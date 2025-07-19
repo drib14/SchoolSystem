@@ -1,18 +1,15 @@
-import express from 'express';
-import {
-    register,
-    verifyEmail,
-    login,
-    forgotPassword,
-    resetPassword
-} from '../controllers/authController.js';
-
+const express = require('express');
+const { register, login, verifyEmail } = require('../controllers/authController');
+const protect = require('../middleware/authMiddleware');
 const router = express.Router();
 
 router.post('/register', register);
-router.get('/verify/:token', verifyEmail);
 router.post('/login', login);
-router.post('/forgot', forgotPassword);
-router.post('/reset/:token', resetPassword);
+router.get('/verify/:token', verifyEmail);
 
-export default router;
+// Example protected route
+router.get('/me', protect, (req, res) => {
+    res.json({ msg: 'Authenticated user', user: req.user });
+});
+
+module.exports = router;

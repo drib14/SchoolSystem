@@ -1,105 +1,85 @@
-import User from '../models/User.js';
-import jwt from 'jsonwebtoken';
-import crypto from 'crypto';
-import sendEmail from '../utils/sendEmail.js';
+const User = require('../models/User');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 
-// Helper to generate JWT
-const generateToken = (userId) => jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '7d' });
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS,
+    },
+});
 
-// Register
-export const register = async (req, res) => {
-    const { name, email, password, role, grade, section } = req.body;
+exports.register = async (req, res) => {
+    const { name, email, password, role } = req.body;
     try {
         const existing = await User.findOne({ email });
-        if (existing) return res.status(400).json({ msg: 'Email already registered' });
+        if (existing) return res.status(400).json({ msg: 'Email already exists' });
 
-        const verifyToken = crypto.randomBytes(32).toString('hex');
+        const hashed = await bcrypt.hash(password, 10);
+        const verificationToken = crypto.randomBytes(20).toString('hex');
 
-        const user = await User.create({ name, email, password, role, grade, section, verifyToken });
+        const user = await User.create({
+            name,
+            email,
+            password: hashed,
+            role,
+            verificationToken,
+        });
 
-        const link = `${process.env.CLIENT_URL}/verify/${verifyToken}`;
-        await sendEmail(email, 'Verify Your Email', `Click to verify: ${link}`);
+        const url = `http://localhost:3000/verify/${verificationToken}`;
+        await transporter.sendMail({
+            to: email,
+            subject: 'Verify your email',
+            html: `<a href="${url}">Click to verify your account</a>`,
+        });
 
-        res.status(201).json({ msg: 'Registered. Check email for verification link.' });
+        res.json({ msg: 'Registered! Check your email to verify.' });
     } catch (err) {
-        res.status(500).json({ msg: err.message });
+        res.status(500).json({ error: err.message });
     }
 };
 
-// Verify Email
-export const verifyEmail = async (req, res) => {
+exports.verifyEmail = async (req, res) => {
     try {
-        const user = await User.findOne({ verifyToken: req.params.token });
+        const user = await User.findOne({ verificationToken: req.params.token });
         if (!user) return res.status(400).json({ msg: 'Invalid token' });
 
         user.isVerified = true;
-        user.verifyToken = '';
+        user.verificationToken = null;
         await user.save();
 
-        res.json({ msg: 'Email verified successfully' });
+        res.json({ msg: 'Email verified!' });
     } catch (err) {
-        res.status(500).json({ msg: err.message });
+        res.status(500).json({ error: err.message });
     }
 };
 
-// Login
-export const login = async (req, res) => {
+exports.login = async (req, res) => {
+  try {
     const { email, password } = req.body;
-    try {
-        const user = await User.findOne({ email });
-        if (!user) return res.status(400).json({ msg: 'Invalid credentials' });
 
-        if (!user.isVerified) return res.status(403).json({ msg: 'Please verify your email first' });
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ msg: 'User not found' });
 
-        const isMatch = await user.comparePassword(password);
-        if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
 
-        const token = generateToken(user._id);
-        res.json({ token, user });
-    } catch (err) {
-        res.status(500).json({ msg: err.message });
-    }
-};
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '1d',
+    });
 
-// Forgot Password
-export const forgotPassword = async (req, res) => {
-    const { email } = req.body;
-    try {
-        const user = await User.findOne({ email });
-        if (!user) return res.status(400).json({ msg: 'User not found' });
-
-        const resetToken = crypto.randomBytes(32).toString('hex');
-        user.resetToken = resetToken;
-        user.resetTokenExpiry = Date.now() + 1000 * 60 * 10; // 10 minutes
-        await user.save();
-
-        const link = `${process.env.CLIENT_URL}/reset/${resetToken}`;
-        await sendEmail(email, 'Reset Password', `Click to reset password: ${link}`);
-
-        res.json({ msg: 'Reset link sent to email' });
-    } catch (err) {
-        res.status(500).json({ msg: err.message });
-    }
-};
-
-// Reset Password
-export const resetPassword = async (req, res) => {
-    const { password } = req.body;
-    try {
-        const user = await User.findOne({
-            resetToken: req.params.token,
-            resetTokenExpiry: { $gt: Date.now() }
-        });
-
-        if (!user) return res.status(400).json({ msg: 'Invalid or expired token' });
-
-        user.password = password;
-        user.resetToken = null;
-        user.resetTokenExpiry = null;
-        await user.save();
-
-        res.json({ msg: 'Password reset successfully' });
-    } catch (err) {
-        res.status(500).json({ msg: err.message });
-    }
+    res.status(200).json({
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ msg: err.message });
+  }
 };
