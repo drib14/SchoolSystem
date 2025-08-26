@@ -46,7 +46,8 @@
                             <th>Teacher ID</th>
                             <th>Teacher Name</th>
                             <th>Total Hours (This Month)</th>
-                            <th>Gross Salary</th>
+                            <th>Net Salary</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="payroll-tbody">
@@ -57,5 +58,16 @@
         </div>
     </div>
     <script src="js/payroll.js"></script>
+
+    <!-- Payroll Breakdown Modal -->
+    <div id="payroll-breakdown-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 id="modal-title">Payroll Breakdown</h3>
+            <div id="modal-body">
+                <!-- Breakdown will be populated here -->
+            </div>
+        </div>
+    </div>
 </body>
 </html>

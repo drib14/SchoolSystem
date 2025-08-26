@@ -47,7 +47,8 @@
                             <th>Student Name</th>
                             <th>Course</th>
                             <th>Total Units</th>
-                            <th>Tuition Fee</th>
+                            <th>Total Tuition</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="tuition-tbody">
@@ -58,5 +59,16 @@
         </div>
     </div>
     <script src="js/tuition-management.js"></script>
+
+    <!-- Tuition Breakdown Modal -->
+    <div id="tuition-breakdown-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 id="modal-title">Tuition Breakdown</h3>
+            <div id="modal-body">
+                <!-- Breakdown will be populated here -->
+            </div>
+        </div>
+    </div>
 </body>
 </html>

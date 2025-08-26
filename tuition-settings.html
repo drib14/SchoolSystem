@@ -41,13 +41,41 @@
             <div class="content">
                 <div class="course-form-container">
                     <h3>Set Price Per Unit</h3>
-                    <form id="tuition-settings-form">
+                    <form id="tuition-rate-form">
                         <div class="input-group">
                             <label for="pricePerUnit">Price per Unit (in ₱)</label>
                             <input type="number" id="pricePerUnit" placeholder="e.g., 1500" required min="0" step="0.01">
                         </div>
-                        <button type="submit" class="action-btn approve-btn">Save Settings</button>
+                        <button type="submit" class="action-btn approve-btn">Save Rate</button>
                     </form>
+                </div>
+                <hr style="margin: 30px 0;">
+                <div class="course-form-container">
+                    <h3>Manage Miscellaneous Fees</h3>
+                    <form id="add-fee-form">
+                        <div class="input-group">
+                            <input type="text" id="feeName" placeholder="Fee Name (e.g., Library Fee)" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="number" id="feeAmount" placeholder="Amount (in ₱)" required min="0" step="0.01">
+                        </div>
+                        <button type="submit" class="action-btn approve-btn">Add Fee</button>
+                    </form>
+                </div>
+                <div class="course-list-container" style="margin-top: 20px;">
+                    <h3>Existing Miscellaneous Fees</h3>
+                    <table class="applicants-table">
+                        <thead>
+                            <tr>
+                                <th>Fee Name</th>
+                                <th>Amount</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fees-tbody">
+                            <!-- Fees will be inserted here by JS -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
