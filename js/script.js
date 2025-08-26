@@ -47,16 +47,19 @@ document.addEventListener('DOMContentLoaded', () => {
         let userIsValid = false;
 
         if (role === 'student') {
-            // Student login logic will be different.
-            // We'll get enrolled students from local storage.
             const enrolledStudents = JSON.parse(localStorage.getItem('students')) || [];
-            const student = enrolledStudents.find(s => s.id === username && s.password === password);
+            const student = enrolledStudents.find(s => s.id === username && s.password === password && s.status === 'enrolled');
             if (student) {
                 userIsValid = true;
             }
-        } else {
-            // Admin and Teacher login
-            // For simplicity, we'll keep the username the same as the role for admin and teacher
+        } else if (role === 'teacher') {
+            const approvedTeachers = JSON.parse(localStorage.getItem('teachers')) || [];
+            const teacher = approvedTeachers.find(t => t.id === username && t.password === password && t.status === 'approved');
+            if (teacher) {
+                userIsValid = true;
+            }
+        } else if (role === 'admin') {
+            // Admin login
             if (users[role] && username === role && users[role].password === password) {
                 userIsValid = true;
             }
@@ -64,7 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (userIsValid) {
             localStorage.setItem('userRole', role);
-            if(role === 'student') {
+            // Store userId for both students and teachers
+            if (role === 'student' || role === 'teacher') {
                 localStorage.setItem('userId', username);
             }
             window.location.href = `${role}.html`;
