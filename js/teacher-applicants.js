@@ -8,8 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const teacherApplicantsTbody = document.getElementById('teacher-applicants-tbody');
     let allTeachers = JSON.parse(localStorage.getItem('teachers')) || [];
 
+    // Modal Elements
+    const modal = document.getElementById('requirements-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+    const closeBtn = document.querySelector('.close-btn');
+
     function renderTable() {
-        // Filter for pending applicants each time we render
         const pendingApplicants = allTeachers.filter(teacher => teacher.status === 'pending');
         teacherApplicantsTbody.innerHTML = '';
 
@@ -25,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td title="${applicant.qualifications}">${applicant.qualifications.substring(0, 40)}...</td>
                     <td><span class="status-pending">${applicant.status}</span></td>
                     <td>
+                        <button class="action-btn view-req-btn" data-id="${applicant.id}" style="background-color: #17a2b8;">Requirements</button>
                         <button class="action-btn approve-btn" data-id="${applicant.id}">Approve</button>
                         <button class="action-btn deny-btn" data-id="${applicant.id}">Deny</button>
                     </td>
@@ -34,29 +40,90 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Event Delegation for Approve/Deny buttons
+    function openRequirementsModal(applicantId) {
+        const applicant = allTeachers.find(t => t.id === applicantId);
+        if (!applicant) return;
+
+        modalTitle.textContent = `Manage Requirements for ${applicant.firstName} ${applicant.lastName}`;
+
+        let checklistHtml = '<ul>';
+        if (applicant.requirements && applicant.requirements.length > 0) {
+            applicant.requirements.forEach(req => {
+                checklistHtml += `
+                    <li>
+                        <label>
+                            <input type="checkbox" data-applicant-id="${applicantId}" data-req-id="${req.id}" ${req.status === 'Submitted' ? 'checked' : ''}>
+                            ${req.name}
+                        </label>
+                        <span>${req.status}</span>
+                    </li>
+                `;
+            });
+        } else {
+            checklistHtml += '<li>No requirements defined for this applicant.</li>';
+        }
+        checklistHtml += '</ul>';
+
+        modalBody.innerHTML = checklistHtml;
+        modal.style.display = 'block';
+    }
+
+    function closeRequirementsModal() {
+        modal.style.display = 'none';
+    }
+
+    // --- Event Listeners ---
     teacherApplicantsTbody.addEventListener('click', (e) => {
         const target = e.target;
-        if (target.tagName !== 'BUTTON') return;
-
         const applicantId = target.dataset.id;
-        const teacherIndex = allTeachers.findIndex(t => t.id === applicantId);
+        if (!applicantId) return;
 
-        if (teacherIndex === -1) return;
-
-        if (target.classList.contains('approve-btn')) {
-            allTeachers[teacherIndex].status = 'approved';
-            localStorage.setItem('teachers', JSON.stringify(allTeachers));
-            alert(`Teacher applicant ${applicantId} has been approved.`);
-            renderTable(); // Re-render to remove the approved applicant from the pending list
+        if (target.classList.contains('view-req-btn')) {
+            openRequirementsModal(applicantId);
+        } else if (target.classList.contains('approve-btn')) {
+            const teacherIndex = allTeachers.findIndex(t => t.id === applicantId);
+            if (teacherIndex > -1) {
+                allTeachers[teacherIndex].status = 'approved';
+                localStorage.setItem('teachers', JSON.stringify(allTeachers));
+                alert(`Teacher applicant ${applicantId} has been approved.`);
+                renderTable();
+            }
+        } else if (target.classList.contains('deny-btn')) {
+            const teacherIndex = allTeachers.findIndex(t => t.id === applicantId);
+            if (teacherIndex > -1) {
+                allTeachers[teacherIndex].status = 'denied';
+                localStorage.setItem('teachers', JSON.stringify(allTeachers));
+                alert(`Teacher applicant ${applicantId} has been denied.`);
+                renderTable();
+            }
         }
+    });
 
-        if (target.classList.contains('deny-btn')) {
-            // Instead of deleting, let's change status to 'denied'
-            allTeachers[teacherIndex].status = 'denied';
-            localStorage.setItem('teachers', JSON.stringify(allTeachers));
-            alert(`Teacher applicant ${applicantId} has been denied.`);
-            renderTable(); // Re-render to remove the denied applicant
+    closeBtn.addEventListener('click', closeRequirementsModal);
+    window.addEventListener('click', (e) => {
+        if (e.target == modal) {
+            closeRequirementsModal();
+        }
+    });
+
+    modalBody.addEventListener('change', (e) => {
+        if (e.target.type === 'checkbox') {
+            const applicantId = e.target.dataset.applicantId;
+            const reqId = parseInt(e.target.dataset.reqId, 10);
+            const isChecked = e.target.checked;
+
+            const teacherIndex = allTeachers.findIndex(t => t.id === applicantId);
+            if (teacherIndex > -1) {
+                const reqIndex = allTeachers[teacherIndex].requirements.findIndex(r => r.id === reqId);
+                if (reqIndex > -1) {
+                    const newStatus = isChecked ? 'Submitted' : 'Pending';
+                    allTeachers[teacherIndex].requirements[reqIndex].status = newStatus;
+                    localStorage.setItem('teachers', JSON.stringify(allTeachers));
+
+                    const statusSpan = e.target.closest('li').querySelector('span');
+                    statusSpan.textContent = newStatus;
+                }
+            }
         }
     });
 

@@ -1,61 +1,126 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Basic auth check
-    const userRole = localStorage.getItem('userRole');
-    if (userRole !== 'admin') {
+    // Auth Check
+    if (localStorage.getItem('userRole') !== 'admin') {
         window.location.href = 'index.html';
         return;
     }
 
     const applicantsTbody = document.getElementById('applicants-tbody');
-    const allStudents = JSON.parse(localStorage.getItem('students')) || [];
+    let allStudents = JSON.parse(localStorage.getItem('students')) || [];
 
-    // Filter for pending applicants
-    const pendingApplicants = allStudents.filter(student => student.status === 'pending');
+    // Modal Elements
+    const modal = document.getElementById('requirements-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+    const closeBtn = document.querySelector('.close-btn');
 
-    if (pendingApplicants.length === 0) {
-        applicantsTbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No pending applicants found.</td></tr>';
-    } else {
-        pendingApplicants.forEach(applicant => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${applicant.id}</td>
-                <td>${applicant.firstName} ${applicant.lastName}</td>
-                <td>${applicant.email}</td>
-                <td>${applicant.course ? `${applicant.course.name} (${applicant.course.code})` : 'N/A'}</td>
-                <td><span class="status-pending">${applicant.status}</span></td>
-                <td>
-                    <button class="action-btn approve-btn" data-id="${applicant.id}">Approve</button>
-                    <button class="action-btn deny-btn" data-id="${applicant.id}">Deny</button>
-                </td>
-            `;
-            applicantsTbody.appendChild(row);
-        });
+    function renderTable() {
+        const pendingApplicants = allStudents.filter(student => student.status === 'pending');
+        applicantsTbody.innerHTML = '';
+
+        if (pendingApplicants.length === 0) {
+            applicantsTbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No pending applicants found.</td></tr>';
+        } else {
+            pendingApplicants.forEach(applicant => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${applicant.id}</td>
+                    <td>${applicant.firstName} ${applicant.lastName}</td>
+                    <td>${applicant.email}</td>
+                    <td>${applicant.course ? `${applicant.course.name} (${applicant.course.code})` : 'N/A'}</td>
+                    <td><span class="status-pending">${applicant.status}</span></td>
+                    <td>
+                        <button class="action-btn view-req-btn" data-id="${applicant.id}" style="background-color: #17a2b8;">Requirements</button>
+                        <button class="action-btn approve-btn" data-id="${applicant.id}">Approve</button>
+                        <button class="action-btn deny-btn" data-id="${applicant.id}">Deny</button>
+                    </td>
+                `;
+                applicantsTbody.appendChild(row);
+            });
+        }
     }
 
-    // Add event listeners for approve/deny buttons
+    function openRequirementsModal(applicantId) {
+        const applicant = allStudents.find(s => s.id === applicantId);
+        if (!applicant) return;
+
+        modalTitle.textContent = `Manage Requirements for ${applicant.firstName} ${applicant.lastName}`;
+
+        let checklistHtml = '<ul>';
+        if (applicant.requirements && applicant.requirements.length > 0) {
+            applicant.requirements.forEach(req => {
+                checklistHtml += `
+                    <li>
+                        <label>
+                            <input type="checkbox" data-applicant-id="${applicantId}" data-req-id="${req.id}" ${req.status === 'Submitted' ? 'checked' : ''}>
+                            ${req.name}
+                        </label>
+                        <span>${req.status}</span>
+                    </li>
+                `;
+            });
+        } else {
+            checklistHtml += '<li>No requirements defined for this applicant.</li>';
+        }
+        checklistHtml += '</ul>';
+
+        modalBody.innerHTML = checklistHtml;
+        modal.style.display = 'block';
+    }
+
+    function closeRequirementsModal() {
+        modal.style.display = 'none';
+    }
+
+    // --- Event Listeners ---
     applicantsTbody.addEventListener('click', (e) => {
         const target = e.target;
         const applicantId = target.dataset.id;
-
         if (!applicantId) return;
 
-        let students = JSON.parse(localStorage.getItem('students')) || [];
-
-        if (target.classList.contains('approve-btn')) {
-            const studentIndex = students.findIndex(s => s.id === applicantId);
+        if (target.classList.contains('view-req-btn')) {
+            openRequirementsModal(applicantId);
+        } else if (target.classList.contains('approve-btn')) {
+            const studentIndex = allStudents.findIndex(s => s.id === applicantId);
             if (studentIndex > -1) {
-                students[studentIndex].status = 'enrolled';
-                localStorage.setItem('students', JSON.stringify(students));
+                allStudents[studentIndex].status = 'enrolled';
+                localStorage.setItem('students', JSON.stringify(allStudents));
                 alert(`Applicant ${applicantId} has been approved.`);
-                window.location.reload();
+                renderTable();
             }
-        }
-
-        if (target.classList.contains('deny-btn')) {
-            students = students.filter(s => s.id !== applicantId);
-            localStorage.setItem('students', JSON.stringify(students));
+        } else if (target.classList.contains('deny-btn')) {
+            allStudents = allStudents.filter(s => s.id !== applicantId);
+            localStorage.setItem('students', JSON.stringify(allStudents));
             alert(`Applicant ${applicantId} has been denied and removed.`);
-            window.location.reload();
+            renderTable();
+        }
+    });
+
+    closeBtn.addEventListener('click', closeRequirementsModal);
+    window.addEventListener('click', (e) => {
+        if (e.target == modal) {
+            closeRequirementsModal();
+        }
+    });
+
+    modalBody.addEventListener('change', (e) => {
+        if (e.target.type === 'checkbox') {
+            const applicantId = e.target.dataset.applicantId;
+            const reqId = parseInt(e.target.dataset.reqId, 10);
+            const isChecked = e.target.checked;
+
+            const studentIndex = allStudents.findIndex(s => s.id === applicantId);
+            if (studentIndex > -1) {
+                const reqIndex = allStudents[studentIndex].requirements.findIndex(r => r.id === reqId);
+                if (reqIndex > -1) {
+                    const newStatus = isChecked ? 'Submitted' : 'Pending';
+                    allStudents[studentIndex].requirements[reqIndex].status = newStatus;
+                    localStorage.setItem('students', JSON.stringify(allStudents));
+
+                    const statusSpan = e.target.closest('li').querySelector('span');
+                    statusSpan.textContent = newStatus;
+                }
+            }
         }
     });
 
@@ -68,4 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'index.html';
         });
     }
+
+    renderTable();
 });

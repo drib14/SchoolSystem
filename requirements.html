@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISCP - Admin Panel</title>
+    <title>ISCP - Manage Requirements</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
@@ -16,7 +16,7 @@
                 <p>Admin Panel</p>
             </div>
             <ul class="sidebar-menu">
-                <li><a href="admin.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="applicants.html"><i class="fas fa-user-plus"></i> Student Applicants</a></li>
                 <li><a href="#"><i class="fas fa-user-graduate"></i> Students</a></li>
                 <li><a href="teacher-applicants.html"><i class="fas fa-user-tie"></i> Teacher Applicants</a></li>
@@ -24,7 +24,7 @@
                 <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
                 <li><a href="subjects.html"><i class="fas fa-flask"></i> Subjects</a></li>
                 <li><a href="schedules.html"><i class="fas fa-calendar-alt"></i> Schedules</a></li>
-                <li><a href="requirements.html"><i class="fas fa-file-alt"></i> Requirements</a></li>
+                <li><a href="requirements.html" class="active"><i class="fas fa-file-alt"></i> Requirements</a></li>
                 <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
             </ul>
             <div class="sidebar-footer">
@@ -33,14 +33,36 @@
         </div>
         <div class="main-content">
             <div class="header">
-                <h1>Welcome, Admin!</h1>
+                <h1>Manage Application Requirements</h1>
             </div>
             <div class="content">
-                <!-- Content for the panel goes here -->
-                <p>This is the admin dashboard. From here, you can manage students, teachers, courses, and system settings.</p>
+                <div class="course-form-container">
+                    <h3>Add New Requirement</h3>
+                    <form id="add-requirement-form">
+                        <div class="input-group">
+                            <input type="text" id="requirementName" placeholder="Requirement Name (e.g., Form 137)" required>
+                        </div>
+                        <button type="submit" class="action-btn approve-btn">Add Requirement</button>
+                    </form>
+                </div>
+                <hr style="margin: 30px 0;">
+                <div class="course-list-container">
+                    <h3>Existing Requirements</h3>
+                    <table class="applicants-table">
+                        <thead>
+                            <tr>
+                                <th>Requirement Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requirements-tbody">
+                            <!-- Requirements will be inserted here by JS -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-    <script src="js/admin.js"></script>
+    <script src="js/requirements.js"></script>
 </body>
 </html>

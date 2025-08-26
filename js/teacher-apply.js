@@ -19,6 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const id = `T${year}${month}${day}${sequentialNumber}`; // 'T' for Teacher
         const password = `${id}${lastName.charAt(0).toUpperCase()}`;
 
+        const masterRequirements = JSON.parse(localStorage.getItem('requirements')) || [];
+        const applicantRequirements = masterRequirements.map(req => ({
+            id: req.id,
+            name: req.name,
+            status: 'Pending'
+        }));
+
         // --- Create Teacher Object ---
         const newTeacher = {
             id: id,
@@ -28,7 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
             email: document.getElementById('email').value,
             phone: document.getElementById('phone').value,
             qualifications: document.getElementById('qualifications').value,
-            status: 'pending' // 'pending', 'approved', 'denied'
+            status: 'pending', // 'pending', 'approved', 'denied'
+            requirements: applicantRequirements
         };
 
         // --- Save to Local Storage ---

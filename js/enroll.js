@@ -110,9 +110,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const id = `${year}${month}${day}${sequentialNumber}`;
         const password = `${id}${applicantData.lastName.charAt(0).toUpperCase()}`;
 
+        const masterRequirements = JSON.parse(localStorage.getItem('requirements')) || [];
+        const applicantRequirements = masterRequirements.map(req => ({
+            id: req.id,
+            name: req.name,
+            status: 'Pending'
+        }));
+
         applicantData.id = id;
         applicantData.password = password;
         applicantData.status = 'pending';
+        applicantData.requirements = applicantRequirements;
 
         // Save to local storage
         students.push(applicantData);
