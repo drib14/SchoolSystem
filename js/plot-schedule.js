@@ -63,11 +63,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderPlottedClasses() {
+        const printBtn = document.getElementById('print-btn');
         plottedClassesTbody.innerHTML = '';
+
         if (studentPlottedSchedules.length === 0) {
             plottedClassesTbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">You have not selected any classes.</td></tr>';
+            printBtn.style.display = 'none';
             return;
         }
+        printBtn.style.display = 'inline-block';
 
         studentPlottedSchedules.forEach(schedule => {
             const subject = allSubjects.find(s => s.code === schedule.subjectCode);
