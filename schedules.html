@@ -17,8 +17,9 @@
             </div>
             <ul class="sidebar-menu">
                 <li><a href="admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="applicants.html"><i class="fas fa-user-plus"></i> Applicants</a></li>
+                <li><a href="applicants.html"><i class="fas fa-user-plus"></i> Student Applicants</a></li>
                 <li><a href="#"><i class="fas fa-user-graduate"></i> Students</a></li>
+                <li><a href="teacher-applicants.html"><i class="fas fa-user-tie"></i> Teacher Applicants</a></li>
                 <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
                 <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
                 <li><a href="subjects.html"><i class="fas fa-flask"></i> Subjects</a></li>
@@ -54,7 +55,11 @@
                             <input type="text" id="roomNumber" placeholder="Room Number" required>
                         </div>
                         <div class="input-group">
-                            <input type="text" id="teacherName" placeholder="Teacher Name (Placeholder)" required>
+                            <label for="teacher-selection">Assign Teacher:</label>
+                            <select id="teacher-selection" required>
+                                <option value="">--Select an Approved Teacher--</option>
+                                <!-- Options populated by JS -->
+                            </select>
                         </div>
                         <button type="submit" class="action-btn approve-btn">Add Schedule</button>
                     </form>

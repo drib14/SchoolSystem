@@ -8,11 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const addScheduleForm = document.getElementById('add-schedule-form');
     const schedulesTbody = document.getElementById('schedules-tbody');
     const subjectSelection = document.getElementById('subject-selection');
+    const teacherSelection = document.getElementById('teacher-selection');
 
     let schedules = JSON.parse(localStorage.getItem('schedules')) || [];
     const subjects = JSON.parse(localStorage.getItem('subjects')) || [];
+    const teachers = JSON.parse(localStorage.getItem('teachers')) || [];
 
-    // --- Populate Subjects Dropdown ---
+    // --- Populate Dropdowns ---
     function populateSubjectsDropdown() {
         if (subjects.length === 0) {
             subjectSelection.innerHTML = '<option value="">Please add a subject first</option>';
@@ -26,6 +28,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function populateTeachersDropdown() {
+        const approvedTeachers = teachers.filter(t => t.status === 'approved');
+        if (approvedTeachers.length === 0) {
+            teacherSelection.innerHTML = '<option value="">No approved teachers found</option>';
+        } else {
+            approvedTeachers.forEach(teacher => {
+                const option = document.createElement('option');
+                option.value = teacher.id;
+                option.textContent = `${teacher.firstName} ${teacher.lastName} (${teacher.id})`;
+                teacherSelection.appendChild(option);
+            });
+        }
+    }
+
     // --- Render Schedules Table ---
     function renderSchedules() {
         schedulesTbody.innerHTML = '';
@@ -35,14 +51,17 @@ document.addEventListener('DOMContentLoaded', () => {
             schedules.forEach((schedule, index) => {
                 const row = document.createElement('tr');
                 const subject = subjects.find(s => s.code === schedule.subjectCode);
+                const teacher = teachers.find(t => t.id === schedule.teacherId);
+
                 const subjectName = subject ? subject.name : 'N/A';
+                const teacherName = teacher ? `${teacher.firstName} ${teacher.lastName}` : 'N/A';
 
                 row.innerHTML = `
                     <td>${subjectName} (${schedule.subjectCode})</td>
                     <td>${schedule.sectionCode}</td>
                     <td>${schedule.time}</td>
                     <td>${schedule.room}</td>
-                    <td>${schedule.teacher}</td>
+                    <td>${teacherName}</td>
                     <td>
                         <button class="action-btn deny-btn delete-btn" data-index="${index}">Delete</button>
                     </td>
@@ -60,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sectionCode: document.getElementById('sectionCode').value,
             time: document.getElementById('scheduleTime').value,
             room: document.getElementById('roomNumber').value,
-            teacher: document.getElementById('teacherName').value
+            teacherId: teacherSelection.value
         };
 
         schedules.push(newSchedule);
@@ -93,5 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Initial Load ---
     populateSubjectsDropdown();
+    populateTeachersDropdown();
     renderSchedules();
 });
