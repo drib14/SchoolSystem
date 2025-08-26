@@ -75,6 +75,53 @@
     overflow-y: auto;
 }
 
+.applicants-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.applicants-table th, .applicants-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.applicants-table th {
+    background-color: #f8f9fa;
+}
+
+.sidebar-menu a.active {
+    background: #34495e;
+}
+
+.status-pending {
+    background-color: #ffc107;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.action-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    margin-right: 5px;
+}
+
+.approve-btn {
+    background-color: #28a745;
+}
+
+.deny-btn {
+    background-color: #dc3545;
+}
+
 .header {
     background: #fff;
     padding: 20px;

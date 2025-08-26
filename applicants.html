@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISCP - Admin Panel</title>
+    <title>ISCP - Manage Applicants</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
 </head>
 <body>
     <div class="panel-container">
+        <!-- Re-using the same sidebar structure -->
         <div class="sidebar">
             <div class="sidebar-header">
                 <h2>ISCP</h2>
@@ -17,7 +18,7 @@
             </div>
             <ul class="sidebar-menu">
                 <li><a href="admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="applicants.html"><i class="fas fa-user-plus"></i> Applicants</a></li>
+                <li><a href="applicants.html" class="active"><i class="fas fa-user-plus"></i> Applicants</a></li>
                 <li><a href="#"><i class="fas fa-user-graduate"></i> Students</a></li>
                 <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
                 <li><a href="#"><i class="fas fa-book"></i> Courses</a></li>
@@ -29,14 +30,26 @@
         </div>
         <div class="main-content">
             <div class="header">
-                <h1>Welcome, Admin!</h1>
+                <h1>Manage Student Applicants</h1>
             </div>
             <div class="content">
-                <!-- Content for the panel goes here -->
-                <p>This is the admin dashboard. From here, you can manage students, teachers, courses, and system settings.</p>
+                <table class="applicants-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="applicants-tbody">
+                        <!-- Applicant rows will be inserted here by JS -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    <script src="js/admin.js"></script>
+    <script src="js/applicants.js"></script>
 </body>
 </html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISCP - Student Enrollment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/enroll.css">
+</head>
+<body>
+    <div class="enroll-container">
+        <div class="enroll-box">
+            <h2>Student Enrollment</h2>
+            <div class="progress-bar">
+                <div class="step active" id="step-1">
+                    <div class="step-icon"><i class="fas fa-user"></i></div>
+                    <p>Personal Info</p>
+                </div>
+                <div class="step" id="step-2">
+                    <div class="step-icon"><i class="fas fa-book-open"></i></div>
+                    <p>Course Selection</p>
+                </div>
+                <div class="step" id="step-3">
+                    <div class="step-icon"><i class="fas fa-file-alt"></i></div>
+                    <p>Requirements</p>
+                </div>
+                <div class="step" id="step-4">
+                    <div class="step-icon"><i class="fas fa-check"></i></div>
+                    <p>Confirmation</p>
+                </div>
+            </div>
+
+            <form id="enroll-form">
+                <!-- Step 1: Personal Information -->
+                <div class="form-step active" id="form-step-1">
+                    <h3>Step 1: Personal Information</h3>
+                    <div class="input-group">
+                        <input type="text" id="firstName" placeholder="First Name" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="lastName" placeholder="Last Name" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="tel" id="phone" placeholder="Phone Number" required>
+                    </div>
+                    <button type="button" class="next-btn">Next</button>
+                </div>
+
+                <!-- Other steps will be added later -->
+
+            </form>
+        </div>
+    </div>
+    <script src="js/enroll.js"></script>
+</body>
+</html>

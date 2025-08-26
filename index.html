@@ -3,19 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISCP - Login</title>
+    <title>ISCP - Welcome</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="login-container">
-        <div class="login-box">
+        <div id="role-selection" class="login-box">
             <div class="logo-container">
-                <!-- <img src="assets/logo.png" alt="ISCP Logo" class="logo"> -->
                 <h2>ISCP</h2>
                 <p>International State College of the Philippines</p>
             </div>
+            <div class="role-buttons">
+                <button class="role-btn" data-role="admin"><i class="fas fa-user-shield"></i> Admin</button>
+                <button class="role-btn" data-role="teacher"><i class="fas fa-chalkboard-teacher"></i> Teacher</button>
+                <button class="role-btn" data-role="student"><i class="fas fa-user-graduate"></i> Student</button>
+            </div>
+            <div class="enroll-link">
+                <p>Don't have an account? <a href="enroll.html">Enroll Now</a></p>
+            </div>
+        </div>
+
+        <div id="login-form-container" class="login-box" style="display: none;">
+            <div class="logo-container">
+                <h2 id="login-title">Login</h2>
+            </div>
             <form id="login-form">
+                <input type="hidden" id="login-role" value="">
                 <div class="input-group">
                     <i class="fas fa-user"></i>
                     <input type="text" id="username" placeholder="Username" required>
@@ -25,6 +39,7 @@
                     <input type="password" id="password" placeholder="Password" required>
                 </div>
                 <button type="submit" class="login-btn">Login</button>
+                <button type="button" id="back-btn" class="back-btn">Back</button>
             </form>
         </div>
     </div>
