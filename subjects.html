@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISCP - Manage Courses</title>
+    <title>ISCP - Manage Subjects</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
@@ -20,8 +20,8 @@
                 <li><a href="applicants.html"><i class="fas fa-user-plus"></i> Applicants</a></li>
                 <li><a href="#"><i class="fas fa-user-graduate"></i> Students</a></li>
                 <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
-                <li><a href="courses.html" class="active"><i class="fas fa-book"></i> Courses</a></li>
-                <li><a href="subjects.html"><i class="fas fa-flask"></i> Subjects</a></li>
+                <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
+                <li><a href="subjects.html" class="active"><i class="fas fa-flask"></i> Subjects</a></li>
                 <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
             </ul>
             <div class="sidebar-footer">
@@ -30,40 +30,52 @@
         </div>
         <div class="main-content">
             <div class="header">
-                <h1>Manage Courses</h1>
+                <h1>Manage Subjects</h1>
             </div>
             <div class="content">
                 <div class="course-form-container">
-                    <h3>Add New Course</h3>
-                    <form id="add-course-form">
+                    <h3>Add New Subject</h3>
+                    <form id="add-subject-form">
                         <div class="input-group">
-                            <input type="text" id="courseName" placeholder="Course Name (e.g., Bachelor of Science in IT)" required>
+                            <input type="text" id="subjectCode" placeholder="Subject Code (e.g., IT-101)" required>
                         </div>
                         <div class="input-group">
-                            <input type="text" id="courseCode" placeholder="Course Code (e.g., BSIT)" required>
+                            <input type="text" id="subjectName" placeholder="Subject Name (e.g., Introduction to Programming)" required>
                         </div>
-                        <button type="submit" class="action-btn approve-btn">Add Course</button>
+                        <div class="input-group">
+                            <input type="number" id="subjectUnits" placeholder="Units" required min="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="course-assignment">Assign to Course:</label>
+                            <select id="course-assignment" required>
+                                <option value="">--Select a Course--</option>
+                                <!-- Options populated by JS -->
+                            </select>
+                        </div>
+                        <button type="submit" class="action-btn approve-btn">Add Subject</button>
                     </form>
                 </div>
                 <hr style="margin: 30px 0;">
                 <div class="course-list-container">
-                    <h3>Existing Courses</h3>
+                    <h3>Existing Subjects</h3>
                     <table class="applicants-table">
                         <thead>
                             <tr>
-                                <th>Course Name</th>
-                                <th>Course Code</th>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Units</th>
+                                <th>Assigned Course</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="courses-tbody">
-                            <!-- Course rows will be inserted here by JS -->
+                        <tbody id="subjects-tbody">
+                            <!-- Subject rows will be inserted here by JS -->
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    <script src="js/courses.js"></script>
+    <script src="js/subjects.js"></script>
 </body>
 </html>
