@@ -117,13 +117,21 @@
 .input-group {
     margin-bottom: 20px;
 }
-.input-group input {
+.input-group input, .input-group select {
     width: 100%;
     padding: 15px;
     border: 1px solid var(--border-color);
     border-radius: 5px;
     outline: none;
     font-size: 1rem;
+    background-color: #fff;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: var(--text-color);
 }
 
 .input-group input:focus {

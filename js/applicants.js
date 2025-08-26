@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${applicant.id}</td>
                 <td>${applicant.firstName} ${applicant.lastName}</td>
                 <td>${applicant.email}</td>
+                <td>${applicant.course ? `${applicant.course.name} (${applicant.course.code})` : 'N/A'}</td>
                 <td><span class="status-pending">${applicant.status}</span></td>
                 <td>
                     <button class="action-btn approve-btn" data-id="${applicant.id}">Approve</button>
