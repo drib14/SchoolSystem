@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISCP - Student Panel</title>
+    <title>ISCP - My Grades</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
@@ -16,10 +16,10 @@
                 <p>Student Panel</p>
             </div>
             <ul class="sidebar-menu">
-                <li><a href="student.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="student.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="plot-schedule.html"><i class="fas fa-calendar-plus"></i> Class Enrollment</a></li>
                 <li><a href="my-attendance.html"><i class="fas fa-user-check"></i> My Attendance</a></li>
-                <li><a href="my-grades.html"><i class="fas fa-graduation-cap"></i> My Grades</a></li>
+                <li><a href="my-grades.html" class="active"><i class="fas fa-graduation-cap"></i> My Grades</a></li>
                 <li><a href="#"><i class="fas fa-user-cog"></i> Profile</a></li>
             </ul>
             <div class="sidebar-footer">
@@ -28,13 +28,14 @@
         </div>
         <div class="main-content">
             <div class="header">
-                <h1>Welcome, Student!</h1>
+                <h1>My Grades</h1>
+                <p>Here is a summary of your academic performance.</p>
             </div>
-            <div class="content">
-                <p>This is your student dashboard. You can view your courses, grades, and profile information here.</p>
+            <div class="content" id="grades-content">
+                <!-- Grade tables will be inserted here by JS -->
             </div>
         </div>
     </div>
-    <script src="js/student.js"></script>
+    <script src="js/my-grades.js"></script>
 </body>
 </html>

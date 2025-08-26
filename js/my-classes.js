@@ -34,8 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${schedule.sectionCode}</td>
                     <td>${schedule.time}</td>
                     <td>${schedule.room}</td>
-                    <td>
-                        <a href="take-attendance.html?scheduleId=${scheduleId}" class="action-btn approve-btn" style="text-decoration: none;">Take Attendance</a>
+                    <td class="action-cell">
+                        <a href="take-attendance.html?scheduleId=${scheduleId}" class="action-btn approve-btn" style="text-decoration: none;">Attendance</a>
+                        <a href="grade-entry.html?scheduleId=${scheduleId}" class="action-btn" style="text-decoration: none; background-color: #ffc107;">Grades</a>
                     </td>
                 `;
                 myClassesTbody.appendChild(row);
