@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISCP - Tuition Settings</title>
+    <title>ISCP - Payroll Management</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
@@ -26,8 +26,8 @@
                 <li><a href="schedules.html"><i class="fas fa-calendar-alt"></i> Schedules</a></li>
                 <li><a href="requirements.html"><i class="fas fa-file-alt"></i> Requirements</a></li>
                 <li><a href="tuition-management.html"><i class="fas fa-file-invoice-dollar"></i> Tuition Management</a></li>
-                <li><a href="tuition-settings.html" class="active"><i class="fas fa-cogs"></i> Tuition Settings</a></li>
-                <li><a href="payroll.html"><i class="fas fa-dollar-sign"></i> Payroll</a></li>
+                <li><a href="tuition-settings.html"><i class="fas fa-cogs"></i> Tuition Settings</a></li>
+                <li><a href="payroll.html" class="active"><i class="fas fa-dollar-sign"></i> Payroll</a></li>
                 <li><a href="payroll-settings.html"><i class="fas fa-money-check-alt"></i> Payroll Settings</a></li>
             </ul>
             <div class="sidebar-footer">
@@ -36,22 +36,26 @@
         </div>
         <div class="main-content">
             <div class="header">
-                <h1>Tuition Settings</h1>
+                <h1>Teacher Payroll Management</h1>
+                <p>Overview of calculated gross salary for the month.</p>
             </div>
             <div class="content">
-                <div class="course-form-container">
-                    <h3>Set Price Per Unit</h3>
-                    <form id="tuition-settings-form">
-                        <div class="input-group">
-                            <label for="pricePerUnit">Price per Unit (in ₱)</label>
-                            <input type="number" id="pricePerUnit" placeholder="e.g., 1500" required min="0" step="0.01">
-                        </div>
-                        <button type="submit" class="action-btn approve-btn">Save Settings</button>
-                    </form>
-                </div>
+                <table class="applicants-table">
+                    <thead>
+                        <tr>
+                            <th>Teacher ID</th>
+                            <th>Teacher Name</th>
+                            <th>Total Hours (This Month)</th>
+                            <th>Gross Salary</th>
+                        </tr>
+                    </thead>
+                    <tbody id="payroll-tbody">
+                        <!-- Payroll data will be inserted here by JS -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    <script src="js/tuition-settings.js"></script>
+    <script src="js/payroll.js"></script>
 </body>
 </html>

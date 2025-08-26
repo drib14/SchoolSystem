@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISCP - Tuition Settings</title>
+    <title>ISCP - Payroll Settings</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
@@ -26,9 +26,9 @@
                 <li><a href="schedules.html"><i class="fas fa-calendar-alt"></i> Schedules</a></li>
                 <li><a href="requirements.html"><i class="fas fa-file-alt"></i> Requirements</a></li>
                 <li><a href="tuition-management.html"><i class="fas fa-file-invoice-dollar"></i> Tuition Management</a></li>
-                <li><a href="tuition-settings.html" class="active"><i class="fas fa-cogs"></i> Tuition Settings</a></li>
+                <li><a href="tuition-settings.html"><i class="fas fa-cogs"></i> Tuition Settings</a></li>
                 <li><a href="payroll.html"><i class="fas fa-dollar-sign"></i> Payroll</a></li>
-                <li><a href="payroll-settings.html"><i class="fas fa-money-check-alt"></i> Payroll Settings</a></li>
+                <li><a href="payroll-settings.html" class="active"><i class="fas fa-money-check-alt"></i> Payroll Settings</a></li>
             </ul>
             <div class="sidebar-footer">
                 <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -36,15 +36,15 @@
         </div>
         <div class="main-content">
             <div class="header">
-                <h1>Tuition Settings</h1>
+                <h1>Payroll Settings</h1>
             </div>
             <div class="content">
                 <div class="course-form-container">
-                    <h3>Set Price Per Unit</h3>
-                    <form id="tuition-settings-form">
+                    <h3>Set Standard Hourly Rate</h3>
+                    <form id="payroll-settings-form">
                         <div class="input-group">
-                            <label for="pricePerUnit">Price per Unit (in ₱)</label>
-                            <input type="number" id="pricePerUnit" placeholder="e.g., 1500" required min="0" step="0.01">
+                            <label for="hourlyRate">Hourly Rate (in ₱)</label>
+                            <input type="number" id="hourlyRate" placeholder="e.g., 500" required min="0" step="0.01">
                         </div>
                         <button type="submit" class="action-btn approve-btn">Save Settings</button>
                     </form>
@@ -52,6 +52,6 @@
             </div>
         </div>
     </div>
-    <script src="js/tuition-settings.js"></script>
+    <script src="js/payroll-settings.js"></script>
 </body>
 </html>
