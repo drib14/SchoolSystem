@@ -79,12 +79,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const date = new Date();
         const year = date.getFullYear().toString().slice(-2);
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const day = date.getDate().toString().padStart(2, '0');
 
-        const teachers = JSON.parse(localStorage.getItem('teachers')) || [];
-        const sequentialNumber = (teachers.length + 1).toString().padStart(3, '0');
+        let lastTeacherIdCounter = parseInt(localStorage.getItem('lastTeacherIdCounter') || '0');
+        lastTeacherIdCounter++;
+        localStorage.setItem('lastTeacherIdCounter', lastTeacherIdCounter);
 
-        const id = `T${year}${month}${day}${sequentialNumber}`;
+        const sequentialNumber = lastTeacherIdCounter.toString().padStart(4, '0');
+        const id = `T${year}${month}${sequentialNumber}`;
         const password = `${id}${lastName.charAt(0).toUpperCase()}`;
 
         const applicantRequirements = teacherReqs.map(req => ({
@@ -112,9 +113,19 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('teachers', JSON.stringify(teachers));
 
         // --- Notify User and Redirect ---
-        alert(`Application Submitted!\nYour Teacher ID is: ${id}\nYour Password is: ${password}\nPlease wait for an administrator to review your application.`);
+        localStorage.setItem('userRole', 'teacher');
+        localStorage.setItem('userId', id);
 
-        window.location.href = 'index.html';
+        Toastify({
+            text: "Application Submitted! You are now being redirected to your dashboard.",
+            duration: 5000,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+            close: true,
+        }).showToast();
+
+        setTimeout(() => { window.location.href = 'teacher.html'; }, 5000);
     });
 
     buildRequirementsList();

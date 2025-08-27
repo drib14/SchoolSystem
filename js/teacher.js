@@ -7,6 +7,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const studentCountEl = document.getElementById('teacher-student-count');
     const attendanceStatusEl = document.getElementById('teacher-attendance-status');
 
+    const allTeachers = JSON.parse(localStorage.getItem('teachers')) || [];
+    const currentUser = allTeachers.find(t => t.id === loggedInTeacherId);
+
+    // --- Handle Pending Status ---
+    if (currentUser && currentUser.status === 'pending') {
+        const mainContent = document.querySelector('.main-content');
+        mainContent.innerHTML = `
+            <div class="header">
+                <h1>Application Pending</h1>
+            </div>
+            <div class="content">
+                <p>Your application is currently under review by an administrator. Your dashboard will become fully accessible once your application is approved.</p>
+                <p>Your Teacher ID is: <strong>${currentUser.id}</strong></p>
+                <p>Your temporary password is: <strong>${currentUser.password}</strong> (Please change it upon approval).</p>
+            </div>
+        `;
+        return; // Stop further script execution
+    }
+
     // --- Display Announcements ---
     function displayAnnouncements() {
         const announcements = JSON.parse(localStorage.getItem('announcements')) || [];

@@ -22,9 +22,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td data-label="Name">${s.firstName} ${s.lastName}</td>
                 <td data-label="Email">${s.email}</td>
                 <td data-label="Course">${s.course ? s.course.name : 'N/A'}</td>
+                <td data-label="Actions">
+                    <button class="action-btn deny-btn deactivate-btn" data-id="${s.id}">Deactivate</button>
+                </td>
             `;
         });
     } else {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No enrolled students found.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No enrolled students found.</td></tr>';
     }
+
+    tbody.addEventListener('click', (e) => {
+        if (e.target.classList.contains('deactivate-btn')) {
+            const studentId = e.target.dataset.id;
+            if (confirm(`Are you sure you want to deactivate student ${studentId}? They will not be able to log in.`)) {
+                const studentIndex = allStudents.findIndex(s => s.id === studentId);
+                if (studentIndex > -1) {
+                    allStudents[studentIndex].status = 'inactive';
+                    localStorage.setItem('students', JSON.stringify(allStudents));
+                    // Re-render the table
+                    const updatedEnrolled = allStudents.filter(s => s.status === 'enrolled');
+                    // This is a bit clumsy, should refactor render logic
+                    window.location.reload(); // Simple solution for now
+                }
+            }
+        }
+    });
 });

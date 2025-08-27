@@ -52,7 +52,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function populateCourses() {
-        // ... (existing logic)
+        if (courses.length === 0) {
+            courseSelection.innerHTML = '<option value="">No courses available</option>';
+        } else {
+            courses.forEach(course => {
+                const option = document.createElement('option');
+                option.value = course.code;
+                option.textContent = course.name;
+                courseSelection.appendChild(option);
+            });
+        }
     }
 
     nextBtns.forEach(btn => {
@@ -77,9 +86,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    function updateFormSteps() {
+        formSteps.forEach((step, idx) => {
+            step.classList.toggle('active', idx === currentStep);
+        });
+    }
+
     prevBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // ... (existing logic)
+            currentStep--;
+            updateFormSteps();
+            updateProgress();
         });
     });
 
@@ -119,12 +136,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const date = new Date();
         const year = date.getFullYear().toString().slice(-2);
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const day = date.getDate().toString().padStart(2, '0');
 
-        const students = JSON.parse(localStorage.getItem('students')) || [];
-        const sequentialNumber = (students.length + 1).toString().padStart(3, '0');
+        let lastStudentIdCounter = parseInt(localStorage.getItem('lastStudentIdCounter') || '0');
+        lastStudentIdCounter++;
+        localStorage.setItem('lastStudentIdCounter', lastStudentIdCounter);
 
-        const id = `${year}${month}${day}${sequentialNumber}`;
+        const sequentialNumber = lastStudentIdCounter.toString().padStart(4, '0');
+        const id = `${year}${month}${sequentialNumber}`;
         const password = `${id}${applicantData.lastName.charAt(0).toUpperCase()}`;
 
         const masterRequirements = allRequirements.filter(r => r.type === 'Student');
@@ -142,18 +160,20 @@ document.addEventListener('DOMContentLoaded', () => {
         students.push(applicantData);
         localStorage.setItem('students', JSON.stringify(students));
 
+        // --- Auto Login and Redirect ---
+        localStorage.setItem('userRole', 'student');
+        localStorage.setItem('userId', id);
+
         Toastify({
-            text: `Application Submitted! ID: ${id}, Password: ${password}`,
-            duration: 10000, // Keep it on screen longer
+            text: `Application Submitted! You are now being redirected to your dashboard.`,
+            duration: 5000,
             gravity: "top",
             position: "center",
             backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-            destination: "index.html",
-            newWindow: false,
             close: true,
         }).showToast();
 
-        setTimeout(() => { window.location.href = 'index.html'; }, 10000);
+        setTimeout(() => { window.location.href = 'student.html'; }, 5000);
     });
 
     populateCourses();
