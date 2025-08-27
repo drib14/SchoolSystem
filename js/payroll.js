@@ -102,14 +102,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${teacher.firstName} ${teacher.lastName}</td>
-                <td>${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}</td>
-                <td>${daysWorked}</td>
-                <td>${absences}</td>
-                <td>${lates}</td>
-                <td>₱${grossPay.toFixed(2)}</td>
-                <td>₱${totalDeductions.toFixed(2)}</td>
-                <td><strong>₱${netPay.toFixed(2)}</strong></td>
+                <td data-label="Teacher Name">${teacher.firstName} ${teacher.lastName}</td>
+                <td data-label="Pay Period">${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}</td>
+                <td data-label="Days Worked">${daysWorked}</td>
+                <td data-label="Absences">${absences}</td>
+                <td data-label="Lates">${lates}</td>
+                <td data-label="Gross Pay">₱${grossPay.toFixed(2)}</td>
+                <td data-label="Deductions">₱${totalDeductions.toFixed(2)}</td>
+                <td data-label="Net Pay"><strong>₱${netPay.toFixed(2)}</strong></td>
             `;
             payrollTbody.appendChild(row);
         });

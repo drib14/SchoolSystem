@@ -527,3 +527,11 @@ img.profile-pic {
     font-size: 0.8rem;
     color: #6c757d;
 }
+
+/* Style for photos in table cells */
+.table-photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}

@@ -50,10 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 totalHours = hours.toFixed(2);
             }
             row.innerHTML = `
-                <td>${new Date(rec.date).toDateString()}</td>
-                <td>${rec.checkIn ? new Date(rec.checkIn).toLocaleTimeString() : 'N/A'}</td>
-                <td>${rec.checkOut ? new Date(rec.checkOut).toLocaleTimeString() : 'N/A'}</td>
-                <td>${totalHours}</td>
+                <td data-label="Date">${new Date(rec.date).toDateString()}</td>
+                <td data-label="Check-in Time">${rec.checkIn ? new Date(rec.checkIn).toLocaleTimeString() : 'N/A'}</td>
+                <td data-label="Check-out Time">${rec.checkOut ? new Date(rec.checkOut).toLocaleTimeString() : 'N/A'}</td>
+                <td data-label="Total Hours">${totalHours}</td>
             `;
             historyTbody.appendChild(row);
         });
@@ -62,10 +62,10 @@ document.addEventListener('DOMContentLoaded', () => {
     checkInBtn.addEventListener('click', () => {
         const todaysRecord = getTodaysRecord();
         if (todaysRecord) {
-            alert('You have already checked in today.');
+            Toastify({ text: "You have already checked in today.", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)" }).showToast();
             return;
         }
-        alert('Biometric simulation successful. You are checked in.');
+        Toastify({ text: "Biometric simulation successful. You are checked in.", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)" }).showToast();
         attendanceRecords.push({
             teacherId: loggedInTeacherId,
             date: todayString,
@@ -79,12 +79,12 @@ document.addEventListener('DOMContentLoaded', () => {
     checkOutBtn.addEventListener('click', () => {
         const recordIndex = attendanceRecords.findIndex(rec => rec.teacherId === loggedInTeacherId && rec.date === todayString);
         if (recordIndex > -1) {
-            alert('Biometric simulation successful. You are checked out.');
+            Toastify({ text: "Biometric simulation successful. You are checked out.", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)" }).showToast();
             attendanceRecords[recordIndex].checkOut = new Date().toISOString();
             localStorage.setItem('teacherAttendanceRecords', JSON.stringify(attendanceRecords));
             updateUI();
         } else {
-            alert('Error: Could not find your check-in record for today.');
+            Toastify({ text: "Error: Could not find your check-in record for today.", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)" }).showToast();
         }
     });
 

@@ -30,14 +30,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Add a generic style for table photos to ensure consistency
-const style = document.createElement('style');
-style.innerHTML = `
-    .table-photo {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        object-fit: cover;
-    }
-`;
-document.head.appendChild(style);
+// The .table-photo style is now globally defined in css/panel.css
