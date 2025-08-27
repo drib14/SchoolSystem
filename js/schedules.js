@@ -143,15 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Logout ---
-    const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            localStorage.removeItem('userRole');
-            window.location.href = 'index.html';
-        });
-    }
+    // --- Logout is handled by auth.js ---
 
     // --- Initial Load ---
     populateSubjectsDropdown();

@@ -127,15 +127,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Logout functionality
-    const logoutBtn = document.getElementById('logout-btn');
-    if(logoutBtn) {
-        logoutBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            localStorage.removeItem('userRole');
-            window.location.href = 'index.html';
-        });
-    }
-
-    renderTable();
 });

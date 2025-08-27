@@ -96,3 +96,4 @@ document.addEventListener('DOMContentLoaded', () => {
     populateCoursesDropdown();
     renderSubjects();
 });
+});

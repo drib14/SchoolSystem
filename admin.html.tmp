@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
-    __ADDITIONAL_CSS__
+
 </head>
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.js"></script>
@@ -16,7 +16,8 @@
         <div class="sidebar">
             <div class="sidebar-header">
                 <div class="profile-info">
-                    <!-- Populated by auth.js -->
+                    <i class="fas fa-user-circle profile-pic"></i>
+                    <h3 class="user-name">Loading...</h3>
                 </div>
             </div>
             <ul class="sidebar-menu">
@@ -30,6 +31,7 @@
             __PAGE_CONTENT__
         </div>
     </div>
+    <div class="overlay"></div>
     <script src="js/auth.js"></script>
     <script src="js/admin.js"></script>
 </body>
