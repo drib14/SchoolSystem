@@ -43,9 +43,16 @@ document.addEventListener('DOMContentLoaded', () => {
             code: courseCodeInput.value
         };
 
-        courses.push(newCourse);
-        saveCourses();
-        renderCourses();
+        let pendingActions = JSON.parse(localStorage.getItem('pendingActions')) || [];
+        pendingActions.push({
+            type: 'newCourse',
+            payload: newCourse,
+            date: new Date().toISOString()
+        });
+        localStorage.setItem('pendingActions', JSON.stringify(pendingActions));
+
+        Toastify({ text: "Course submitted for admin approval.", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)" }).showToast();
+
         addCourseForm.reset();
     });
 

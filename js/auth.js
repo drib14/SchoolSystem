@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = {
         admin: [
             { href: 'admin.html', icon: 'fa-tachometer-alt', text: 'Dashboard' },
+            { href: 'admin-approval.html', icon: 'fa-check-double', text: 'Approval Queue' },
             { href: 'applicants.html', icon: 'fa-user-plus', text: 'Student Applicants' },
             { href: 'teacher-applicants.html', icon: 'fa-user-tie', text: 'Teacher Applicants' },
             { href: 'enrolled-students.html', icon: 'fa-user-graduate', text: 'Students' },
