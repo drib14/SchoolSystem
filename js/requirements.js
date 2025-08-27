@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
             requirements.forEach((req, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${req.name}</td>
-                    <td>
+                    <td data-label="Requirement Name">${req.name}</td>
+                    <td data-label="Actions">
                         <button class="action-btn deny-btn delete-btn" data-index="${index}">Delete</button>
                     </td>
                 `;

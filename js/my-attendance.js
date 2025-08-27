@@ -50,9 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const subject = allSubjects.find(s => s.code === subjectCode);
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${new Date(record.date).toDateString()}</td>
-                    <td>${subject ? subject.name : 'Unknown Subject'}</td>
-                    <td>${record.status}</td>
+                    <td data-label="Date">${new Date(record.date).toDateString()}</td>
+                    <td data-label="Subject">${subject ? subject.name : 'Unknown Subject'}</td>
+                    <td data-label="Status">${record.status}</td>
                 `;
                 attendanceHistoryTbody.appendChild(row);
             });

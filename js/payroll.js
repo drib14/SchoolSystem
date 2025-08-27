@@ -53,11 +53,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${teacher.id}</td>
-                <td>${teacher.firstName} ${teacher.lastName}</td>
-                <td>${totalHours.toFixed(2)}</td>
-                <td>₱ ${netSalary.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                <td>
+                <td data-label="Teacher ID">${teacher.id}</td>
+                <td data-label="Name">${teacher.firstName} ${teacher.lastName}</td>
+                <td data-label="Total Hours">${totalHours.toFixed(2)}</td>
+                <td data-label="Net Salary">₱ ${netSalary.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                <td data-label="Actions">
                     <button class="action-btn view-breakdown-btn" data-id="${teacher.id}" style="background-color: #17a2b8;">View Breakdown</button>
                 </td>
             `;

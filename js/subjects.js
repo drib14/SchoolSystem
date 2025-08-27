@@ -39,11 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const courseName = course ? course.name : 'N/A';
 
                 row.innerHTML = `
-                    <td>${subject.code}</td>
-                    <td>${subject.name}</td>
-                    <td>${subject.units}</td>
-                    <td>${courseName} (${subject.courseCode})</td>
-                    <td>
+                    <td data-label="Code">${subject.code}</td>
+                    <td data-label="Name">${subject.name}</td>
+                    <td data-label="Units">${subject.units}</td>
+                    <td data-label="Assigned Course">${courseName} (${subject.courseCode})</td>
+                    <td data-label="Actions">
                         <button class="action-btn deny-btn delete-btn" data-index="${index}">Delete</button>
                     </td>
                 `;

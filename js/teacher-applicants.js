@@ -24,12 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
             pendingApplicants.forEach(applicant => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${applicant.id}</td>
-                    <td>${applicant.firstName} ${applicant.lastName}</td>
-                    <td>${applicant.email}</td>
-                    <td title="${applicant.qualifications}">${applicant.qualifications.substring(0, 40)}...</td>
-                    <td><span class="status-pending">${applicant.status}</span></td>
-                    <td>
+                    <td data-label="ID">${applicant.id}</td>
+                    <td data-label="Name">${applicant.firstName} ${applicant.lastName}</td>
+                    <td data-label="Email">${applicant.email}</td>
+                    <td data-label="Qualifications" title="${applicant.qualifications}">${applicant.qualifications.substring(0, 40)}...</td>
+                    <td data-label="Status"><span class="status-pending">${applicant.status}</span></td>
+                    <td data-label="Actions">
                         <button class="action-btn view-req-btn" data-id="${applicant.id}" style="background-color: #17a2b8;">Requirements</button>
                         <button class="action-btn approve-btn" data-id="${applicant.id}">Approve</button>
                         <button class="action-btn deny-btn" data-id="${applicant.id}">Deny</button>

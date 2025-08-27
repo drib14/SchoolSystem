@@ -57,12 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const teacherName = teacher ? `${teacher.firstName} ${teacher.lastName}` : 'N/A';
 
                 row.innerHTML = `
-                    <td>${subjectName} (${schedule.subjectCode})</td>
-                    <td>${schedule.sectionCode}</td>
-                    <td>${schedule.time}</td>
-                    <td>${schedule.room}</td>
-                    <td>${teacherName}</td>
-                    <td>
+                    <td data-label="Subject">${subjectName} (${schedule.subjectCode})</td>
+                    <td data-label="Section">${schedule.sectionCode}</td>
+                    <td data-label="Schedule">${schedule.time}</td>
+                    <td data-label="Room">${schedule.room}</td>
+                    <td data-label="Teacher">${teacherName}</td>
+                    <td data-label="Actions">
                         <button class="action-btn deny-btn delete-btn" data-index="${index}">Delete</button>
                     </td>
                 `;

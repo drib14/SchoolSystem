@@ -2,6 +2,9 @@
     display: flex;
     height: 100vh;
     width: 100%;
+    max-width: 1800px;
+    margin: 0 auto;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
 .sidebar {
@@ -262,5 +265,52 @@
 
     .sidebar-footer a span {
         display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .applicants-table thead {
+        display: none;
+    }
+
+    .applicants-table, .applicants-table tbody, .applicants-table tr, .applicants-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .applicants-table tr {
+        margin-bottom: 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 5px;
+        box-shadow: 0 2px 2px rgba(0,0,0,0.05);
+    }
+
+    .applicants-table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .applicants-table td:last-child {
+        border-bottom: none;
+    }
+
+    .applicants-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: calc(50% - 25px);
+        padding-right: 10px;
+        text-align: left;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        color: #6c757d;
+    }
+
+    .action-btn {
+        margin-bottom: 5px;
     }
 }

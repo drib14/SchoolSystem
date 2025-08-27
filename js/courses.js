@@ -22,9 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
             courses.forEach((course, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${course.name}</td>
-                    <td>${course.code}</td>
-                    <td>
+                    <td data-label="Course Name">${course.name}</td>
+                    <td data-label="Course Code">${course.code}</td>
+                    <td data-label="Actions">
                         <button class="action-btn deny-btn delete-btn" data-index="${index}">Delete</button>
                     </td>
                 `;

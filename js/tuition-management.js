@@ -46,12 +46,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${student.id}</td>
-                <td>${student.firstName} ${student.lastName}</td>
-                <td>${student.course ? student.course.name : 'N/A'}</td>
-                <td>${totalUnits}</td>
-                <td>₱ ${totalTuition.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                <td>
+                <td data-label="Student ID">${student.id}</td>
+                <td data-label="Name">${student.firstName} ${student.lastName}</td>
+                <td data-label="Course">${student.course ? student.course.name : 'N/A'}</td>
+                <td data-label="Total Units">${totalUnits}</td>
+                <td data-label="Total Tuition">₱ ${totalTuition.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                <td data-label="Actions">
                     <button class="action-btn view-breakdown-btn" data-id="${student.id}" style="background-color: #17a2b8;">View Breakdown</button>
                 </td>
             `;

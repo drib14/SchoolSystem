@@ -30,11 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const scheduleId = `${schedule.subjectCode}_${schedule.sectionCode}`;
 
                 row.innerHTML = `
-                    <td>${subjectName}</td>
-                    <td>${schedule.sectionCode}</td>
-                    <td>${schedule.time}</td>
-                    <td>${schedule.room}</td>
-                    <td class="action-cell">
+                    <td data-label="Subject">${subjectName}</td>
+                    <td data-label="Section">${schedule.sectionCode}</td>
+                    <td data-label="Schedule">${schedule.time}</td>
+                    <td data-label="Room">${schedule.room}</td>
+                    <td data-label="Actions" class="action-cell">
                         <a href="take-attendance.html?scheduleId=${scheduleId}" class="action-btn approve-btn" style="text-decoration: none;">Attendance</a>
                         <a href="grade-entry.html?scheduleId=${scheduleId}" class="action-btn" style="text-decoration: none; background-color: #ffc107;">Grades</a>
                     </td>

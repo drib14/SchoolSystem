@@ -50,11 +50,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const subject = allSubjects.find(s => s.code === schedule.subjectCode);
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${subject ? subject.name : 'N/A'}</td>
-                <td>${schedule.sectionCode}</td>
-                <td>${schedule.time}</td>
-                <td>${schedule.teacher}</td>
-                <td>
+                <td data-label="Subject">${subject ? subject.name : 'N/A'}</td>
+                <td data-label="Section">${schedule.sectionCode}</td>
+                <td data-label="Schedule">${schedule.time}</td>
+                <td data-label="Teacher">${schedule.teacher}</td>
+                <td data-label="Action">
                     <button class="action-btn approve-btn add-btn" data-subject-code="${schedule.subjectCode}" data-section-code="${schedule.sectionCode}">Add</button>
                 </td>
             `;
@@ -77,11 +77,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const subject = allSubjects.find(s => s.code === schedule.subjectCode);
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${subject ? subject.name : 'N/A'}</td>
-                <td>${schedule.sectionCode}</td>
-                <td>${schedule.time}</td>
-                <td>${schedule.teacher}</td>
-                <td>
+                <td data-label="Subject">${subject ? subject.name : 'N/A'}</td>
+                <td data-label="Section">${schedule.sectionCode}</td>
+                <td data-label="Schedule">${schedule.time}</td>
+                <td data-label="Teacher">${schedule.teacher}</td>
+                <td data-label="Action">
                     <button class="action-btn deny-btn remove-btn" data-subject-code="${schedule.subjectCode}" data-section-code="${schedule.sectionCode}">Remove</button>
                 </td>
             `;

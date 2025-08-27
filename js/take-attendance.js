@@ -64,9 +64,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const status = existingRecord ? existingRecord.status : 'Present'; // Default to Present
 
                 row.innerHTML = `
-                    <td>${student.id}</td>
-                    <td>${student.firstName} ${student.lastName}</td>
-                    <td>
+                    <td data-label="Student ID">${student.id}</td>
+                    <td data-label="Student Name">${student.firstName} ${student.lastName}</td>
+                    <td data-label="Status">
                         <div class="attendance-status">
                             <label><input type="radio" name="status-${student.id}" value="Present" ${status === 'Present' ? 'checked' : ''} ${attendanceTakenToday ? 'disabled' : ''}> Present</label>
                             <label><input type="radio" name="status-${student.id}" value="Late" ${status === 'Late' ? 'checked' : ''} ${attendanceTakenToday ? 'disabled' : ''}> Late</label>

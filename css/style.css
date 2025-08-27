@@ -99,6 +99,30 @@ body {
     }
 }
 
+@media (max-width: 360px) {
+    .login-box {
+        padding: 20px;
+    }
+
+    .logo-container h2 {
+        font-size: 2.2rem;
+    }
+
+    .logo-container p {
+        font-size: 0.8rem;
+    }
+
+    .input-group input, .role-btn, .login-btn {
+        padding: 12px;
+        padding-left: 45px; /* For input with icon */
+        font-size: 1rem;
+    }
+
+    .role-btn {
+        padding-left: 12px; /* Reset for role button */
+    }
+}
+
 .role-buttons {
     display: flex;
     flex-direction: column;
