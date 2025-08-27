@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const teacherApplyForm = document.getElementById('teacher-apply-form');
     const teacherRequirementsList = document.getElementById('teacher-requirements-list');
+    const photoUpload = document.getElementById('photo-upload');
+    const photoPreview = document.getElementById('photo-preview');
 
+    let photoUrl = null; // To store the base64 string
     const allRequirements = JSON.parse(localStorage.getItem('requirements')) || [];
     const teacherReqs = allRequirements.filter(r => r.type === 'Teacher');
 
@@ -38,6 +41,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 statusEl.textContent = 'No file chosen';
                 statusEl.classList.remove('submitted');
             }
+        }
+    });
+
+    photoUpload.addEventListener('change', () => {
+        const file = photoUpload.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                photoPreview.innerHTML = `<img src="${e.target.result}" alt="Profile Photo Preview">`;
+                photoUrl = e.target.result;
+            };
+            reader.readAsDataURL(file);
         }
     });
 
@@ -88,7 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
             phone: document.getElementById('phone').value,
             qualifications: document.getElementById('qualifications').value,
             status: 'pending',
-            requirements: applicantRequirements
+            requirements: applicantRequirements,
+            photoUrl: photoUrl
         };
 
         // --- Save to Local Storage ---

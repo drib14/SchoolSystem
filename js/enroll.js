@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const enrollForm = document.getElementById('enroll-form');
     const courseSelection = document.getElementById('course-selection');
     const studentRequirementsList = document.getElementById('student-requirements-list');
+    const photoUpload = document.getElementById('photo-upload');
+    const photoPreview = document.getElementById('photo-preview');
 
     let currentStep = 0;
     let applicantData = {};
@@ -130,6 +132,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     populateCourses();
+    photoUpload.addEventListener('change', () => {
+        const file = photoUpload.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                photoPreview.innerHTML = `<img src="${e.target.result}" alt="Profile Photo Preview">`;
+                applicantData.photoUrl = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
     buildRequirementsList();
     updateProgress();
 });

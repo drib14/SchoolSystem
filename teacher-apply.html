@@ -14,6 +14,14 @@
             <h2>Faculty Application</h2>
             <p style="text-align: center; margin-bottom: 30px;">Submit your application to join our team.</p>
             <form id="teacher-apply-form">
+                <div class="photo-upload-container">
+                    <label for="photo-upload">Profile Photo</label>
+                    <div class="photo-preview" id="photo-preview">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <input type="file" id="photo-upload" accept="image/*" style="display: none;">
+                    <label for="photo-upload" class="upload-label">Choose Photo</label>
+                </div>
                 <div class="input-group">
                     <input type="text" id="firstName" placeholder="First Name" required>
                 </div>

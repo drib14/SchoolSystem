@@ -31,6 +31,14 @@
                 <!-- Step 1: Personal Information -->
                 <div class="form-step active" id="form-step-1">
                     <h3>Step 1: Personal Information</h3>
+                    <div class="photo-upload-container">
+                        <label for="photo-upload">Profile Photo</label>
+                        <div class="photo-preview" id="photo-preview">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <input type="file" id="photo-upload" accept="image/*" style="display: none;">
+                        <label for="photo-upload" class="upload-label">Choose Photo</label>
+                    </div>
                     <div class="input-group">
                         <input type="text" id="firstName" placeholder="First Name" required>
                     </div>
