@@ -249,22 +249,52 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+/* New Hamburger Button Style */
+.hamburger-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+/* New Overlay Style */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1001;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
+    .hamburger-btn {
+        display: block;
+    }
+
     .sidebar {
-        width: 70px;
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100%;
+        z-index: 1002;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.2);
     }
 
-    .sidebar-header h2, .sidebar-header p, .sidebar-menu li a span {
-        display: none;
+    .sidebar.open {
+        transform: translateX(0);
     }
 
-    .sidebar-menu li a i {
-        margin-right: 0;
-    }
-
-    .sidebar-footer a span {
-        display: none;
+    .overlay.open {
+        display: block;
     }
 }
 
