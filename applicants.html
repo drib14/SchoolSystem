@@ -15,7 +15,8 @@
         <div class="sidebar">
             <div class="sidebar-header">
                 <div class="profile-info">
-                    <!-- Populated by auth.js -->
+                    <i class="fas fa-user-circle profile-pic"></i>
+                    <h3 class="user-name">Loading...</h3>
                 </div>
             </div>
             <ul class="sidebar-menu">
@@ -47,16 +48,17 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-        <div id="requirements-modal" class="modal">
-            <div class="modal-content">
-                <span class="close-btn">&times;</span>
-                <h2>Submitted Requirements</h2>
-                <div id="modal-body"></div>
-                <button id="approve-btn" class="action-btn approve-btn" style="margin-top: 15px;">Approve Applicant</button>
+            <div id="requirements-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn">&times;</span>
+                    <h2>Submitted Requirements</h2>
+                    <div id="modal-body"></div>
+                    <button id="approve-btn" class="action-btn approve-btn" style="margin-top: 15px;">Approve Applicant</button>
+                </div>
             </div>
         </div>
     </div>
+    <div class="overlay"></div>
     <script src="js/auth.js"></script>
     <script src="js/applicants.js"></script>
 </body>

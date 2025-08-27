@@ -17,23 +17,11 @@
             <div class="sidebar-header">
                 <div class="profile-info">
                     <i class="fas fa-user-circle profile-pic"></i>
-                    <h3 class="user-name">Admin User</h3>
+                    <h3 class="user-name">Loading...</h3>
                 </div>
             </div>
             <ul class="sidebar-menu">
-                <li><a href="admin.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="applicants.html"><i class="fas fa-user-plus"></i> Student Applicants</a></li>
-                <li><a href="teacher-applicants.html"><i class="fas fa-user-tie"></i> Teacher Applicants</a></li>
-                <li><a href="enrolled-students.html"><i class="fas fa-user-graduate"></i> Students</a></li>
-                <li><a href="approved-teachers.html"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
-                <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
-                <li><a href="subjects.html"><i class="fas fa-flask"></i> Subjects</a></li>
-                <li><a href="schedules.html"><i class="fas fa-calendar-alt"></i> Schedules</a></li>
-                <li><a href="requirements.html"><i class="fas fa-file-alt"></i> Requirements</a></li>
-                <li><a href="tuition-management.html"><i class="fas fa-file-invoice-dollar"></i> Tuition Management</a></li>
-                <li><a href="tuition-settings.html"><i class="fas fa-cogs"></i> Tuition Settings</a></li>
-                <li><a href="payroll.html"><i class="fas fa-dollar-sign"></i> Payroll</a></li>
-                <li><a href="payroll-settings.html"><i class="fas fa-money-check-alt"></i> Payroll Settings</a></li>
+                <!-- Populated by auth.js -->
             </ul>
             <div class="sidebar-footer">
                 <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -46,7 +34,6 @@
                 <p>Welcome, Admin! Here is an overview of the school system.</p>
             </div>
             <div class="analytics-grid">
-                <!-- Enrollment Stats -->
                 <div class="card">
                     <div class="card-icon"><i class="fas fa-user-plus"></i></div>
                     <div class="card-info">
@@ -75,8 +62,6 @@
                         <h3 id="approved-teachers-count">0</h3>
                     </div>
                 </div>
-
-                <!-- Academic Stats -->
                 <div class="card">
                     <div class="card-icon"><i class="fas fa-book"></i></div>
                     <div class="card-info">
@@ -91,8 +76,6 @@
                         <h3 id="total-subjects-count">0</h3>
                     </div>
                 </div>
-
-                <!-- Financial Stats -->
                 <div class="card">
                     <div class="card-icon"><i class="fas fa-file-invoice-dollar"></i></div>
                     <div class="card-info">
@@ -120,6 +103,7 @@
             </div>
         </div>
     </div>
+    <div class="overlay"></div>
     <script src="js/auth.js"></script>
     <script src="js/admin.js"></script>
 </body>
