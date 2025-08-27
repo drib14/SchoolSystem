@@ -1,146 +1,142 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Auth Check
-    if (localStorage.getItem('userRole') !== 'admin') {
-        window.location.href = 'index.html';
+    // --- Config ---
+    const LATE_THRESHOLD_HOUR = 8; // 8:00 AM
+    const WORKING_DAYS_IN_MONTH = 22; // Assumed for daily rate calculation
+
+    // --- DOM Elements ---
+    const payPeriodSelect = document.getElementById('pay-period-select');
+    const calculateBtn = document.getElementById('calculate-payroll-btn');
+    const resultsContainer = document.getElementById('payroll-results-container');
+    const payrollTbody = document.getElementById('payroll-tbody');
+    const announceBtn = document.getElementById('announce-payroll-btn');
+
+    // --- Data Loading ---
+    const settings = JSON.parse(localStorage.getItem('payrollSettings'));
+    const allTeachers = JSON.parse(localStorage.getItem('teachers')) || [];
+    const attendanceRecords = JSON.parse(localStorage.getItem('teacherAttendanceRecords')) || [];
+
+    if (!settings) {
+        document.querySelector('.content').innerHTML = `
+            <h2>Settings Not Found</h2>
+            <p>Please configure the payroll settings before calculating payroll.</p>
+            <a href="payroll-settings.html" class="btn btn-primary">Go to Settings</a>
+        `;
         return;
     }
 
-    const payrollTbody = document.getElementById('payroll-tbody');
-    const allTeachers = JSON.parse(localStorage.getItem('teachers')) || [];
-    const attendanceRecords = JSON.parse(localStorage.getItem('teacherAttendanceRecords')) || [];
-    const hourlyRate = parseFloat(localStorage.getItem('teacherHourlyRate')) || 0;
-    const payrollComponents = JSON.parse(localStorage.getItem('payrollComponents')) || [];
+    // --- Pay Period Generation ---
+    function getPayPeriods() {
+        const periods = [];
+        const payday = settings.payday; // Day of the week (1=Mon, 5=Fri)
+        let current = new Date();
 
-    // Modal Elements
-    const modal = document.getElementById('payroll-breakdown-modal');
-    const modalTitle = document.getElementById('modal-title');
-    const modalBody = document.getElementById('modal-body');
-    const closeBtn = document.querySelector('.close-btn');
+        for (let i = 0; i < 6; i++) { // Generate 6 recent pay periods
+            // Go back to the last payday
+            while (current.getDay() !== payday) {
+                current.setDate(current.getDate() - 1);
+            }
 
-    function renderPayrollTable() {
+            const endDate = new Date(current);
+            const startDate = new Date(current);
+            startDate.setDate(startDate.getDate() - 13); // 14 days = 2 weeks
+
+            periods.push({
+                label: `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`,
+                startDate,
+                endDate
+            });
+
+            // Move to the day before the start of this period to find the next one
+            current.setDate(current.getDate() - 14);
+        }
+        return periods;
+    }
+
+    function populatePayPeriodSelect() {
+        const periods = getPayPeriods();
+        payPeriodSelect.innerHTML = periods.map(p =>
+            `<option value='${JSON.stringify({ start: p.startDate, end: p.endDate })}'>
+                ${p.label}
+            </option>`
+        ).join('');
+    }
+
+    // --- Payroll Calculation Logic ---
+    calculateBtn.addEventListener('click', () => {
+        const selectedPeriod = JSON.parse(payPeriodSelect.value);
+        const startDate = new Date(selectedPeriod.start);
+        const endDate = new Date(selectedPeriod.end);
+
         payrollTbody.innerHTML = '';
-        const approvedTeachers = allTeachers.filter(t => t.status === 'approved');
 
-        if (approvedTeachers.length === 0) {
-            payrollTbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No approved teachers found.</td></tr>';
-            return;
-        }
+        allTeachers.forEach(teacher => {
+            let daysWorked = 0;
+            let absences = 0;
+            let lates = 0;
 
-        if (hourlyRate === 0) {
-            // ... (warning message logic remains the same) ...
-        }
+            // Iterate through the pay period
+            for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+                // Check only for weekdays (Monday to Friday)
+                if (d.getDay() >= 1 && d.getDay() <= 5) {
+                    const dateString = d.toISOString().split('T')[0];
+                    const record = attendanceRecords.find(r => r.teacherId === teacher.id && r.date === dateString);
 
-        const currentMonth = new Date().getMonth();
-        const currentYear = new Date().getFullYear();
-
-        approvedTeachers.forEach(teacher => {
-            const monthlyRecords = attendanceRecords.filter(rec => {
-                const recDate = new Date(rec.date);
-                return rec.teacherId === teacher.id && recDate.getMonth() === currentMonth && recDate.getFullYear() === currentYear;
-            });
-
-            let totalHours = 0;
-            monthlyRecords.forEach(rec => {
-                if (rec.checkIn && rec.checkOut) {
-                    totalHours += (new Date(rec.checkOut) - new Date(rec.checkIn)) / 1000 / 60 / 60;
+                    if (record && record.checkIn) {
+                        daysWorked++;
+                        const checkInTime = new Date(record.checkIn);
+                        if (checkInTime.getHours() >= LATE_THRESHOLD_HOUR) {
+                            lates++;
+                        }
+                    } else {
+                        absences++;
+                    }
                 }
-            });
+            }
 
-            const grossSalary = totalHours * hourlyRate;
-            const totalAllowances = payrollComponents.filter(c => c.type === 'allowance').reduce((sum, c) => sum + c.amount, 0);
-            const totalDeductions = payrollComponents.filter(c => c.type === 'deduction').reduce((sum, c) => sum + c.amount, 0);
-            const netSalary = grossSalary + totalAllowances - totalDeductions;
+            const dailyRate = settings.monthlySalary / WORKING_DAYS_IN_MONTH;
+            const grossPay = daysWorked * dailyRate;
+            const absenceDeductions = absences * settings.absenceDeduction;
+            const lateDeductions = lates * settings.lateDeduction;
+            const totalDeductions = absenceDeductions + lateDeductions;
+            const netPay = grossPay - totalDeductions;
 
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td data-label="Teacher ID">${teacher.id}</td>
-                <td data-label="Name">${teacher.firstName} ${teacher.lastName}</td>
-                <td data-label="Total Hours">${totalHours.toFixed(2)}</td>
-                <td data-label="Net Salary">₱ ${netSalary.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                <td data-label="Actions">
-                    <button class="action-btn view-breakdown-btn" data-id="${teacher.id}" style="background-color: #17a2b8;">View Breakdown</button>
-                </td>
+                <td>${teacher.firstName} ${teacher.lastName}</td>
+                <td>${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}</td>
+                <td>${daysWorked}</td>
+                <td>${absences}</td>
+                <td>${lates}</td>
+                <td>₱${grossPay.toFixed(2)}</td>
+                <td>₱${totalDeductions.toFixed(2)}</td>
+                <td><strong>₱${netPay.toFixed(2)}</strong></td>
             `;
             payrollTbody.appendChild(row);
         });
-    }
 
-    function openBreakdownModal(teacherId) {
-        const teacher = allTeachers.find(t => t.id === teacherId);
-        if (!teacher) return;
-
-        modalTitle.textContent = `Payroll Breakdown for ${teacher.firstName} ${teacher.lastName}`;
-
-        const currentMonth = new Date().getMonth();
-        const currentYear = new Date().getFullYear();
-        const monthlyRecords = attendanceRecords.filter(rec => {
-            const recDate = new Date(rec.date);
-            return rec.teacherId === teacher.id && recDate.getMonth() === currentMonth && recDate.getFullYear() === currentYear;
-        });
-
-        let totalHours = 0;
-        monthlyRecords.forEach(rec => {
-            if (rec.checkIn && rec.checkOut) {
-                totalHours += (new Date(rec.checkOut) - new Date(rec.checkIn)) / 1000 / 60 / 60;
-            }
-        });
-
-        const grossSalary = totalHours * hourlyRate;
-
-        let breakdownHtml = '<ul>';
-        breakdownHtml += `<li><span>Gross Salary (${totalHours.toFixed(2)} hours @ ₱${hourlyRate}/hour)</span><span>₱ ${grossSalary.toLocaleString()}</span></li>`;
-        breakdownHtml += '<li style="border-top: 1px solid #ddd; padding-top: 10px; margin-top: 10px;"><strong>Allowances</strong></li>';
-
-        let totalAllowances = 0;
-        payrollComponents.filter(c => c.type === 'allowance').forEach(allowance => {
-            breakdownHtml += `<li><span>${allowance.name}</span><span>+ ₱ ${allowance.amount.toLocaleString()}</span></li>`;
-            totalAllowances += allowance.amount;
-        });
-
-        breakdownHtml += '<li style="border-top: 1px solid #ddd; padding-top: 10px; margin-top: 10px;"><strong>Deductions</strong></li>';
-
-        let totalDeductions = 0;
-        payrollComponents.filter(c => c.type === 'deduction').forEach(deduction => {
-            breakdownHtml += `<li><span>${deduction.name}</span><span>- ₱ ${deduction.amount.toLocaleString()}</span></li>`;
-            totalDeductions += deduction.amount;
-        });
-
-        const netSalary = grossSalary + totalAllowances - totalDeductions;
-        breakdownHtml += `<li style="font-weight: bold; border-top: 2px solid #333; margin-top: 10px; padding-top: 10px;"><span>NET SALARY</span><span>₱ ${netSalary.toLocaleString()}</span></li>`;
-        breakdownHtml += '</ul>';
-
-        modalBody.innerHTML = breakdownHtml;
-        modal.style.display = 'block';
-    }
-
-    function closeBreakdownModal() {
-        modal.style.display = 'none';
-    }
-
-    // --- Event Listeners ---
-    payrollTbody.addEventListener('click', (e) => {
-        if (e.target.classList.contains('view-breakdown-btn')) {
-            openBreakdownModal(e.target.dataset.id);
-        }
+        resultsContainer.style.display = 'block';
     });
 
-    closeBtn.addEventListener('click', closeBreakdownModal);
-    window.addEventListener('click', (e) => {
-        if (e.target == modal) {
-            closeBreakdownModal();
-        }
+    // --- Announcement Logic ---
+    announceBtn.addEventListener('click', () => {
+        const selectedPeriodLabel = payPeriodSelect.options[payPeriodSelect.selectedIndex].text;
+        let announcements = JSON.parse(localStorage.getItem('announcements')) || [];
+
+        const newAnnouncement = {
+            id: `ann-${Date.now()}`,
+            date: new Date().toISOString(),
+            title: 'Payroll Distribution',
+            message: `Payroll for the period ${selectedPeriodLabel} has been distributed. Please check your accounts.`
+        };
+
+        // Add to the beginning of the array and keep only the last 5
+        announcements.unshift(newAnnouncement);
+        announcements = announcements.slice(0, 5);
+
+        localStorage.setItem('announcements', JSON.stringify(announcements));
+        alert('Payroll announcement has been posted for all teachers.');
     });
 
-    // Logout functionality
-    const logoutBtn = document.getElementById('logout-btn');
-    if(logoutBtn) {
-        logoutBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            localStorage.removeItem('userRole');
-            window.location.href = 'index.html';
-        });
-    }
-
-    // Initial Render
-    renderPayrollTable();
+    // --- Initial Load ---
+    populatePayPeriodSelect();
 });

@@ -1,18 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Auth & URL Param ---
-    const loggedInTeacherId = localStorage.getItem('userId');
+    // This will be handled by auth.js, but we repeat it here for safety
     const userRole = localStorage.getItem('userRole');
-    if (userRole !== 'teacher' || !loggedInTeacherId) {
-        window.location.href = 'index.html';
+    if (userRole !== 'teacher') {
+        // window.location.href = 'index.html'; // auth.js will handle this
         return;
     }
+
     const urlParams = new URLSearchParams(window.location.search);
     const scheduleId = urlParams.get('scheduleId');
     if (!scheduleId) {
-        window.location.href = 'my-classes.html';
+        // window.location.href = 'my-classes.html'; // or show an error
         return;
     }
     const [subjectCode, sectionCode] = scheduleId.split('_');
+
+    // --- Grade Weight Configuration ---
+    const WEIGHTS = {
+        midterm: {
+            quizzes: 0.3,
+            assignments: 0.3,
+            midtermExam: 0.4
+        },
+        final: {
+            midtermGrade: 0.5,
+            finalExam: 0.5
+        }
+    };
 
     // --- Data Loading ---
     const allStudents = JSON.parse(localStorage.getItem('students')) || [];
@@ -47,24 +60,25 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderRoster() {
         rosterTbody.innerHTML = '';
         if (enrolledStudents.length === 0) {
-            rosterTbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No students are enrolled in this class.</td></tr>';
+            rosterTbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">No students are enrolled in this class.</td></tr>';
             gradesForm.querySelector('button').style.display = 'none';
         } else {
             enrolledStudents.forEach(student => {
                 const existingRecord = gradeRecords.find(rec => rec.scheduleId === scheduleId && rec.studentId === student.id);
-                const grades = existingRecord ? existingRecord.grades : { quizzes: '', assignments: '', midterm: '', finalExam: '' };
-                const finalGrade = existingRecord ? existingRecord.finalGrade : 'N/A';
+                const grades = existingRecord ? existingRecord.grades : { quizzes: '', assignments: '', midtermExam: '', finalExam: '' };
+                const calculatedGrades = existingRecord ? existingRecord.calculated : { midtermGrade: 'N/A', finalGrade: 'N/A' };
 
                 const row = document.createElement('tr');
                 row.dataset.studentId = student.id;
                 row.innerHTML = `
                     <td>${student.id}</td>
                     <td>${student.firstName} ${student.lastName}</td>
-                    <td class="grade-inputs"><input type="number" class="grade-component" name="quizzes" value="${grades.quizzes || ''}" min="0" max="100"></td>
-                    <td class="grade-inputs"><input type="number" class="grade-component" name="assignments" value="${grades.assignments || ''}" min="0" max="100"></td>
-                    <td class="grade-inputs"><input type="number" class="grade-component" name="midterm" value="${grades.midterm || ''}" min="0" max="100"></td>
-                    <td class="grade-inputs"><input type="number" class="grade-component" name="finalExam" value="${grades.finalExam || ''}" min="0" max="100"></td>
-                    <td class="grade-inputs"><input type="text" class="final-grade-input" name="finalGrade" value="${finalGrade}" readonly></td>
+                    <td class="grade-inputs"><input type="number" name="quizzes" value="${grades.quizzes || ''}" min="0" max="100"></td>
+                    <td class="grade-inputs"><input type="number" name="assignments" value="${grades.assignments || ''}" min="0" max="100"></td>
+                    <td class="grade-inputs"><input type="number" name="midtermExam" value="${grades.midtermExam || ''}" min="0" max="100"></td>
+                    <td class="grade-inputs"><input type="text" name="midtermGrade" value="${calculatedGrades.midtermGrade}" readonly class="final-grade-input"></td>
+                    <td class="grade-inputs"><input type="number" name="finalExam" value="${grades.finalExam || ''}" min="0" max="100"></td>
+                    <td class="grade-inputs"><input type="text" name="finalGrade" value="${calculatedGrades.finalGrade}" readonly class="final-grade-input"></td>
                 `;
                 rosterTbody.appendChild(row);
             });
@@ -80,46 +94,52 @@ document.addEventListener('DOMContentLoaded', () => {
             const studentId = row.dataset.studentId;
             if (!studentId) return;
 
-            const grades = {
-                quizzes: row.querySelector('input[name="quizzes"]').value,
-                assignments: row.querySelector('input[name="assignments"]').value,
-                midterm: row.querySelector('input[name="midterm"]').value,
-                finalExam: row.querySelector('input[name="finalExam"]').value
+            // Get raw scores from inputs
+            const rawScores = {
+                quizzes: parseFloat(row.querySelector('input[name="quizzes"]').value) || 0,
+                assignments: parseFloat(row.querySelector('input[name="assignments"]').value) || 0,
+                midtermExam: parseFloat(row.querySelector('input[name="midtermExam"]').value) || 0,
+                finalExam: parseFloat(row.querySelector('input[name="finalExam"]').value) || 0
             };
 
-            const gradeValues = Object.values(grades).map(g => parseFloat(g) || 0);
-            const finalGrade = gradeValues.reduce((sum, g) => sum + g, 0) / gradeValues.length;
+            // Calculate midterm grade
+            const midtermGrade = (rawScores.quizzes * WEIGHTS.midterm.quizzes) +
+                                 (rawScores.assignments * WEIGHTS.midterm.assignments) +
+                                 (rawScores.midtermExam * WEIGHTS.midterm.midtermExam);
 
+            // Calculate final grade
+            const finalGrade = (midtermGrade * WEIGHTS.final.midtermGrade) +
+                               (rawScores.finalExam * WEIGHTS.final.finalExam);
+
+            // Find existing record or create a new one
             const recordIndex = gradeRecords.findIndex(rec => rec.scheduleId === scheduleId && rec.studentId === studentId);
 
-            if (recordIndex > -1) {
-                gradeRecords[recordIndex].grades = grades;
-                gradeRecords[recordIndex].finalGrade = finalGrade.toFixed(2);
-            } else {
-                gradeRecords.push({
-                    scheduleId: scheduleId,
-                    studentId: studentId,
-                    grades: grades,
+            const record = {
+                scheduleId: scheduleId,
+                studentId: studentId,
+                grades: { // Store raw input values
+                    quizzes: row.querySelector('input[name="quizzes"]').value,
+                    assignments: row.querySelector('input[name="assignments"]').value,
+                    midtermExam: row.querySelector('input[name="midtermExam"]').value,
+                    finalExam: row.querySelector('input[name="finalExam"]').value
+                },
+                calculated: {
+                    midtermGrade: midtermGrade.toFixed(2),
                     finalGrade: finalGrade.toFixed(2)
-                });
+                }
+            };
+
+            if (recordIndex > -1) {
+                gradeRecords[recordIndex] = record;
+            } else {
+                gradeRecords.push(record);
             }
         });
 
         localStorage.setItem('gradeRecords', JSON.stringify(gradeRecords));
-        alert('All grades have been saved successfully!');
-        renderRoster(); // Re-render to show calculated final grade
+        alert('All grades have been saved and calculated successfully!');
+        renderRoster(); // Re-render to show calculated grades
     });
-
-    // --- Logout ---
-    const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            localStorage.removeItem('userRole');
-            localStorage.removeItem('userId');
-            window.location.href = 'index.html';
-        });
-    }
 
     // --- Initial Load ---
     renderRoster();

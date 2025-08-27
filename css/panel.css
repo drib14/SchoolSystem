@@ -26,11 +26,31 @@
     font-size: 1.8rem;
 }
 
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.profile-pic {
+    font-size: 4rem;
+    margin-bottom: 10px;
+    color: #ecf0f1;
+}
+
+.user-name {
+    font-size: 1.1rem;
+    color: #ecf0f1;
+    font-weight: 600;
+}
+
 .sidebar-menu {
     list-style: none;
     padding: 0;
     margin: 0;
     flex-grow: 1;
+    overflow-y: auto;
 }
 
 .sidebar-menu li a {
@@ -382,4 +402,117 @@
     .charts-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* Profile Form Styles */
+#profile-form {
+    display: flex;
+    gap: 20px;
+}
+
+.form-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.photo-section {
+    flex: 1;
+    text-align: center;
+}
+
+.details-section {
+    flex: 2;
+}
+
+.photo-preview-container {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 20px;
+    border: 4px solid #ddd;
+}
+
+#photo-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#photo-upload {
+    display: none;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-color-dark);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    #profile-form {
+        flex-direction: column;
+    }
+}
+
+/* Announcement Styles */
+#announcements-container {
+    margin-bottom: 20px;
+}
+
+.announcement {
+    background-color: #eaf5ff;
+    border-left: 4px solid var(--primary-color);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 0 5px 5px 0;
+}
+
+.announcement h4 {
+    margin: 0 0 5px 0;
+    color: var(--primary-color-dark);
+}
+
+.announcement p {
+    margin: 0;
+}
+
+.announcement-date {
+    font-size: 0.8rem;
+    color: #6c757d;
 }

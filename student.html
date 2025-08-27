@@ -12,8 +12,10 @@
     <div class="panel-container">
         <div class="sidebar">
             <div class="sidebar-header">
-                <h2>ISCP</h2>
-                <p>Student Panel</p>
+                <div class="profile-info">
+                    <i class="fas fa-user-circle profile-pic"></i>
+                    <h3 class="user-name">Student Name</h3>
+                </div>
             </div>
             <ul class="sidebar-menu">
                 <li><a href="student.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
@@ -28,13 +30,35 @@
         </div>
         <div class="main-content">
             <div class="header">
-                <h1>Welcome, Student!</h1>
+                <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
+                <h1>Student Dashboard</h1>
             </div>
-            <div class="content">
-                <p>This is your student dashboard. You can view your courses, grades, and profile information here.</p>
+            <div class="analytics-grid">
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-book-open"></i></div>
+                    <div class="card-info">
+                        <p>Enrolled Subjects</p>
+                        <h3 id="student-subject-count">0</h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="card-info">
+                        <p>Overall GPA</p>
+                        <h3 id="student-gpa">N/A</h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-user-times"></i></div>
+                    <div class="card-info">
+                        <p>Total Absences</p>
+                        <h3 id="student-absence-count">0</h3>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <script src="js/auth.js"></script>
     <script src="js/student.js"></script>
 </body>
 </html>
