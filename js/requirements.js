@@ -5,94 +5,66 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    const addRequirementForm = document.getElementById('add-requirement-form');
-    const requirementsTbody = document.getElementById('requirements-tbody');
+    const addReqForm = document.getElementById('add-requirement-form');
+    const reqTbody = document.getElementById('requirements-tbody');
     let requirements = JSON.parse(localStorage.getItem('requirements')) || [];
-
-    // --- Pre-populate default requirements on first load ---
-    function initializeDefaultRequirements() {
-        if (localStorage.getItem('requirementsInitialized')) {
-            return;
-        }
-        const defaultStudentReqs = [
-            { id: Date.now() + 1, name: 'Birth Certificate (PSA)', type: 'Student' },
-            { id: Date.now() + 2, name: 'Form 137 / Transcript of Records', type: 'Student' },
-            { id: Date.now() + 3, name: '2x2 Photo ID', type: 'Student' }
-        ];
-        const defaultTeacherReqs = [
-            { id: Date.now() + 4, name: 'Resume / Curriculum Vitae', type: 'Teacher' },
-            { id: Date.now() + 5, name: 'Diploma / Transcript of Records', type: 'Teacher' },
-            { id: Date.now() + 6, name: 'PRC License (if applicable)', type: 'Teacher' }
-        ];
-        requirements = [...defaultStudentReqs, ...defaultTeacherReqs];
-        saveRequirements();
-        localStorage.setItem('requirementsInitialized', 'true');
-    }
 
     function saveRequirements() {
         localStorage.setItem('requirements', JSON.stringify(requirements));
     }
 
     function renderRequirements() {
-        requirementsTbody.innerHTML = '';
+        reqTbody.innerHTML = '';
         if (requirements.length === 0) {
-            requirementsTbody.innerHTML = '<tr><td colspan="3" style="text-align: center;">No requirements defined.</td></tr>';
+            reqTbody.innerHTML = '<tr><td colspan="3" style="text-align: center;">No requirements defined.</td></tr>';
         } else {
             requirements.forEach((req, index) => {
-                const row = document.createElement('tr');
+                const row = reqTbody.insertRow();
                 row.innerHTML = `
-                    <td data-label="Requirement Name">${req.name}</td>
+                    <td data-label="Name">${req.name}</td>
                     <td data-label="Type">${req.type}</td>
                     <td data-label="Actions">
                         <button class="action-btn deny-btn delete-btn" data-index="${index}">Delete</button>
                     </td>
                 `;
-                requirementsTbody.appendChild(row);
             });
         }
     }
 
-    addRequirementForm.addEventListener('submit', (e) => {
+    addReqForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const requirementNameInput = document.getElementById('requirementName');
-        const requirementTypeInput = document.getElementById('requirementType');
-        const newRequirementName = requirementNameInput.value.trim();
-        const newRequirementType = requirementTypeInput.value;
+        const reqNameInput = document.getElementById('requirementName');
+        const reqTypeInput = document.getElementById('requirementType');
 
-        if (newRequirementName) {
-            if (requirements.some(r => r.name.toLowerCase() === newRequirementName.toLowerCase())) {
-                alert('This requirement already exists.');
-                return;
-            }
-            requirements.push({ id: Date.now(), name: newRequirementName, type: newRequirementType });
+        const newRequirement = {
+            id: Date.now(), // Simple unique ID
+            name: reqNameInput.value.trim(),
+            type: reqTypeInput.value
+        };
+
+        if (newRequirement.name) {
+            requirements.push(newRequirement);
             saveRequirements();
             renderRequirements();
-            addRequirementForm.reset();
+            Toastify({ text: "Requirement added successfully!", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)" }).showToast();
+            addReqForm.reset();
+        } else {
+            Toastify({ text: "Please enter a valid requirement name.", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)" }).showToast();
         }
     });
 
-    requirementsTbody.addEventListener('click', (e) => {
+    reqTbody.addEventListener('click', (e) => {
         if (e.target.classList.contains('delete-btn')) {
-            const reqIndex = e.target.dataset.index;
-            if (confirm(`Are you sure you want to delete this requirement?`)) {
-                requirements.splice(reqIndex, 1);
+            const index = e.target.dataset.index;
+            if (confirm(`Are you sure you want to delete the requirement "${requirements[index].name}"?`)) {
+                requirements.splice(index, 1);
                 saveRequirements();
                 renderRequirements();
+                Toastify({ text: "Requirement deleted.", duration: 3000, gravity: "top", position: "center" }).showToast();
             }
         }
     });
 
-    // Logout functionality
-    const logoutBtn = document.getElementById('logout-btn');
-    if(logoutBtn) {
-        logoutBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            localStorage.removeItem('userRole');
-            window.location.href = 'index.html';
-        });
-    }
-
-    // Initial Load
-    initializeDefaultRequirements();
+    // Initial Render
     renderRequirements();
 });
