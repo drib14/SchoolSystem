@@ -29,12 +29,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Basic validation
         if (isNaN(settings.monthlySalary) || isNaN(settings.absenceDeduction) || isNaN(settings.lateDeduction)) {
-            alert('Please ensure all fields have valid numbers.');
+            Toastify({
+                text: "Please ensure all fields have valid numbers.",
+                duration: 3000,
+                gravity: "top",
+                position: "center",
+                backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)",
+                stopOnFocus: true,
+            }).showToast();
             return;
         }
 
         localStorage.setItem('payrollSettings', JSON.stringify(settings));
-        alert('Payroll settings have been saved successfully!');
+        Toastify({
+            text: "Payroll settings have been saved successfully!",
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+            stopOnFocus: true,
+        }).showToast();
     });
 
     // Initial load

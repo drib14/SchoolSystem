@@ -67,13 +67,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (userIsValid) {
             localStorage.setItem('userRole', role);
-            // Store userId for both students and teachers
-            if (role === 'student' || role === 'teacher') {
+            // Store userId for students, teachers, and admin
+            if (role === 'student' || role === 'teacher' || role === 'admin') {
                 localStorage.setItem('userId', username);
             }
             window.location.href = `${role}.html`;
         } else {
-            alert('Invalid username or password');
+            Toastify({
+                text: "Invalid username or password",
+                duration: 3000,
+                gravity: "top",
+                position: "center",
+                backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)",
+                stopOnFocus: true,
+            }).showToast();
         }
     });
 });

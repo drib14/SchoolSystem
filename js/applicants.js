@@ -85,13 +85,25 @@ document.addEventListener('DOMContentLoaded', () => {
             if (studentIndex > -1) {
                 allStudents[studentIndex].status = 'enrolled';
                 localStorage.setItem('students', JSON.stringify(allStudents));
-                alert(`Applicant ${applicantId} has been approved.`);
+                Toastify({
+                    text: `Applicant ${applicantId} has been approved.`,
+                    duration: 3000,
+                    gravity: "top",
+                    position: "center",
+                    backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                }).showToast();
                 renderTable();
             }
         } else if (target.classList.contains('deny-btn')) {
             allStudents = allStudents.filter(s => s.id !== applicantId);
             localStorage.setItem('students', JSON.stringify(allStudents));
-            alert(`Applicant ${applicantId} has been denied and removed.`);
+            Toastify({
+                text: `Applicant ${applicantId} has been denied and removed.`,
+                duration: 3000,
+                gravity: "top",
+                position: "center",
+                backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)",
+            }).showToast();
             renderTable();
         }
     });

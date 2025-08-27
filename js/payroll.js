@@ -134,7 +134,14 @@ document.addEventListener('DOMContentLoaded', () => {
         announcements = announcements.slice(0, 5);
 
         localStorage.setItem('announcements', JSON.stringify(announcements));
-        alert('Payroll announcement has been posted for all teachers.');
+        Toastify({
+            text: "Payroll announcement has been posted for all teachers.",
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+            stopOnFocus: true,
+        }).showToast();
     });
 
     // --- Initial Load ---

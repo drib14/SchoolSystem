@@ -72,10 +72,24 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem(storageKey, JSON.stringify(allUsers));
 
             // Give feedback and refresh to see changes reflected in the sidebar
-            alert('Profile updated successfully!');
-            window.location.reload();
+            Toastify({
+                text: "Profile updated successfully!",
+                duration: 2000,
+                gravity: "top",
+                position: "center",
+                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                stopOnFocus: true,
+            }).showToast();
+            setTimeout(() => window.location.reload(), 2000);
         } else {
-            alert('Error updating profile.');
+            Toastify({
+                text: "Error updating profile.",
+                duration: 3000,
+                gravity: "top",
+                position: "center",
+                backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)",
+                stopOnFocus: true,
+            }).showToast();
         }
     });
 });

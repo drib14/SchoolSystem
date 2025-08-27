@@ -37,7 +37,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentSubject = allSubjects.find(s => s.code === subjectCode);
 
     if (!currentSchedule || !currentSubject) {
-        alert('Could not find class details.');
+        Toastify({
+            text: "Error: Could not find class details.",
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)",
+            stopOnFocus: true,
+        }).showToast();
         return;
     }
 
@@ -137,7 +144,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         localStorage.setItem('gradeRecords', JSON.stringify(gradeRecords));
-        alert('All grades have been saved and calculated successfully!');
+        Toastify({
+            text: "All grades have been saved and calculated successfully!",
+            duration: 3000,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+            stopOnFocus: true,
+        }).showToast();
         renderRoster(); // Re-render to show calculated grades
     });
 

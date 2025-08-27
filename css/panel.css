@@ -34,9 +34,20 @@
 }
 
 .profile-pic {
-    font-size: 4rem;
+    font-size: 60px; /* Icon size */
+    width: 60px;
+    height: 60px;
     margin-bottom: 10px;
     color: #ecf0f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+img.profile-pic {
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ecf0f1;
 }
 
 .user-name {

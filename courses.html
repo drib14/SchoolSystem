@@ -3,39 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISCP - Manage Courses</title>
+    <title>ISCP - Courses</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
 </head>
 <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.js"></script>
     <div class="panel-container">
         <div class="sidebar">
-            <div class="sidebar-header">
-                <h2>ISCP</h2>
-                <p>Admin Panel</p>
-            </div>
-            <ul class="sidebar-menu">
-                <li><a href="admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="applicants.html"><i class="fas fa-user-plus"></i> Student Applicants</a></li>
-                <li><a href="#"><i class="fas fa-user-graduate"></i> Students</a></li>
-                <li><a href="teacher-applicants.html"><i class="fas fa-user-tie"></i> Teacher Applicants</a></li>
-                <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
-                <li><a href="courses.html" class="active"><i class="fas fa-book"></i> Courses</a></li>
-                <li><a href="subjects.html"><i class="fas fa-flask"></i> Subjects</a></li>
-                <li><a href="schedules.html"><i class="fas fa-calendar-alt"></i> Schedules</a></li>
-                <li><a href="requirements.html"><i class="fas fa-file-alt"></i> Requirements</a></li>
-                <li><a href="tuition-management.html"><i class="fas fa-file-invoice-dollar"></i> Tuition Management</a></li>
-                <li><a href="tuition-settings.html"><i class="fas fa-cogs"></i> Tuition Settings</a></li>
-                <li><a href="payroll.html"><i class="fas fa-dollar-sign"></i> Payroll</a></li>
-                <li><a href="payroll-settings.html"><i class="fas fa-money-check-alt"></i> Payroll Settings</a></li>
-            </ul>
-            <div class="sidebar-footer">
-                <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
-            </div>
+            <!-- Sidebar will be populated by auth.js -->
         </div>
         <div class="main-content">
             <div class="header">
+                <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
                 <h1>Manage Courses</h1>
             </div>
             <div class="content">
@@ -43,7 +25,7 @@
                     <h3>Add New Course</h3>
                     <form id="add-course-form">
                         <div class="input-group">
-                            <input type="text" id="courseName" placeholder="Course Name (e.g., Bachelor of Science in IT)" required>
+                            <input type="text" id="courseName" placeholder="Course Name (e.g., Bachelor of Science in Information Technology)" required>
                         </div>
                         <div class="input-group">
                             <input type="text" id="courseCode" placeholder="Course Code (e.g., BSIT)" required>
@@ -51,7 +33,6 @@
                         <button type="submit" class="action-btn approve-btn">Add Course</button>
                     </form>
                 </div>
-                <hr style="margin: 30px 0;">
                 <div class="course-list-container">
                     <h3>Existing Courses</h3>
                     <table class="applicants-table">
@@ -63,13 +44,14 @@
                             </tr>
                         </thead>
                         <tbody id="courses-tbody">
-                            <!-- Course rows will be inserted here by JS -->
+                            <!-- Course data will be inserted here by JS -->
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
+    <script src="js/auth.js"></script>
     <script src="js/courses.js"></script>
 </body>
 </html>
