@@ -138,3 +138,50 @@
 .input-group input:focus {
     border-color: var(--primary-color);
 }
+
+#student-requirements-list .requirement-item,
+#teacher-requirements-list .requirement-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#student-requirements-list .requirement-item span,
+#teacher-requirements-list .requirement-item span {
+    font-weight: 500;
+}
+
+#student-requirements-list .file-upload-status,
+#teacher-requirements-list .file-upload-status {
+    font-style: italic;
+    color: #6c757d;
+}
+
+#student-requirements-list .file-upload-status.submitted,
+#teacher-requirements-list .file-upload-status.submitted {
+    color: #28a745;
+    font-weight: bold;
+}
+
+/* Hide actual file input */
+.requirement-item input[type="file"] {
+    display: none;
+}
+
+/* Style the custom upload button */
+.requirement-item .upload-label {
+    padding: 8px 12px;
+    background-color: #6c757d;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.requirement-item .upload-label:hover {
+    background-color: #5a6268;
+}

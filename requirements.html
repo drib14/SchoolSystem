@@ -45,6 +45,13 @@
                         <div class="input-group">
                             <input type="text" id="requirementName" placeholder="Requirement Name (e.g., Form 137)" required>
                         </div>
+                        <div class="input-group">
+                            <label for="requirementType">For:</label>
+                            <select id="requirementType" required>
+                                <option value="Student">Student</option>
+                                <option value="Teacher">Teacher</option>
+                            </select>
+                        </div>
                         <button type="submit" class="action-btn approve-btn">Add Requirement</button>
                     </form>
                 </div>
@@ -55,6 +62,7 @@
                         <thead>
                             <tr>
                                 <th>Requirement Name</th>
+                                <th>Type</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>

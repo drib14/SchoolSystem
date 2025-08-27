@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISCP - Manage Teacher Applicants</title>
+    <title>ISCP - Approved Teachers</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
@@ -18,9 +18,9 @@
             <ul class="sidebar-menu">
                 <li><a href="admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                 <li><a href="applicants.html"><i class="fas fa-user-plus"></i> Student Applicants</a></li>
-                <li><a href="teacher-applicants.html" class="active"><i class="fas fa-user-tie"></i> Teacher Applicants</a></li>
+                <li><a href="teacher-applicants.html"><i class="fas fa-user-tie"></i> Teacher Applicants</a></li>
                 <li><a href="enrolled-students.html"><i class="fas fa-user-graduate"></i> Students</a></li>
-                <li><a href="approved-teachers.html"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
+                <li><a href="approved-teachers.html" class="active"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
                 <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
                 <li><a href="subjects.html"><i class="fas fa-flask"></i> Subjects</a></li>
                 <li><a href="schedules.html"><i class="fas fa-calendar-alt"></i> Schedules</a></li>
@@ -35,39 +35,47 @@
             </div>
         </div>
         <div class="main-content">
-            <div class="header">
-                <h1>Manage Teacher Applicants</h1>
-            </div>
+            <div class="header"><h1>Approved Teachers</h1></div>
             <div class="content">
                 <table class="applicants-table">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Teacher ID</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Qualifications</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th>Phone</th>
                         </tr>
                     </thead>
-                    <tbody id="teacher-applicants-tbody">
-                        <!-- Teacher applicant rows will be inserted here by JS -->
+                    <tbody id="approved-teachers-tbody">
+                        <!-- Data populated by JS -->
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    <script src="js/teacher-applicants.js"></script>
-
-    <!-- Requirements Modal -->
-    <div id="requirements-modal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h3 id="modal-title">Manage Requirements</h3>
-            <div id="modal-body">
-                <!-- Checklist will be populated here -->
-            </div>
-        </div>
-    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('userRole') !== 'admin') { window.location.href = 'index.html'; return; }
+            const tbody = document.getElementById('approved-teachers-tbody');
+            const allTeachers = JSON.parse(localStorage.getItem('teachers')) || [];
+            const approved = allTeachers.filter(t => t.status === 'approved');
+            if(approved.length > 0) {
+                approved.forEach(t => {
+                    const row = tbody.insertRow();
+                    row.innerHTML = `<td data-label="ID">${t.id}</td><td data-label="Name">${t.firstName} ${t.lastName}</td><td data-label="Email">${t.email}</td><td data-label="Phone">${t.phone}</td>`;
+                });
+            } else {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No approved teachers found.</td></tr>';
+            }
+            const logoutBtn = document.getElementById('logout-btn');
+            if(logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.removeItem('userRole');
+                    window.location.href = 'index.html';
+                });
+            }
+        });
+    </script>
 </body>
 </html>

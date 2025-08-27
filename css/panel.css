@@ -314,3 +314,17 @@
         margin-bottom: 5px;
     }
 }
+
+@media (max-width: 360px) {
+    .main-content, .header, .content {
+        padding: 10px;
+    }
+    .card {
+        flex-direction: column;
+        text-align: center;
+    }
+    .card-icon {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISCP - My Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/panel.css">
+</head>
+<body>
+    <div class="panel-container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>ISCP</h2>
+                <p>Student Panel</p>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="student.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="plot-schedule.html"><i class="fas fa-calendar-plus"></i> Class Enrollment</a></li>
+                <li><a href="my-attendance.html"><i class="fas fa-user-check"></i> My Attendance</a></li>
+                <li><a href="my-grades.html"><i class="fas fa-graduation-cap"></i> My Grades</a></li>
+                <li><a href="profile.html" class="active"><i class="fas fa-user-cog"></i> Profile</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header"><h1>My Profile</h1></div>
+            <div class="content" id="profile-content">
+                <!-- Profile data populated by JS -->
+                <p>Loading profile...</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userRole = localStorage.getItem('userRole');
+            const userId = localStorage.getItem('userId');
+            if (userRole !== 'student' || !userId) { window.location.href = 'index.html'; return; }
+
+            const profileContent = document.getElementById('profile-content');
+            const allStudents = JSON.parse(localStorage.getItem('students')) || [];
+            const currentUser = allStudents.find(s => s.id === userId);
+
+            if (currentUser) {
+                profileContent.innerHTML = `
+                    <p><strong>Student ID:</strong> ${currentUser.id}</p>
+                    <p><strong>Name:</strong> ${currentUser.firstName} ${currentUser.lastName}</p>
+                    <p><strong>Email:</strong> ${currentUser.email}</p>
+                    <p><strong>Phone:</strong> ${currentUser.phone}</p>
+                    <p><strong>Course:</strong> ${currentUser.course ? currentUser.course.name : 'N/A'}</p>
+                    <p><strong>Enrollment Status:</strong> <span style="text-transform: capitalize;">${currentUser.status}</span></p>
+                `;
+            } else {
+                profileContent.innerHTML = '<p>Could not load profile data.</p>';
+            }
+
+            const logoutBtn = document.getElementById('logout-btn');
+            if(logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.removeItem('userRole');
+                    localStorage.removeItem('userId');
+                    window.location.href = 'index.html';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

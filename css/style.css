@@ -123,6 +123,12 @@ body {
     }
 }
 
+@media (max-width: 320px) {
+    .logo-container h2 {
+        font-size: 2rem;
+    }
+}
+
 .role-buttons {
     display: flex;
     flex-direction: column;

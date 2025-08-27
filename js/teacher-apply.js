@@ -1,8 +1,61 @@
 document.addEventListener('DOMContentLoaded', () => {
     const teacherApplyForm = document.getElementById('teacher-apply-form');
+    const teacherRequirementsList = document.getElementById('teacher-requirements-list');
+
+    const allRequirements = JSON.parse(localStorage.getItem('requirements')) || [];
+    const teacherReqs = allRequirements.filter(r => r.type === 'Teacher');
+
+    function buildRequirementsList() {
+        teacherRequirementsList.innerHTML = '';
+        if (teacherReqs.length === 0) {
+            teacherRequirementsList.innerHTML = '<p>No application requirements defined at this time.</p>';
+        } else {
+            teacherReqs.forEach(req => {
+                const reqItem = document.createElement('div');
+                reqItem.className = 'requirement-item';
+                reqItem.innerHTML = `
+                    <span>${req.name}</span>
+                    <div>
+                        <span class="file-upload-status">No file chosen</span>
+                        <label class="upload-label">
+                            Choose File
+                            <input type="file" class="requirement-upload" data-req-id="${req.id}" required>
+                        </label>
+                    </div>
+                `;
+                teacherRequirementsList.appendChild(reqItem);
+            });
+        }
+    }
+
+    teacherRequirementsList.addEventListener('change', (e) => {
+        if (e.target.classList.contains('requirement-upload')) {
+            const statusEl = e.target.closest('div').querySelector('.file-upload-status');
+            if (e.target.files.length > 0) {
+                statusEl.textContent = e.target.files[0].name;
+                statusEl.classList.add('submitted');
+            } else {
+                statusEl.textContent = 'No file chosen';
+                statusEl.classList.remove('submitted');
+            }
+        }
+    });
 
     teacherApplyForm.addEventListener('submit', (e) => {
         e.preventDefault();
+
+        const uploads = teacherRequirementsList.querySelectorAll('.requirement-upload');
+        let allFilesChosen = true;
+        uploads.forEach(upload => {
+            if (upload.files.length === 0) {
+                allFilesChosen = false;
+            }
+        });
+
+        if (!allFilesChosen) {
+            alert('Please upload all required documents before submitting.');
+            return;
+        }
 
         const firstName = document.getElementById('firstName').value;
         const lastName = document.getElementById('lastName').value;
@@ -16,14 +69,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const teachers = JSON.parse(localStorage.getItem('teachers')) || [];
         const sequentialNumber = (teachers.length + 1).toString().padStart(3, '0');
 
-        const id = `T${year}${month}${day}${sequentialNumber}`; // 'T' for Teacher
+        const id = `T${year}${month}${day}${sequentialNumber}`;
         const password = `${id}${lastName.charAt(0).toUpperCase()}`;
 
-        const masterRequirements = JSON.parse(localStorage.getItem('requirements')) || [];
-        const applicantRequirements = masterRequirements.map(req => ({
+        const applicantRequirements = teacherReqs.map(req => ({
             id: req.id,
             name: req.name,
-            status: 'Pending'
+            status: 'Submitted'
         }));
 
         // --- Create Teacher Object ---
@@ -35,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
             email: document.getElementById('email').value,
             phone: document.getElementById('phone').value,
             qualifications: document.getElementById('qualifications').value,
-            status: 'pending', // 'pending', 'approved', 'denied'
+            status: 'pending',
             requirements: applicantRequirements
         };
 
@@ -48,4 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         window.location.href = 'index.html';
     });
+
+    buildRequirementsList();
 });
