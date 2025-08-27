@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISCP - Tuition Fee Settings</title>
+    <title>ISCP - Submit Requirements</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -18,23 +18,20 @@
         <div class="main-content">
             <div class="header">
                 <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
-                <h1>Tuition Fee Settings</h1>
+                <h1>Submit Missing Requirements</h1>
+                <p>Upload the following pending documents.</p>
             </div>
             <div class="content">
-                <div class="form-section">
-                    <h2>Set Price Per Subject</h2>
-                    <form id="tuition-settings-form">
-                        <div class="form-group">
-                            <label for="pricePerSubject">Price per Subject (in ₱)</label>
-                            <input type="number" id="pricePerSubject" placeholder="e.g., 3000" required min="0" step="100">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save Setting</button>
-                    </form>
-                </div>
+                <form id="requirements-form">
+                    <div id="requirements-list">
+                        <!-- Pending requirements will be rendered here by JS -->
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Save and Submit All</button>
+                </form>
             </div>
         </div>
     </div>
     <script src="js/auth.js"></script>
-    <script src="js/tuition-settings.js"></script>
+    <script src="js/submit-requirements.js"></script>
 </body>
 </html>

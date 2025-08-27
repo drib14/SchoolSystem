@@ -57,7 +57,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     nextBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // ... (existing logic)
+            if (currentStep === 0) {
+                // Save personal info
+                applicantData.firstName = document.getElementById('firstName').value;
+                applicantData.lastName = document.getElementById('lastName').value;
+                applicantData.email = document.getElementById('email').value;
+                applicantData.phone = document.getElementById('phone').value;
+            } else if (currentStep === 1) {
+                // Save academic info
+                const courseCode = courseSelection.value;
+                const selectedCourse = courses.find(c => c.code === courseCode);
+                applicantData.course = selectedCourse;
+                applicantData.academicYear = document.getElementById('academic-year').value;
+                applicantData.yearLevel = document.getElementById('year-level').value;
+            }
+            currentStep++;
+            updateFormSteps();
+            updateProgress();
         });
     });
 
@@ -126,9 +142,18 @@ document.addEventListener('DOMContentLoaded', () => {
         students.push(applicantData);
         localStorage.setItem('students', JSON.stringify(students));
 
-        alert(`Application Submitted!\nYour ID is: ${id}\nYour Password is: ${password}\nPlease wait for admin approval.`);
+        Toastify({
+            text: `Application Submitted! ID: ${id}, Password: ${password}`,
+            duration: 10000, // Keep it on screen longer
+            gravity: "top",
+            position: "center",
+            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+            destination: "index.html",
+            newWindow: false,
+            close: true,
+        }).showToast();
 
-        window.location.href = 'index.html';
+        setTimeout(() => { window.location.href = 'index.html'; }, 10000);
     });
 
     populateCourses();

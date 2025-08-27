@@ -1,122 +1,95 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Auth Check
-    if (localStorage.getItem('userRole') !== 'admin') {
-        window.location.href = 'index.html';
-        return;
-    }
+    // Auth is handled by auth.js
+    const tbody = document.getElementById('pending-payments-tbody');
+    const declineModal = document.getElementById('decline-modal');
+    const declineForm = document.getElementById('decline-form');
+    const declineReasonInput = document.getElementById('decline-reason');
+    const closeModalBtn = declineModal.querySelector('.close-btn');
 
-    const tuitionTbody = document.getElementById('tuition-tbody');
-    const allStudents = JSON.parse(localStorage.getItem('students')) || [];
-    const allSubjects = JSON.parse(localStorage.getItem('subjects')) || [];
-    const tuitionRate = parseFloat(localStorage.getItem('tuitionRate')) || 0;
-    const feeComponents = JSON.parse(localStorage.getItem('feeComponents')) || [];
+    let payments = JSON.parse(localStorage.getItem('payments')) || [];
+    const students = JSON.parse(localStorage.getItem('students')) || [];
 
-    // Modal Elements
-    const modal = document.getElementById('tuition-breakdown-modal');
-    const modalTitle = document.getElementById('modal-title');
-    const modalBody = document.getElementById('modal-body');
-    const closeBtn = document.querySelector('.close-btn');
+    let currentPaymentIdToDecline = null;
 
-    function renderTuitionTable() {
-        tuitionTbody.innerHTML = '';
-        const enrolledStudents = allStudents.filter(s => s.status === 'enrolled');
+    function renderPendingPayments() {
+        const pendingPayments = payments.filter(p => p.status === 'pending');
+        tbody.innerHTML = '';
 
-        if (enrolledStudents.length === 0) {
-            tuitionTbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No enrolled students found.</td></tr>';
-            return;
-        }
-
-        if (tuitionRate === 0) {
-            // ... (warning message logic remains the same) ...
-        }
-
-        enrolledStudents.forEach(student => {
-            const plottedClasses = student.plottedClasses || [];
-            let totalUnits = 0;
-            plottedClasses.forEach(schedule => {
-                const subject = allSubjects.find(s => s.code === schedule.subjectCode);
-                if (subject) {
-                    totalUnits += parseFloat(subject.units) || 0;
-                }
+        if (pendingPayments.length > 0) {
+            pendingPayments.forEach(payment => {
+                const student = students.find(s => s.id === payment.studentId);
+                const studentName = student ? `${student.firstName} ${student.lastName}` : 'Unknown Student';
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td data-label="Student Name">${studentName}</td>
+                    <td data-label="Date Submitted">${new Date(payment.date).toLocaleDateString()}</td>
+                    <td data-label="Amount">₱${payment.amount.toFixed(2)}</td>
+                    <td data-label="Receipt"><a href="${payment.receiptUrl}" target="_blank">View Receipt</a></td>
+                    <td data-label="Actions">
+                        <button class="action-btn approve-btn" data-id="${payment.id}">Approve</button>
+                        <button class="action-btn deny-btn" data-id="${payment.id}">Decline</button>
+                    </td>
+                `;
             });
-
-            const tuitionPerUnit = totalUnits * tuitionRate;
-            const miscellaneousFeesTotal = feeComponents.reduce((sum, fee) => sum + fee.amount, 0);
-            const totalTuition = tuitionPerUnit + miscellaneousFeesTotal;
-
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td data-label="Student ID">${student.id}</td>
-                <td data-label="Name">${student.firstName} ${student.lastName}</td>
-                <td data-label="Course">${student.course ? student.course.name : 'N/A'}</td>
-                <td data-label="Total Units">${totalUnits}</td>
-                <td data-label="Total Tuition">₱ ${totalTuition.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                <td data-label="Actions">
-                    <button class="action-btn view-breakdown-btn" data-id="${student.id}" style="background-color: #17a2b8;">View Breakdown</button>
-                </td>
-            `;
-            tuitionTbody.appendChild(row);
-        });
+        } else {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No pending payments to verify.</td></tr>';
+        }
     }
 
-    function openBreakdownModal(studentId) {
-        const student = allStudents.find(s => s.id === studentId);
-        if (!student) return;
-
-        modalTitle.textContent = `Tuition Breakdown for ${student.firstName} ${student.lastName}`;
-
-        let totalUnits = 0;
-        (student.plottedClasses || []).forEach(schedule => {
-            const subject = allSubjects.find(s => s.code === schedule.subjectCode);
-            if (subject) totalUnits += parseFloat(subject.units) || 0;
-        });
-
-        const tuitionPerUnit = totalUnits * tuitionRate;
-        let breakdownHtml = '<ul>';
-        breakdownHtml += `<li><span>Base Tuition ( ${totalUnits} units @ ₱${tuitionRate}/unit )</span><span>₱ ${tuitionPerUnit.toLocaleString()}</span></li>`;
-
-        let miscellaneousFeesTotal = 0;
-        feeComponents.forEach(fee => {
-            breakdownHtml += `<li><span>${fee.name}</span><span>₱ ${fee.amount.toLocaleString()}</span></li>`;
-            miscellaneousFeesTotal += fee.amount;
-        });
-
-        const totalTuition = tuitionPerUnit + miscellaneousFeesTotal;
-        breakdownHtml += `<li style="font-weight: bold; border-top: 2px solid #333; margin-top: 10px; padding-top: 10px;"><span>TOTAL TUITION</span><span>₱ ${totalTuition.toLocaleString()}</span></li>`;
-        breakdownHtml += '</ul>';
-
-        modalBody.innerHTML = breakdownHtml;
-        modal.style.display = 'block';
+    function approvePayment(paymentId) {
+        const paymentIndex = payments.findIndex(p => p.id === paymentId);
+        if (paymentIndex > -1) {
+            payments[paymentIndex].status = 'approved';
+            localStorage.setItem('payments', JSON.stringify(payments));
+            Toastify({ text: "Payment approved!", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)" }).showToast();
+            renderPendingPayments();
+        }
     }
 
-    function closeBreakdownModal() {
-        modal.style.display = 'none';
+    function openDeclineModal(paymentId) {
+        currentPaymentIdToDecline = paymentId;
+        declineModal.style.display = 'block';
+    }
+
+    function closeDeclineModal() {
+        declineModal.style.display = 'none';
+        declineForm.reset();
+        currentPaymentIdToDecline = null;
     }
 
     // --- Event Listeners ---
-    tuitionTbody.addEventListener('click', (e) => {
-        if (e.target.classList.contains('view-breakdown-btn')) {
-            openBreakdownModal(e.target.dataset.id);
+    tbody.addEventListener('click', (e) => {
+        const paymentId = e.target.dataset.id;
+        if (!paymentId) return;
+
+        if (e.target.classList.contains('approve-btn')) {
+            approvePayment(paymentId);
+        } else if (e.target.classList.contains('deny-btn')) {
+            openDeclineModal(paymentId);
         }
     });
 
-    closeBtn.addEventListener('click', closeBreakdownModal);
+    closeModalBtn.addEventListener('click', closeDeclineModal);
     window.addEventListener('click', (e) => {
-        if (e.target == modal) {
-            closeBreakdownModal();
-        }
+        if (e.target == declineModal) closeDeclineModal();
     });
 
-    // Logout functionality
-    const logoutBtn = document.getElementById('logout-btn');
-    if(logoutBtn) {
-        logoutBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            localStorage.removeItem('userRole');
-            window.location.href = 'index.html';
-        });
-    }
+    declineForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const reason = declineReasonInput.value.trim();
+        if (!reason || !currentPaymentIdToDecline) return;
 
-    // Initial Render
-    renderTuitionTable();
+        const paymentIndex = payments.findIndex(p => p.id === currentPaymentIdToDecline);
+        if (paymentIndex > -1) {
+            payments[paymentIndex].status = 'declined';
+            payments[paymentIndex].notes = reason;
+            localStorage.setItem('payments', JSON.stringify(payments));
+            Toastify({ text: "Payment declined and notes added.", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)" }).showToast();
+            renderPendingPayments();
+        }
+        closeDeclineModal();
+    });
+
+    // --- Initial Load ---
+    renderPendingPayments();
 });

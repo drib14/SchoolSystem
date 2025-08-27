@@ -66,7 +66,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // --- Post-Approval Requirements Check ---
+    function checkRequirements() {
+        const allTeachers = JSON.parse(localStorage.getItem('teachers')) || [];
+        const currentUser = allTeachers.find(t => t.id === loggedInTeacherId);
+        if (!currentUser) return;
+
+        const hasPendingRequirements = currentUser.requirements && currentUser.requirements.some(req => req.status === 'Pending');
+        if (hasPendingRequirements) {
+            const container = document.querySelector('.analytics-grid');
+            if (container && container.nextElementSibling) {
+                const button = document.createElement('a');
+                button.href = 'submit-requirements.html';
+                button.className = 'btn';
+                button.textContent = 'Submit Missing Requirements';
+                button.style.backgroundColor = '#ffc107';
+                button.style.color = '#212529';
+                button.style.display = 'block';
+                button.style.width = 'fit-content';
+                button.style.margin = '0 0 20px 0';
+                // Insert the button after the analytics grid, before the next element
+                container.parentNode.insertBefore(button, container.nextElementSibling);
+            }
+        }
+    }
+
     // --- Initial Load ---
     displayAnnouncements();
     populateDashboard();
+    checkRequirements();
 });
