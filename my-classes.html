@@ -5,22 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISCP - My Classes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
 </head>
 <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.js"></script>
     <div class="panel-container">
         <div class="sidebar">
             <div class="sidebar-header">
-                <h2>ISCP</h2>
-                <p>Teacher Panel</p>
+                <div class="profile-info">
+                    <!-- Populated by auth.js -->
+                </div>
             </div>
             <ul class="sidebar-menu">
-                <li><a href="teacher.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="my-classes.html" class="active"><i class="fas fa-chalkboard-teacher"></i> My Classes</a></li>
-                <li><a href="teacher-attendance.html"><i class="fas fa-user-clock"></i> My Attendance</a></li>
-                <li><a href="#"><i class="fas fa-marker"></i> Grades</a></li>
-                <li><a href="profile.html"><i class="fas fa-user-cog"></i> Profile</a></li>
+                <!-- Populated by auth.js -->
             </ul>
             <div class="sidebar-footer">
                 <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -50,7 +49,7 @@
             </div>
         </div>
     </div>
+    <script src="js/auth.js"></script>
     <script src="js/my-classes.js"></script>
-<script src="js/auth.js"></script>
 </body>
 </html>

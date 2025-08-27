@@ -2,30 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ISCP - Student Study Load</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Printable Study Load</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            background-color: #fff;
+            font-family: 'Poppins', sans-serif;
             margin: 20px;
         }
-        .header, .student-info {
+        .header-info, .student-info {
             text-align: center;
             margin-bottom: 20px;
         }
-        .header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-        .header p {
+        h1, h2, h3, p {
             margin: 5px 0;
-            font-size: 14px;
-        }
-        .student-info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            text-align: left;
-            width: 80%;
-            margin: 20px auto;
         }
         table {
             width: 100%;
@@ -33,7 +25,7 @@
             margin-top: 20px;
         }
         th, td {
-            border: 1px solid #000;
+            border: 1px solid #333;
             padding: 8px;
             text-align: left;
         }
@@ -41,35 +33,29 @@
             background-color: #f2f2f2;
         }
         @media print {
-            body {
-                margin: 0;
-            }
-            .no-print {
-                display: none;
-            }
+            body { margin: 0; }
+            .no-print { display: none; }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-                <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
-        <h1>International State College of the Philippines</h1>
-        <p>Student Study Load</p>
-        <p>A.Y. 2024-2025 - 1st Semester</p>
+    <div class="header-info">
+        <h2>International State College of the Philippines</h2>
+        <p>Study Load for <span id="academic-year-span"></span></p>
+    </div>
+    <div class="student-info">
+        <h3>Student Name: <span id="student-name-span"></span></h3>
+        <p>Student ID: <span id="student-id-span"></span></p>
+        <p>Course: <span id="student-course-span"></span></p>
     </div>
 
-    <div id="student-info-container">
-        <!-- Student info will be populated here -->
-    </div>
-
-    <table id="study-load-table">
+    <h3>Enrolled Classes</h3>
+    <table>
         <thead>
             <tr>
-                <th>Subject Code</th>
-                <th>Subject Name</th>
-                <th>Units</th>
+                <th>Subject</th>
+                <th>Section</th>
                 <th>Schedule</th>
-                <th>Room</th>
                 <th>Teacher</th>
             </tr>
         </thead>
@@ -78,7 +64,8 @@
         </tbody>
     </table>
 
+    <button onclick="window.print()" class="no-print btn btn-primary" style="margin-top: 20px;">Print</button>
+
     <script src="js/printable-study-load.js"></script>
-<script src="js/auth.js"></script>
 </body>
 </html>
