@@ -4,7 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const WORKING_DAYS_IN_MONTH = 22; // Assumed for daily rate calculation
 
     // --- DOM Elements ---
-    const payPeriodSelect = document.getElementById('pay-period-select');
+    const startDateInput = document.getElementById('start-date');
+    const endDateInput = document.getElementById('end-date');
     const calculateBtn = document.getElementById('calculate-payroll-btn');
     const resultsContainer = document.getElementById('payroll-results-container');
     const payrollTbody = document.getElementById('payroll-tbody');
@@ -24,67 +25,39 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // --- Pay Period Generation ---
-    function getPayPeriods() {
-        const periods = [];
-        const payday = settings.payday; // Day of the week (1=Mon, 5=Fri)
-        let current = new Date();
-
-        for (let i = 0; i < 6; i++) { // Generate 6 recent pay periods
-            // Go back to the last payday
-            while (current.getDay() !== payday) {
-                current.setDate(current.getDate() - 1);
-            }
-
-            const endDate = new Date(current);
-            const startDate = new Date(current);
-            startDate.setDate(startDate.getDate() - 13); // 14 days = 2 weeks
-
-            periods.push({
-                label: `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`,
-                startDate,
-                endDate
-            });
-
-            // Move to the day before the start of this period to find the next one
-            current.setDate(current.getDate() - 14);
-        }
-        return periods;
-    }
-
-    function populatePayPeriodSelect() {
-        const periods = getPayPeriods();
-        payPeriodSelect.innerHTML = periods.map(p =>
-            `<option value='${JSON.stringify({ start: p.startDate, end: p.endDate })}'>
-                ${p.label}
-            </option>`
-        ).join('');
-    }
-
     // --- Payroll Calculation Logic ---
     calculateBtn.addEventListener('click', () => {
-        const selectedPeriod = JSON.parse(payPeriodSelect.value);
-        const startDate = new Date(selectedPeriod.start);
-        const endDate = new Date(selectedPeriod.end);
+        const startDate = new Date(startDateInput.value);
+        const endDate = new Date(endDateInput.value);
+
+        if (!startDateInput.value || !endDateInput.value || startDate > endDate) {
+            Toastify({ text: "Please select a valid start and end date.", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)" }).showToast();
+            return;
+        }
 
         payrollTbody.innerHTML = '';
 
         allTeachers.forEach(teacher => {
+            if (teacher.status !== 'approved') return; // Only calculate for approved teachers
+
             let daysWorked = 0;
             let absences = 0;
             let lates = 0;
 
-            // Iterate through the pay period
             for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
-                // Check only for weekdays (Monday to Friday)
-                if (d.getDay() >= 1 && d.getDay() <= 5) {
+                // dayOfWeek: Sunday=0, Monday=1, ..., Saturday=6
+                const dayOfWeek = d.getDay();
+                // teacher.dayOff is stored as 0-5 (Mon-Sat). We convert Sunday (0) to 6 for our logic.
+                const teacherDayOff = teacher.dayOff !== undefined ? teacher.dayOff + 1 : -1; // Now 1-6 for Mon-Sat
+
+                // Check if it's a working day (Mon-Sat) and not the teacher's day off
+                if (dayOfWeek >= 1 && dayOfWeek <= 6 && dayOfWeek !== teacherDayOff) {
                     const dateString = d.toISOString().split('T')[0];
                     const record = attendanceRecords.find(r => r.teacherId === teacher.id && r.date === dateString);
 
                     if (record && record.checkIn) {
                         daysWorked++;
-                        const checkInTime = new Date(record.checkIn);
-                        if (checkInTime.getHours() >= LATE_THRESHOLD_HOUR) {
+                        if (new Date(record.checkIn).getHours() >= LATE_THRESHOLD_HOUR) {
                             lates++;
                         }
                     } else {
@@ -119,31 +92,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Announcement Logic ---
     announceBtn.addEventListener('click', () => {
-        const selectedPeriodLabel = payPeriodSelect.options[payPeriodSelect.selectedIndex].text;
+        const startDate = new Date(startDateInput.value);
+        const endDate = new Date(endDateInput.value);
+        if (!startDateInput.value || !endDateInput.value || startDate > endDate) {
+             Toastify({ text: "Please calculate payroll for a valid date range before announcing.", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)" }).showToast();
+            return;
+        }
+
+        const periodLabel = `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`;
         let announcements = JSON.parse(localStorage.getItem('announcements')) || [];
 
         const newAnnouncement = {
             id: `ann-${Date.now()}`,
             date: new Date().toISOString(),
             title: 'Payroll Distribution',
-            message: `Payroll for the period ${selectedPeriodLabel} has been distributed. Please check your accounts.`
+            message: `Payroll for the period ${periodLabel} has been distributed. Please check your accounts.`
         };
 
-        // Add to the beginning of the array and keep only the last 5
         announcements.unshift(newAnnouncement);
         announcements = announcements.slice(0, 5);
-
         localStorage.setItem('announcements', JSON.stringify(announcements));
-        Toastify({
-            text: "Payroll announcement has been posted for all teachers.",
-            duration: 3000,
-            gravity: "top",
-            position: "center",
-            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-            stopOnFocus: true,
-        }).showToast();
-    });
 
-    // --- Initial Load ---
-    populatePayPeriodSelect();
+        Toastify({ text: "Payroll announcement has been posted for all teachers.", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)" }).showToast();
+    });
 });

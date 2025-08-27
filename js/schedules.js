@@ -87,10 +87,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const startHour = parseInt(timeParts[2]);
         const endHour = parseInt(timeParts[3]);
 
-        const dayMap = { M: 0, T: 1, W: 2, Th: 3, F: 4 };
-        const days = daysStr.split('').map(d => dayMap[d]).filter(d => d !== undefined);
+        const dayMap = { M: 0, T: 1, W: 2, Th: 3, F: 4, S: 5 };
+        const days = daysStr.match(/S(?!a)|M|T(?!h)|W|Th|F/g).map(d => dayMap[d]).filter(d => d !== undefined);
 
-        // 1. Check against teacher's general availability
+        // 1. Check against teacher's general availability and day off
+        if (days.some(d => d === teacher.dayOff)) {
+            Toastify({ text: `Warning: This schedule conflicts with the teacher's assigned day off.`, duration: 5000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #ffc107, #ff9a4f)" }).showToast();
+        }
         days.forEach(day => {
             for (let hour = startHour; hour < endHour; hour++) {
                 if (!teacherWorkSchedule[day] || !teacherWorkSchedule[day].includes(hour)) {

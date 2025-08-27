@@ -33,10 +33,16 @@
             </div>
             <div class="content">
                 <div class="form-section">
-                    <h2>Select Pay Period</h2>
-                    <div class="form-group">
-                        <label for="pay-period">Select a recent pay period to calculate:</label>
-                        <select id="pay-period-select"></select>
+                    <h2>Select Custom Pay Period</h2>
+                    <div class="form-group" style="display: flex; gap: 10px;">
+                        <div style="flex: 1;">
+                            <label for="start-date">Start Date:</label>
+                            <input type="date" id="start-date" required>
+                        </div>
+                        <div style="flex: 1;">
+                            <label for="end-date">End Date:</label>
+                            <input type="date" id="end-date" required>
+                        </div>
                     </div>
                     <button id="calculate-payroll-btn" class="btn btn-primary">Calculate Payroll</button>
                 </div>
