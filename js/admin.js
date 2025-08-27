@@ -81,4 +81,63 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'index.html';
         });
     }
+
+    // --- Chart Rendering ---
+
+    // 1. Students per Course (Bar Chart)
+    const courseCtx = document.getElementById('course-chart').getContext('2d');
+    if (courseCtx) {
+        const courseLabels = allCourses.map(c => c.name);
+        const courseData = allCourses.map(course => {
+            return enrolledStudentList.filter(student => student.course && student.course.code === course.code).length;
+        });
+
+        new Chart(courseCtx, {
+            type: 'bar',
+            data: {
+                labels: courseLabels,
+                datasets: [{
+                    label: '# of Enrolled Students',
+                    data: courseData,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // 2. Student Status (Pie Chart)
+    const statusCtx = document.getElementById('student-status-chart').getContext('2d');
+    if (statusCtx) {
+        new Chart(statusCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Pending Applicants', 'Enrolled Students'],
+                datasets: [{
+                    label: 'Student Status',
+                    data: [studentApplicants, enrolledStudents],
+                    backgroundColor: [
+                        'rgba(255, 206, 86, 0.5)',
+                        'rgba(75, 192, 192, 0.5)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            }
+        });
+    }
 });
