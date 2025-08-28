@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const monthlySalaryInput = document.getElementById('monthlySalary');
     const absenceDeductionInput = document.getElementById('absenceDeduction');
     const lateDeductionInput = document.getElementById('lateDeduction');
+    const taxRateInput = document.getElementById('taxRate');
     const paydayInput = document.getElementById('payday');
 
     // Load existing settings from localStorage and populate the form
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
             monthlySalaryInput.value = settings.monthlySalary || '';
             absenceDeductionInput.value = settings.absenceDeduction || '';
             lateDeductionInput.value = settings.lateDeduction || '';
+            taxRateInput.value = settings.taxRate || '10';
             paydayInput.value = settings.payday || '5'; // Default to Friday
         }
     }
@@ -24,11 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
             monthlySalary: parseFloat(monthlySalaryInput.value),
             absenceDeduction: parseFloat(absenceDeductionInput.value),
             lateDeduction: parseFloat(lateDeductionInput.value),
+            taxRate: parseFloat(taxRateInput.value),
             payday: parseInt(paydayInput.value, 10)
         };
 
         // Basic validation
-        if (isNaN(settings.monthlySalary) || isNaN(settings.absenceDeduction) || isNaN(settings.lateDeduction)) {
+        if (isNaN(settings.monthlySalary) || isNaN(settings.absenceDeduction) || isNaN(settings.lateDeduction) || isNaN(settings.taxRate)) {
             Toastify({
                 text: "Please ensure all fields have valid numbers.",
                 duration: 3000,

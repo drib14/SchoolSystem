@@ -71,7 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const absenceDeductions = absences * settings.absenceDeduction;
             const lateDeductions = lates * settings.lateDeduction;
             const totalDeductions = absenceDeductions + lateDeductions;
-            const netPay = grossPay - totalDeductions;
+            const taxableIncome = grossPay - totalDeductions;
+            const taxAmount = taxableIncome * (settings.taxRate / 100);
+            const netPay = taxableIncome - taxAmount;
 
             const row = document.createElement('tr');
             row.innerHTML = `
