@@ -1,85 +1,106 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const loggedInUserId = localStorage.getItem('userId');
-    if (!loggedInUserId) return;
+document.addEventListener("DOMContentLoaded", () => {
+    const catalogTbody = document.getElementById("library-catalog-tbody");
+    const loansTbody = document.getElementById("my-loans-tbody");
+    const searchInput = document.getElementById("search-query");
+    const searchBtn = document.getElementById("search-btn");
+    const sidebarPanelName = document.getElementById("sidebar-panel-name");
 
-    const searchForm = document.getElementById('book-search-form');
-    const searchQuery = document.getElementById('search-query');
-    const resultsGrid = document.getElementById('search-results-grid');
-    const myLoansTbody = document.getElementById('my-loans-tbody');
+    const currentUserRole = localStorage.getItem("userRole");
+    const currentUserId = localStorage.getItem("userId");
 
-    let libraryBooks = JSON.parse(localStorage.getItem('libraryBooks')) || [];
-    let loans = JSON.parse(localStorage.getItem('loans')) || [];
-
-    function renderMyLoans() {
-        myLoansTbody.innerHTML = '';
-        const myCurrentLoans = loans.filter(l => l.userId === loggedInUserId && !l.dateIn);
-        if (myCurrentLoans.length === 0) {
-            myLoansTbody.innerHTML = '<tr><td colspan="3" style="text-align:center;">You have no books checked out.</td></tr>';
-            return;
-        }
-        myCurrentLoans.forEach(loan => {
-            const book = libraryBooks.find(b => b.key === loan.bookKey);
-            if (book) {
-                const row = myLoansTbody.insertRow();
-                row.innerHTML = `
-                    <td data-label="Title">${book.title}</td>
-                    <td data-label="Author">${book.author}</td>
-                    <td data-label="Due Date">${new Date(loan.dueDate).toLocaleDateString()}</td>
-                `;
-            }
-        });
+    // Basic check to update sidebar title
+    if (sidebarPanelName && currentUserRole) {
+        sidebarPanelName.textContent = `${currentUserRole.charAt(0).toUpperCase() + currentUserRole.slice(1)} Panel`;
     }
 
-    async function searchBooks(query) {
-        resultsGrid.innerHTML = '<p>Searching...</p>';
-        try {
-            const response = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}`);
-            const data = await response.json();
-            displayResults(data.docs);
-        } catch (error) {
-            console.error("Error fetching book data:", error);
-            resultsGrid.innerHTML = '<p>Error searching for books. Please try again.</p>';
+    // Mock data for now, will be replaced by localStorage calls
+    const DB = {
+        getItem: (key, defaultValue = []) => {
+            const item = localStorage.getItem(key);
+            return item ? JSON.parse(item) : defaultValue;
+        },
+        setItem: (key, value) => {
+            localStorage.setItem(key, JSON.stringify(value));
         }
-    }
+    };
 
-    function displayResults(books) {
-        resultsGrid.innerHTML = '';
-        if (books.length === 0) {
-            resultsGrid.innerHTML = '<p>No books found for your query.</p>';
+    let allBooks = DB.getItem("library");
+    let allLoans = DB.getItem("loans");
+
+    const renderCatalog = (filter = "") => {
+        catalogTbody.innerHTML = "";
+        const filteredBooks = allBooks.filter(book =>
+            book.title.toLowerCase().includes(filter.toLowerCase()) ||
+            (book.author_name && book.author_name.join(', ').toLowerCase().includes(filter.toLowerCase()))
+        );
+
+        if (filteredBooks.length === 0) {
+            catalogTbody.innerHTML = "<tr><td colspan='4'>No books found.</td></tr>";
             return;
         }
 
-        books.slice(0, 12).forEach(book => { // Show top 12 results
-            const title = book.title;
-            const author = book.author_name ? book.author_name.join(', ') : 'N/A';
-            const coverUrl = book.cover_i ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg` : 'https://via.placeholder.com/200x300';
-
-            const localBook = libraryBooks.find(b => b.key === book.key);
-            const isLoaned = localBook ? loans.some(l => l.bookKey === localBook.key && !l.dateIn) : false;
-
-            let status = 'Not in Collection';
-            if (localBook && !isLoaned) status = 'Available';
-            if (localBook && isLoaned) status = 'Checked Out';
-
-            const card = document.createElement('div');
-            card.className = 'book-card';
-            card.innerHTML = `
-                <img src="${coverUrl}" alt="Cover for ${title}">
-                <h4>${title}</h4>
-                <p>${author}</p>
-                <p><strong>Status:</strong> ${status}</p>
+        filteredBooks.forEach(book => {
+            const tr = document.createElement("tr");
+            const isOnLoan = allLoans.some(loan => loan.bookKey === book.key);
+            tr.innerHTML = `
+                <td data-label="Title">${book.title}</td>
+                <td data-label="Author(s)">${book.author_name ? book.author_name.join(', ') : 'N/A'}</td>
+                <td data-label="Publish Year">${book.first_publish_year || 'N/A'}</td>
+                <td data-label="Status"><span class="badge ${isOnLoan ? 'bg-secondary' : 'bg-success'}">${isOnLoan ? 'On Loan' : 'Available'}</span></td>
             `;
-            resultsGrid.appendChild(card);
+            catalogTbody.appendChild(tr);
         });
-    }
+    };
 
-    searchForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const query = searchQuery.value.trim();
-        if (query) {
-            searchBooks(query);
+    const renderMyLoans = () => {
+        loansTbody.innerHTML = "";
+        const userLoans = allLoans.filter(loan => loan.userId === currentUserId);
+
+        if (userLoans.length === 0) {
+            loansTbody.innerHTML = "<tr><td colspan='4'>You have no books on loan.</td></tr>";
+            return;
+        }
+
+        userLoans.forEach(loan => {
+            const book = allBooks.find(b => b.key === loan.bookKey);
+            if (!book) return;
+
+            const tr = document.createElement("tr");
+            const dueDate = new Date(loan.dueDate);
+            const isOverdue = new Date() > dueDate;
+
+            tr.innerHTML = `
+                <td data-label="Book Title">${book.title}</td>
+                <td data-label="Date Borrowed">${new Date(loan.loanDate).toLocaleDateString()}</td>
+                <td data-label="Due Date" class="${isOverdue ? 'text-danger fw-bold' : ''}">${dueDate.toLocaleDateString()}</td>
+                <td data-label="Status">${isOverdue ? 'Overdue' : 'On Loan'}</td>
+            `;
+            loansTbody.appendChild(tr);
+        });
+    };
+
+    searchBtn.addEventListener("click", () => {
+        renderCatalog(searchInput.value);
+    });
+
+    searchInput.addEventListener("keyup", (e) => {
+        if (e.key === 'Enter') {
+            renderCatalog(searchInput.value);
         }
     });
 
+    // Initial Render
+    renderCatalog();
     renderMyLoans();
+
+    // Rudimentary auth handling for logout
+    const logoutBtn = document.getElementById('logout-btn');
+    if(logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('userRole');
+            localStorage.removeItem('userId');
+            window.location.href = 'index.html';
+        });
+    }
 });

@@ -21,9 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const newRate = hourlyRateInput.value;
         if (newRate && !isNaN(newRate) && parseFloat(newRate) >= 0) {
             localStorage.setItem('teacherHourlyRate', newRate);
-            alert('Hourly rate has been saved successfully.');
+            Toastify({ text: 'Hourly rate has been saved successfully.', duration: 3000, className: "toast-success" }).showToast();
         } else {
-            alert('Please enter a valid, non-negative number for the rate.');
+            Toastify({ text: 'Please enter a valid, non-negative number for the rate.', duration: 3000, className: "toast-warning" }).showToast();
         }
     });
 
@@ -70,8 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
             saveComponents();
             renderComponents();
             addComponentForm.reset();
+            Toastify({ text: 'Component added successfully.', duration: 3000, className: "toast-success" }).showToast();
         } else {
-            alert('Please enter a valid name and amount for the component.');
+            Toastify({ text: 'Please enter a valid name and amount for the component.', duration: 3000, className: "toast-warning" }).showToast();
         }
     });
 

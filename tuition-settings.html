@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISCP - Payroll Settings</title>
+    <title>ISCP - Tuition Settings</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -26,7 +26,7 @@
         </div>
         <div class="main-content">
             <div class="header">
-                <h1>Payroll Settings</h1>
+                <h1>Tuition Settings</h1>
                 <div class="header-right">
                     <div class="profile-info">
                         <!-- Populated by js/auth.js -->
@@ -35,47 +35,40 @@
             </div>
             <div class="content">
                 <div class="course-form-container">
-                    <h3>Set Standard Hourly Rate</h3>
-                    <form id="payroll-rate-form">
+                    <h3>Set Price Per Unit</h3>
+                    <form id="tuition-rate-form">
                         <div class="input-group">
-                            <label for="hourlyRate">Hourly Rate (in ₱)</label>
-                            <input type="number" id="hourlyRate" placeholder="e.g., 500" required min="0" step="0.01">
+                            <label for="pricePerUnit">Price per Unit (in ₱)</label>
+                            <input type="number" id="pricePerUnit" placeholder="e.g., 1500" required min="0" step="0.01">
                         </div>
                         <button type="submit" class="action-btn approve-btn">Save Rate</button>
                     </form>
                 </div>
                 <hr style="margin: 30px 0;">
                 <div class="course-form-container">
-                    <h3>Manage Payroll Components</h3>
-                    <form id="add-payroll-component-form">
+                    <h3>Manage Miscellaneous Fees</h3>
+                    <form id="add-fee-form">
                         <div class="input-group">
-                            <input type="text" id="componentName" placeholder="Component Name (e.g., Health Insurance)" required>
+                            <input type="text" id="feeName" placeholder="Fee Name (e.g., Library Fee)" required>
                         </div>
                         <div class="input-group">
-                            <input type="number" id="componentAmount" placeholder="Amount (in ₱)" required step="0.01">
+                            <input type="number" id="feeAmount" placeholder="Amount (in ₱)" required min="0" step="0.01">
                         </div>
-                        <div class="input-group">
-                            <select id="componentType" required>
-                                <option value="allowance">Allowance</option>
-                                <option value="deduction">Deduction</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="action-btn approve-btn">Add Component</button>
+                        <button type="submit" class="action-btn approve-btn">Add Fee</button>
                     </form>
                 </div>
                 <div class="course-list-container" style="margin-top: 20px;">
-                    <h3>Existing Payroll Components</h3>
+                    <h3>Existing Miscellaneous Fees</h3>
                     <table class="applicants-table">
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Fee Name</th>
                                 <th>Amount</th>
-                                <th>Type</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="payroll-components-tbody">
-                            <!-- Components will be inserted here by JS -->
+                        <tbody id="fees-tbody">
+                            <!-- Fees will be inserted here by JS -->
                         </tbody>
                     </table>
                 </div>
@@ -84,6 +77,6 @@
     </div>
     <script src="js/auth.js"></script>
     <script src="js/nav.js"></script>
-    <script src="js/payroll-settings.js"></script>
+    <script src="js/tuition-settings.js"></script>
 </body>
 </html>

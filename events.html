@@ -3,59 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISCP - Events Calendar</title>
+    <title>ISCP - Events</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
     <style>
-        .calendar-container { padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .calendar-header { display: flex; justify-content: space-between; align-items: center; }
-        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
-        .calendar-day { min-height: 100px; border: 1px solid #ddd; padding: 5px; }
-        .calendar-day-header { font-weight: bold; text-align: center; }
-        .event-marker { background-color: var(--primary-color); color: white; border-radius: 3px; padding: 2px 4px; font-size: 0.8rem; margin-top: 5px; display: block; }
-        .events-list { margin-top: 20px; }
+        .events-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .event-list-container, .event-form-container {
+            flex: 1;
+            min-width: 300px;
+        }
+        .event-item {
+            background: #f9f9f9;
+            border-left: 4px solid #007bff;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .event-item h4 { margin: 0 0 5px 0; }
+        .event-item p { margin: 0; font-size: 0.9em; color: #555; }
+        .event-item .actions { margin-top: 5px; }
+        .event-item .actions button { font-size: 0.8em; padding: 2px 5px; }
     </style>
 </head>
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.js"></script>
     <div class="panel-container">
         <div class="sidebar">
-            <div class="sidebar-header"><div class="profile-info"><i class="fas fa-user-circle profile-pic"></i><h3 class="user-name">Loading...</h3></div></div>
-            <ul class="sidebar-menu"></ul>
-            <div class="sidebar-footer"><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></div>
+            <div class="sidebar-header">
+                <h2>ISCP</h2>
+                <p id="sidebar-panel-name">User Panel</p>
+            </div>
+            <ul id="sidebar-menu" class="sidebar-menu">
+                <!-- Placeholder: Links should be dynamically added or match the role -->
+            </ul>
+            <div class="sidebar-footer">
+                <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
         </div>
         <div class="main-content">
             <div class="header">
-                <div class="header-left"><button class="hamburger-btn"><i class="fas fa-bars"></i></button><h1>Events Calendar</h1></div>
-                <div class="header-right"><div class="notification-area"><button class="notification-btn"><i class="fas fa-bell"></i><span class="notification-badge" style="display: none;">0</span></button><div class="notification-panel"><div class="notification-panel-header"><h4>Notifications</h4></div><ul class="notification-list"></ul></div></div></div>
+                <h1>School Events</h1>
+                <div class="notification-area">
+                    <button class="notification-btn"><i class="fas fa-bell"></i><span class="notification-badge" style="display: none;">0</span></button>
+                    <div class="notification-panel">
+                        <div class="notification-panel-header"><h4>Notifications</h4></div>
+                        <ul class="notification-list"></ul>
+                    </div>
+                </div>
             </div>
             <div class="content">
-                <div class="calendar-container">
-                    <div class="calendar-header">
-                        <button id="prev-month-btn" class="btn"><i class="fas fa-chevron-left"></i></button>
-                        <h2 id="month-year-header"></h2>
-                        <button id="next-month-btn" class="btn"><i class="fas fa-chevron-right"></i></button>
+                <div class="events-container">
+                    <div class="event-list-container card">
+                        <div class="card-header">
+                            <h2>Upcoming Events</h2>
+                        </div>
+                        <div class="card-body" id="event-list">
+                            <!-- Events will be dynamically inserted here -->
+                        </div>
                     </div>
-                    <div class="calendar-grid" id="weekdays-header"></div>
-                    <div class="calendar-grid" id="calendar-days-grid"></div>
-                </div>
-                <div class="events-list" id="events-list-container"></div>
-                <div id="admin-event-form-container" style="display: none; margin-top: 20px;">
-                    <h3>Add New Event</h3>
-                    <form id="add-event-form" class="form-section">
-                        <div class="form-group"><label for="event-title">Event Title:</label><input type="text" id="event-title" required></div>
-                        <div class="form-group"><label for="event-date">Event Date:</label><input type="date" id="event-date" required></div>
-                        <button type="submit" class="btn btn-primary">Add Event</button>
-                    </form>
+                    <div id="admin-event-form-container" class="event-form-container card" style="display: none;">
+                        <div class="card-header">
+                            <h2 id="form-title">Add New Event</h2>
+                        </div>
+                        <div class="card-body">
+                            <form id="event-form">
+                                <input type="hidden" id="event-id">
+                                <div class="form-group">
+                                    <label for="event-title">Event Title</label>
+                                    <input type="text" id="event-title" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="event-date">Event Date</label>
+                                    <input type="date" id="event-date" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="event-description">Description</label>
+                                    <textarea id="event-description" class="form-control" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Event</button>
+                                <button type="button" id="cancel-edit-btn" class="btn btn-secondary" style="display: none;">Cancel Edit</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="overlay"></div>
-    <script src="js/auth.js"></script>
-    <script src="js/notifications.js"></script>
+    <script src="js/nav.js"></script>
     <script src="js/events.js"></script>
+    <script src="js/notifications.js"></script>
+    <div class="overlay"></div>
 </body>
 </html>

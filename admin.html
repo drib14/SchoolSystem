@@ -5,39 +5,120 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISCP - Admin Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.js"></script>
     <div class="panel-container">
         <div class="sidebar">
-            <div class="sidebar-header"><div class="profile-info"><i class="fas fa-user-circle profile-pic"></i><h3 class="user-name">Loading...</h3></div></div>
-            <ul class="sidebar-menu"></ul>
-            <div class="sidebar-footer"><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></div>
+            <div class="sidebar-header">
+                <h2>ISCP</h2>
+                <p>Admin Panel</p>
+            </div>
+            <ul class="sidebar-menu">
+                <!-- Links are now dynamically inserted by js/auth.js -->
+            </ul>
+            <div class="sidebar-footer">
+                <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
         </div>
         <div class="main-content">
             <div class="header">
-                <div class="header-left"><button class="hamburger-btn"><i class="fas fa-bars"></i></button><h1>Admin Dashboard</h1></div>
-                <div class="header-right"><div class="notification-area"><button class="notification-btn"><i class="fas fa-bell"></i><span class="notification-badge" style="display: none;">0</span></button><div class="notification-panel"><div class="notification-panel-header"><h4>Notifications</h4></div><ul class="notification-list"></ul></div></div></div>
+                <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
+                <h1>Admin Dashboard</h1>
+                <div class="header-right">
+                    <div class="notification-area">
+                        <button class="notification-btn"><i class="fas fa-bell"></i><span class="notification-badge" style="display: none;">0</span></button>
+                        <div class="notification-panel">
+                            <div class="notification-panel-header"><h4>Notifications</h4></div>
+                            <ul class="notification-list"></ul>
+                        </div>
+                    </div>
+                    <div class="profile-info">
+                        <!-- Populated by js/auth.js -->
+                    </div>
+                </div>
             </div>
             <div class="analytics-grid">
-                <div class="card"><div class="card-icon"><i class="fas fa-user-plus"></i></div><div class="card-info"><p>Student Applicants</p><h3 id="student-applicants-count">0</h3></div></div>
-                <div class="card"><div class="card-icon"><i class="fas fa-user-graduate"></i></div><div class="card-info"><p>Enrolled Students</p><h3 id="enrolled-students-count">0</h3></div></div>
-                <div class="card"><div class="card-icon"><i class="fas fa-user-tie"></i></div><div class="card-info"><p>Teacher Applicants</p><h3 id="teacher-applicants-count">0</h3></div></div>
-                <div class="card"><div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div><div class="card-info"><p>Approved Teachers</p><h3 id="approved-teachers-count">0</h3></div></div>
+                <!-- Enrollment Stats -->
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-user-plus"></i></div>
+                    <div class="card-info">
+                        <p>Student Applicants</p>
+                        <h3 id="student-applicants-count">0</h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-user-graduate"></i></div>
+                    <div class="card-info">
+                        <p>Enrolled Students</p>
+                        <h3 id="enrolled-students-count">0</h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-user-tie"></i></div>
+                    <div class="card-info">
+                        <p>Teacher Applicants</p>
+                        <h3 id="teacher-applicants-count">0</h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <div class="card-info">
+                        <p>Approved Teachers</p>
+                        <h3 id="approved-teachers-count">0</h3>
+                    </div>
+                </div>
+
+                <!-- Academic Stats -->
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-book"></i></div>
+                    <div class="card-info">
+                        <p>Total Courses</p>
+                        <h3 id="total-courses-count">0</h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-flask"></i></div>
+                    <div class="card-info">
+                        <p>Total Subjects</p>
+                        <h3 id="total-subjects-count">0</h3>
+                    </div>
+                </div>
+
+                <!-- Financial Stats -->
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                    <div class="card-info">
+                        <p>Total Est. Tuition</p>
+                        <h3 id="total-tuition">₱0.00</h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-dollar-sign"></i></div>
+                    <div class="card-info">
+                        <p>Total Payroll (Month)</p>
+                        <h3 id="total-payroll">₱0.00</h3>
+                    </div>
+                </div>
             </div>
             <div class="charts-grid">
-                <div class="chart-container"><h3>Students per Course</h3><canvas id="course-chart"></canvas></div>
-                <div class="chart-container"><h3>Student Status</h3><canvas id="student-status-chart"></canvas></div>
+                <div class="chart-container">
+                    <h3>Students per Course</h3>
+                    <canvas id="course-chart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Student Status</h3>
+                    <canvas id="student-status-chart"></canvas>
+                </div>
             </div>
         </div>
     </div>
-    <div class="overlay"></div>
     <script src="js/auth.js"></script>
-    <script src="js/notifications.js"></script>
+    <script src="js/nav.js"></script>
     <script src="js/admin.js"></script>
+    <script src="js/notifications.js"></script>
+    <div class="overlay"></div>
 </body>
 </html>

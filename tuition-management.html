@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISCP - Approved Teachers</title>
+    <title>ISCP - Tuition Management</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
@@ -24,7 +24,10 @@
         </div>
         <div class="main-content">
             <div class="header">
-                <h1>Approved Teachers</h1>
+                <div class="header-left">
+                    <h1>Student Tuition Management</h1>
+                    <p>Overview of calculated tuition fees for the semester.</p>
+                </div>
                 <div class="header-right">
                     <div class="profile-info">
                         <!-- Populated by js/auth.js -->
@@ -35,15 +38,16 @@
                 <table class="applicants-table">
                     <thead>
                         <tr>
-                                <th>Photo</th>
-                            <th>Teacher ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Course</th>
+                            <th>Total Units</th>
+                            <th>Total Tuition</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="approved-teachers-tbody">
-                        <!-- Data populated by JS -->
+                    <tbody id="tuition-tbody">
+                        <!-- Student tuition data will be inserted here by JS -->
                     </tbody>
                 </table>
             </div>
@@ -51,6 +55,17 @@
     </div>
     <script src="js/auth.js"></script>
     <script src="js/nav.js"></script>
-    <script src="js/approved-teachers.js"></script>
+    <script src="js/tuition-management.js"></script>
+
+    <!-- Tuition Breakdown Modal -->
+    <div id="tuition-breakdown-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 id="modal-title">Tuition Breakdown</h3>
+            <div id="modal-body">
+                <!-- Breakdown will be populated here -->
+            </div>
+        </div>
+    </div>
 </body>
 </html>

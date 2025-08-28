@@ -1,131 +1,185 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const loggedInUserId = localStorage.getItem('userId');
-    const userRole = localStorage.getItem('userRole');
-    if (!loggedInUserId) return;
+// These need to be global for the showView function
+const welcomeView = document.getElementById("welcome-view");
+const conversationView = document.getElementById("conversation-view");
+const newMessageView = document.getElementById("new-message-view");
 
+// Make this global for testing if needed, but primarily used inside
+function showView(viewToShow) {
+    [welcomeView, conversationView, newMessageView].forEach(v => {
+        if(v) v.style.display = 'none'
+    });
+    if(viewToShow) viewToShow.style.display = 'block';
+    if(viewToShow === conversationView) conversationView.style.display = 'flex';
+};
+
+document.addEventListener("DOMContentLoaded", () => {
     // --- DOM Elements ---
-    const threadListContainer = document.getElementById('thread-list-container');
-    const messageViewContainer = document.getElementById('message-view-container');
-    const msgViewHeader = document.getElementById('message-view-header-name');
-    const msgListContainer = document.getElementById('message-list-container');
-    const msgForm = document.getElementById('message-input-form');
-    const msgInput = document.getElementById('message-input');
+    const messagingContainer = document.querySelector(".messaging-container");
+    const conversationListItems = document.getElementById("conversation-list-items");
+    const conversationWithName = document.getElementById("conversation-with-name");
+    const messageBody = document.getElementById("message-body");
+    const messageForm = document.getElementById("message-form");
+    const messageInput = document.getElementById("message-input");
+    const newMessageBtn = document.getElementById("new-message-btn");
+    const cancelNewMessageBtn = document.getElementById("cancel-new-message-btn");
+    const recipientSelect = document.getElementById("recipient-select");
+    const startConversationBtn = document.getElementById("start-conversation-btn");
+    const mobileBackBtn = document.querySelector(".mobile-back-btn");
 
     // --- Data ---
-    let messageThreads = JSON.parse(localStorage.getItem('messageThreads')) || [];
-    let allUsers = [
-        ...JSON.parse(localStorage.getItem('students')) || [],
-        ...JSON.parse(localStorage.getItem('teachers')) || [],
-        { id: 'admin', firstName: 'Admin', lastName: '' }
+    const currentUserId = localStorage.getItem("userId");
+    const DB = {
+        getItem: (key, def = []) => JSON.parse(localStorage.getItem(key) || JSON.stringify(def)),
+        setItem: (key, val) => localStorage.setItem(key, JSON.stringify(val)),
+    };
+    const allMessages = DB.getItem("messages", {});
+    const students = DB.getItem("students");
+    const teachers = DB.getItem("teachers");
+    const userActivity = DB.getItem("userActivity", {});
+
+    const allUsers = [
+        { id: 'admin', firstName: 'Admin', lastName: '', role: 'admin' },
+        ...students,
+        ...teachers
     ];
-    let activeThreadId = null;
+    let activeConversationId = null;
 
     // --- Functions ---
-    function renderThreadList() {
-        threadListContainer.innerHTML = '';
-        const myThreads = messageThreads
-            .filter(t => t.participants.includes(loggedInUserId))
-            .sort((a,b) => new Date(b.messages[b.messages.length - 1].timestamp) - new Date(a.messages[a.messages.length - 1].timestamp));
+    const getConversationId = (userId1, userId2) => [userId1, userId2].sort().join('_');
+    const getUserById = (userId) => allUsers.find(u => u.id === userId);
 
-        if (myThreads.length === 0) {
-            threadListContainer.innerHTML = '<p style="padding: 15px;">No conversations yet.</p>';
-            return;
-        }
+    const updateUserActivity = () => {
+        userActivity[currentUserId] = new Date().getTime();
+        DB.setItem('userActivity', userActivity);
+    };
 
-        myThreads.forEach(thread => {
-            const otherParticipantId = thread.participants.find(p => p !== loggedInUserId);
-            const otherUser = allUsers.find(u => u.id === otherParticipantId);
-            const otherUserName = otherUser ? `${otherUser.firstName} ${otherUser.lastName}` : 'Unknown User';
-            const lastMessage = thread.messages[thread.messages.length - 1];
+    const isUserActive = (userId) => {
+        const lastActivity = userActivity[userId];
+        if (!lastActivity) return false;
+        const fiveMinutes = 5 * 60 * 1000;
+        return (new Date().getTime() - lastActivity) < fiveMinutes;
+    };
 
-            const threadEl = document.createElement('div');
-            threadEl.className = 'thread-list-item';
-            threadEl.dataset.threadId = thread.id;
-            threadEl.innerHTML = `
-                <h4>${otherUserName}</h4>
-                <p>${lastMessage.text.substring(0, 30)}...</p>
-            `;
-            threadListContainer.appendChild(threadEl);
-        });
-    }
+    const renderConversations = () => {
+        conversationListItems.innerHTML = "";
+        const conversations = {};
+        Object.values(allMessages).flat().forEach(msg => {
+            const otherUserId = msg.senderId === currentUserId ? msg.receiverId : msg.senderId;
+            const otherUser = getUserById(otherUserId);
+            if (!otherUser) return;
 
-    function renderMessageView(threadId) {
-        activeThreadId = threadId;
-        const thread = messageThreads.find(t => t.id === threadId);
-        if (!thread) {
-            messageViewContainer.style.display = 'none';
-            return;
-        }
-
-        const otherParticipantId = thread.participants.find(p => p !== loggedInUserId);
-        const otherUser = allUsers.find(u => u.id === otherParticipantId);
-        msgViewHeader.textContent = `Conversation with ${otherUser ? otherUser.firstName + ' ' + otherUser.lastName : 'Unknown'}`;
-
-        msgListContainer.innerHTML = '';
-        thread.messages.forEach(msg => {
-            const messageEl = document.createElement('div');
-            messageEl.className = `message ${msg.senderId === loggedInUserId ? 'sent' : 'received'}`;
-            messageEl.innerHTML = `<div class="message-bubble">${msg.text}</div>`;
-            msgListContainer.appendChild(messageEl);
+            if (!conversations[otherUserId] || new Date(msg.timestamp) > conversations[otherUserId].timestamp) {
+                conversations[otherUserId] = {
+                    user: otherUser,
+                    lastMessage: msg,
+                    timestamp: new Date(msg.timestamp)
+                };
+            }
         });
 
-        msgListContainer.scrollTop = msgListContainer.scrollHeight; // Scroll to bottom
-        messageViewContainer.style.display = 'flex';
-    }
+        Object.values(conversations)
+            .sort((a, b) => b.timestamp - a.timestamp)
+            .forEach(({ user, lastMessage }) => {
+                const conversationId = getConversationId(currentUserId, user.id);
+                const item = document.createElement("div");
+                item.className = "conversation-item";
+                if(conversationId === activeConversationId) item.classList.add('active');
+                item.dataset.userId = user.id;
 
-    function sendMessage() {
-        const text = msgInput.value.trim();
-        if (!text || !activeThreadId) return;
-
-        const threadIndex = messageThreads.findIndex(t => t.id === activeThreadId);
-        if (threadIndex > -1) {
-            messageThreads[threadIndex].messages.push({
-                senderId: loggedInUserId,
-                text: text,
-                timestamp: new Date().toISOString()
+                const activeClass = isUserActive(user.id) ? 'active' : 'inactive';
+                item.innerHTML = `
+                    <div class="user-with-status">
+                        <h5>${user.firstName} ${user.lastName}</h5>
+                        <span class="status-indicator ${activeClass}"></span>
+                    </div>
+                    <p>${lastMessage.text.substring(0, 30)}...</p>
+                `;
+                item.addEventListener("click", () => openConversation(user.id));
+                conversationListItems.appendChild(item);
             });
-            localStorage.setItem('messageThreads', JSON.stringify(messageThreads));
-            renderMessageView(activeThreadId); // Re-render the view
-            renderThreadList(); // Re-render thread list to update last message
-            msgInput.value = '';
-        }
-    }
+    };
+
+    const openConversation = (otherUserId) => {
+        const otherUser = getUserById(otherUserId);
+        if (!otherUser) return;
+
+        activeConversationId = getConversationId(currentUserId, otherUserId);
+        const activeClass = isUserActive(otherUserId) ? 'active' : 'inactive';
+        conversationWithName.innerHTML = `${otherUser.firstName} ${otherUser.lastName} <span class="status-indicator ${activeClass}"></span>`;
+
+        renderMessages(activeConversationId);
+        showView(conversationView);
+        renderConversations();
+        messagingContainer.classList.add('mobile-chat-active');
+    };
+
+    const renderMessages = (conversationId) => {
+        messageBody.innerHTML = "";
+        const messages = allMessages[conversationId] || [];
+        messages.forEach(msg => {
+            const messageDiv = document.createElement("div");
+            messageDiv.className = `message ${msg.senderId === currentUserId ? 'sent' : 'received'}`;
+            messageDiv.innerHTML = `<div class="bubble">${msg.text}</div>`;
+            messageBody.appendChild(messageDiv);
+        });
+        messageBody.scrollTop = messageBody.scrollHeight;
+    };
+
+    const populateRecipients = () => {
+        recipientSelect.innerHTML = '<option value="">Select a user...</option>';
+        allUsers
+            .filter(u => u.id !== currentUserId)
+            .forEach(u => {
+                const activeText = isUserActive(u.id) ? ' (Active)' : '';
+                recipientSelect.innerHTML += `<option value="${u.id}">${u.firstName} ${u.lastName} (${u.role})${activeText}</option>`;
+            });
+    };
 
     // --- Event Listeners ---
-    threadListContainer.addEventListener('click', (e) => {
-        const threadItem = e.target.closest('.thread-list-item');
-        if (threadItem) {
-            const threadId = threadItem.dataset.threadId;
-            renderMessageView(threadId);
-        }
-    });
-
-    msgForm.addEventListener('submit', (e) => {
+    messageForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        sendMessage();
+        if (!activeConversationId || !messageInput.value.trim()) return;
+
+        const otherUserId = activeConversationId.replace(currentUserId, '').replace('_', '');
+        const newMessage = {
+            senderId: currentUserId,
+            receiverId: otherUserId,
+            text: messageInput.value.trim(),
+            timestamp: new Date().toISOString(),
+        };
+
+        if (!allMessages[activeConversationId]) allMessages[activeConversationId] = [];
+        allMessages[activeConversationId].push(newMessage);
+        DB.setItem("messages", allMessages);
+
+        updateUserActivity();
+        renderMessages(activeConversationId);
+        messageInput.value = "";
+        renderConversations();
     });
 
-    // --- Initial Load ---
-    renderThreadList();
+    newMessageBtn.addEventListener('click', () => {
+        populateRecipients();
+        showView(newMessageView);
+        messagingContainer.classList.add('mobile-chat-active');
+    });
 
-    // Check for URL param to start a new message
-    const urlParams = new URLSearchParams(window.location.search);
-    const newMsgTo = urlParams.get('newMsgTo');
-    if (newMsgTo) {
-        let thread = messageThreads.find(t => t.participants.includes(loggedInUserId) && t.participants.includes(newMsgTo));
-        if (thread) {
-            renderMessageView(thread.id);
-        } else {
-            // Create a new thread
-            const newThread = {
-                id: `thread-${Date.now()}`,
-                participants: [loggedInUserId, newMsgTo],
-                messages: []
-            };
-            messageThreads.push(newThread);
-            localStorage.setItem('messageThreads', JSON.stringify(messageThreads));
-            renderThreadList();
-            renderMessageView(newThread.id);
-        }
-    }
+    cancelNewMessageBtn.addEventListener('click', () => {
+        showView(welcomeView);
+        messagingContainer.classList.remove('mobile-chat-active');
+    });
+
+    mobileBackBtn.addEventListener('click', () => {
+        messagingContainer.classList.remove('mobile-chat-active');
+    });
+
+    startConversationBtn.addEventListener('click', () => {
+        const recipientId = recipientSelect.value;
+        if(recipientId) openConversation(recipientId);
+    });
+
+    // --- Init ---
+    updateUserActivity();
+    renderConversations();
+    showView(welcomeView);
 });

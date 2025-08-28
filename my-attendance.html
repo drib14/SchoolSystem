@@ -3,33 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISCP - Ay attendance</title>
+    <title>ISCP - My Attendance</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
 </head>
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <div class="panel-container">
         <div class="sidebar">
-            <div class="sidebar-header"><div class="profile-info"><i class="fas fa-user-circle profile-pic"></i><h3 class="user-name">Loading...</h3></div></div>
-            <ul class="sidebar-menu"></ul>
-            <div class="sidebar-footer"><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></div>
+            <div class="sidebar-header">
+                <h2>ISCP</h2>
+                <p>Student Panel</p>
+            </div>
+            <ul class="sidebar-menu">
+                <!-- Links are now dynamically inserted by js/auth.js -->
+            </ul>
+            <div class="sidebar-footer">
+                <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
         </div>
         <div class="main-content">
             <div class="header">
-                <div class="header-left"><button class="hamburger-btn"><i class="fas fa-bars"></i></button><h1>Ay attendance</h1></div>
-                <div class="header-right"><div class="notification-area"><button class="notification-btn"><i class="fas fa-bell"></i><span class="notification-badge" style="display: none;">0</span></button><div class="notification-panel"><div class="notification-panel-header"><h4>Notifications</h4></div><ul class="notification-list"></ul></div></div></div>
+                <h1>My Attendance</h1>
+                <div class="header-right">
+                    <div class="profile-info">
+                        <!-- Populated by js/auth.js -->
+                    </div>
+                </div>
             </div>
             <div class="content">
-                <p>Content for Ay attendance is loaded by its JavaScript file.</p>
-                 <table class="applicants-table"><thead></thead><tbody><tr><td>Loading...</td></tr></tbody></table>
+                <div class="course-form-container">
+                    <h3>Biometric Check-in (Simulation)</h3>
+                    <p>Select a class and check in for today's session.</p>
+                    <div class="input-group">
+                        <label for="class-check-in">Select Class:</label>
+                        <select id="class-check-in" required>
+                            <option value="">--Select a class to check in--</option>
+                            <!-- Options populated by JS -->
+                        </select>
+                    </div>
+                    <button id="check-in-btn" class="action-btn approve-btn">Check-in with Biometrics</button>
+                </div>
+                <hr style="margin: 30px 0;">
+                <div class="course-list-container">
+                    <h3>My Attendance History</h3>
+                    <table class="applicants-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Subject</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendance-history-tbody">
+                            <!-- Attendance records will be inserted here by JS -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-    <div class="overlay"></div>
     <script src="js/auth.js"></script>
+    <script src="js/nav.js"></script>
     <script src="js/my-attendance.js"></script>
 </body>
 </html>

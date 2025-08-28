@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentSubject = allSubjects.find(s => s.code === subjectCode);
 
     if (!currentSchedule || !currentSubject) {
-        alert('Could not find class details.');
+        Toastify({ text: 'Could not find class details.', duration: 3000, className: "toast-error", gravity: "top", position: "center" }).showToast();
         return;
     }
 
@@ -75,52 +75,48 @@ document.addEventListener('DOMContentLoaded', () => {
     gradesForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const rosterRows = rosterTbody.querySelectorAll('tr');
-        const WEIGHTS = { midterm: { quizzes: 0.3, assignments: 0.3, midtermExam: 0.4 }, final: { midtermGrade: 0.5, finalExam: 0.5 } };
 
         rosterRows.forEach(row => {
             const studentId = row.dataset.studentId;
             if (!studentId) return;
 
-            const rawScores = {
-                quizzes: parseFloat(row.querySelector('input[name="quizzes"]').value) || 0,
-                assignments: parseFloat(row.querySelector('input[name="assignments"]').value) || 0,
-                midtermExam: parseFloat(row.querySelector('input[name="midtermExam"]').value) || 0,
-                finalExam: parseFloat(row.querySelector('input[name="finalExam"]').value) || 0
+            const grades = {
+                quizzes: row.querySelector('input[name="quizzes"]').value,
+                assignments: row.querySelector('input[name="assignments"]').value,
+                midterm: row.querySelector('input[name="midterm"]').value,
+                finalExam: row.querySelector('input[name="finalExam"]').value
             };
 
-            const midtermGrade = (rawScores.quizzes * WEIGHTS.midterm.quizzes) + (rawScores.assignments * WEIGHTS.midterm.assignments) + (rawScores.midtermExam * WEIGHTS.midterm.midtermExam);
-            const finalGrade = (midtermGrade * WEIGHTS.final.midtermGrade) + (rawScores.finalExam * WEIGHTS.final.finalExam);
+            const gradeValues = Object.values(grades).map(g => parseFloat(g) || 0);
+            const finalGrade = gradeValues.reduce((sum, g) => sum + g, 0) / gradeValues.length;
 
             const recordIndex = gradeRecords.findIndex(rec => rec.scheduleId === scheduleId && rec.studentId === studentId);
-            const record = {
-                scheduleId: scheduleId, studentId: studentId,
-                grades: { quizzes: rawScores.quizzes, assignments: rawScores.assignments, midtermExam: rawScores.midtermExam, finalExam: rawScores.finalExam },
-                calculated: { midtermGrade: midtermGrade.toFixed(2), finalGrade: finalGrade.toFixed(2) }
-            };
 
-            if (recordIndex > -1) gradeRecords[recordIndex] = record;
-            else gradeRecords.push(record);
+            if (recordIndex > -1) {
+                gradeRecords[recordIndex].grades = grades;
+                gradeRecords[recordIndex].finalGrade = finalGrade.toFixed(2);
+            } else {
+                gradeRecords.push({
+                    scheduleId: scheduleId,
+                    studentId: studentId,
+                    grades: grades,
+                    finalGrade: finalGrade.toFixed(2)
+                });
+            }
         });
 
         localStorage.setItem('gradeRecords', JSON.stringify(gradeRecords));
-        Toastify({ text: "All grades have been saved and calculated successfully!", duration: 3000 }).showToast();
+        Toastify({ text: 'All grades have been saved successfully!', duration: 3000, className: "toast-success", gravity: "top", position: "right" }).showToast();
 
-        let notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+        // Create notifications for each student
         rosterRows.forEach(row => {
             const studentId = row.dataset.studentId;
-            if (!studentId) return;
-            notifications.push({
-                id: Date.now() + Math.random(),
-                userId: studentId,
-                message: `New grades have been posted for ${currentSubject.name}.`,
-                link: "my-grades.html",
-                isRead: false,
-                timestamp: new Date().toISOString()
-            });
+            if (studentId) {
+                createNotification(studentId, `New grades have been posted for ${currentSubject.name}.`, 'my-grades.html');
+            }
         });
-        localStorage.setItem('notifications', JSON.stringify(notifications));
 
-        renderRoster();
+        renderRoster(); // Re-render to show calculated final grade
     });
 
     // --- Logout ---

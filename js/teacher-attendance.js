@@ -62,10 +62,10 @@ document.addEventListener('DOMContentLoaded', () => {
     checkInBtn.addEventListener('click', () => {
         const todaysRecord = getTodaysRecord();
         if (todaysRecord) {
-            alert('You have already checked in today.');
+            Toastify({ text: 'You have already checked in today.', duration: 3000, className: "toast-warning" }).showToast();
             return;
         }
-        alert('Biometric simulation successful. You are checked in.');
+        Toastify({ text: 'Biometric simulation successful. You are checked in.', duration: 3000, className: "toast-success" }).showToast();
         attendanceRecords.push({
             teacherId: loggedInTeacherId,
             date: todayString,
@@ -79,12 +79,12 @@ document.addEventListener('DOMContentLoaded', () => {
     checkOutBtn.addEventListener('click', () => {
         const recordIndex = attendanceRecords.findIndex(rec => rec.teacherId === loggedInTeacherId && rec.date === todayString);
         if (recordIndex > -1) {
-            alert('Biometric simulation successful. You are checked out.');
+            Toastify({ text: 'Biometric simulation successful. You are checked out.', duration: 3000, className: "toast-success" }).showToast();
             attendanceRecords[recordIndex].checkOut = new Date().toISOString();
             localStorage.setItem('teacherAttendanceRecords', JSON.stringify(attendanceRecords));
             updateUI();
         } else {
-            alert('Error: Could not find your check-in record for today.');
+            Toastify({ text: 'Error: Could not find your check-in record for today.', duration: 3000, className: "toast-error" }).showToast();
         }
     });
 

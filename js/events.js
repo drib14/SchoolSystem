@@ -1,110 +1,129 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const userRole = localStorage.getItem('userRole');
+document.addEventListener("DOMContentLoaded", () => {
+    const eventList = document.getElementById("event-list");
+    const adminFormContainer = document.getElementById("admin-event-form-container");
+    const eventForm = document.getElementById("event-form");
+    const formTitle = document.getElementById("form-title");
+    const eventIdInput = document.getElementById("event-id");
+    const eventTitleInput = document.getElementById("event-title");
+    const eventDateInput = document.getElementById("event-date");
+    const eventDescriptionInput = document.getElementById("event-description");
+    const cancelEditBtn = document.getElementById("cancel-edit-btn");
+    const sidebarMenu = document.getElementById("sidebar-menu");
+    const sidebarPanelName = document.getElementById("sidebar-panel-name");
 
-    const monthYearHeader = document.getElementById('month-year-header');
-    const weekdaysHeader = document.getElementById('weekdays-header');
-    const calendarGrid = document.getElementById('calendar-days-grid');
-    const eventsListContainer = document.getElementById('events-list-container');
-    const prevMonthBtn = document.getElementById('prev-month-btn');
-    const nextMonthBtn = document.getElementById('next-month-btn');
-    const addEventFormContainer = document.getElementById('admin-event-form-container');
-    const addEventForm = document.getElementById('add-event-form');
+    const currentUserRole = localStorage.getItem("userRole");
 
-    let events = JSON.parse(localStorage.getItem('events')) || [];
-    let currentDate = new Date();
+    const DB = {
+        getItem: (key, defaultValue = []) => {
+            const item = localStorage.getItem(key);
+            return item ? JSON.parse(item) : defaultValue;
+        },
+        setItem: (key, value) => {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
+    };
 
-    function renderCalendar() {
-        calendarGrid.innerHTML = '';
-        eventsListContainer.innerHTML = '<h3>Upcoming Events</h3>';
-        const month = currentDate.getMonth();
-        const year = currentDate.getFullYear();
+    let events = DB.getItem("events");
 
-        monthYearHeader.textContent = `${currentDate.toLocaleString('default', { month: 'long' })} ${year}`;
-
-        const firstDayOfMonth = new Date(year, month, 1).getDay();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-        // Add blank days for the start of the month
-        for (let i = 0; i < firstDayOfMonth; i++) {
-            calendarGrid.appendChild(document.createElement('div'));
+    const renderEvents = () => {
+        eventList.innerHTML = "";
+        if (events.length === 0) {
+            eventList.innerHTML = "<p>No upcoming events.</p>";
+            return;
         }
 
-        // Add days of the month
-        for (let day = 1; day <= daysInMonth; day++) {
-            const dayEl = document.createElement('div');
-            dayEl.className = 'calendar-day';
-            dayEl.textContent = day;
+        const sortedEvents = events.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-            const dayEvents = events.filter(e => {
-                const eventDate = new Date(e.date);
-                return eventDate.getFullYear() === year && eventDate.getMonth() === month && eventDate.getDate() === day;
-            });
-
-            if (dayEvents.length > 0) {
-                dayEvents.forEach(event => {
-                    const eventMarker = document.createElement('div');
-                    eventMarker.className = 'event-marker';
-                    eventMarker.textContent = event.title;
-                    dayEl.appendChild(eventMarker);
-                });
-            }
-            calendarGrid.appendChild(dayEl);
-        }
-
-        // Render upcoming events list
-        const upcomingEvents = events
-            .filter(e => new Date(e.date) >= new Date())
-            .sort((a,b) => new Date(a.date) - new Date(b.date));
-
-        if(upcomingEvents.length > 0) {
-            upcomingEvents.forEach(e => {
-                const eventDate = new Date(e.date);
-                eventsListContainer.innerHTML += `<p><strong>${eventDate.toLocaleDateString()}:</strong> ${e.title}</p>`;
-            });
-        } else {
-            eventsListContainer.innerHTML += '<p>No upcoming events.</p>';
-        }
-    }
-
-    function renderWeekdaysHeader() {
-        const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        weekdaysHeader.innerHTML = '';
-        weekdays.forEach(day => {
-            const dayEl = document.createElement('div');
-            dayEl.className = 'calendar-day-header';
-            dayEl.textContent = day;
-            weekdaysHeader.appendChild(dayEl);
+        sortedEvents.forEach(event => {
+            const eventItem = document.createElement("div");
+            eventItem.className = "event-item";
+            eventItem.innerHTML = `
+                <h4>${event.title}</h4>
+                <p><strong>Date:</strong> ${new Date(event.date).toLocaleDateString()}</p>
+                <p>${event.description}</p>
+                ${currentUserRole === 'admin' ? `
+                <div class="actions">
+                    <button class="btn btn-sm btn-primary" data-action="edit" data-id="${event.id}">Edit</button>
+                    <button class="btn btn-sm btn-danger" data-action="delete" data-id="${event.id}">Delete</button>
+                </div>
+                ` : ''}
+            `;
+            eventList.appendChild(eventItem);
         });
+    };
+
+    const resetForm = () => {
+        formTitle.textContent = "Add New Event";
+        eventForm.reset();
+        eventIdInput.value = "";
+        cancelEditBtn.style.display = "none";
+    };
+
+    // --- Event Listeners ---
+    eventForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const eventData = {
+            id: eventIdInput.value || `evt_${Date.now()}`,
+            title: eventTitleInput.value,
+            date: eventDateInput.value,
+            description: eventDescriptionInput.value,
+        };
+
+        if (eventIdInput.value) { // Editing
+            events = events.map(evt => evt.id === eventIdInput.value ? eventData : evt);
+        } else { // Creating
+            events.push(eventData);
+        }
+
+        DB.setItem("events", events);
+        renderEvents();
+        resetForm();
+    });
+
+    eventList.addEventListener("click", (e) => {
+        const action = e.target.dataset.action;
+        const eventId = e.target.dataset.id;
+        if (!action || !eventId) return;
+
+        if (action === "delete") {
+            if (confirm("Are you sure you want to delete this event?")) {
+                events = events.filter(evt => evt.id !== eventId);
+                DB.setItem("events", events);
+                renderEvents();
+            }
+        } else if (action === "edit") {
+            const eventToEdit = events.find(evt => evt.id === eventId);
+            if (eventToEdit) {
+                formTitle.textContent = "Edit Event";
+                eventIdInput.value = eventToEdit.id;
+                eventTitleInput.value = eventToEdit.title;
+                eventDateInput.value = eventToEdit.date;
+                eventDescriptionInput.value = eventToEdit.description;
+                cancelEditBtn.style.display = "inline-block";
+            }
+        }
+    });
+
+    cancelEditBtn.addEventListener("click", resetForm);
+
+    // --- Initialization ---
+    if (currentUserRole === 'admin') {
+        adminFormContainer.style.display = "block";
     }
 
-    prevMonthBtn.addEventListener('click', () => {
-        currentDate.setMonth(currentDate.getMonth() - 1);
-        renderCalendar();
-    });
-
-    nextMonthBtn.addEventListener('click', () => {
-        currentDate.setMonth(currentDate.getMonth() + 1);
-        renderCalendar();
-    });
-
-    // Admin-specific functionality
-    if (userRole === 'admin') {
-        addEventFormContainer.style.display = 'block';
-        addEventForm.addEventListener('submit', (e) => {
+    // Rudimentary sidebar and logout
+    if (sidebarPanelName && currentUserRole) {
+        sidebarPanelName.textContent = `${currentUserRole.charAt(0).toUpperCase() + currentUserRole.slice(1)} Panel`;
+    }
+    const logoutBtn = document.getElementById('logout-btn');
+    if(logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            const title = document.getElementById('event-title').value;
-            const date = document.getElementById('event-date').value;
-
-            if (title && date) {
-                events.push({ id: Date.now(), title, date });
-                localStorage.setItem('events', JSON.stringify(events));
-                renderCalendar();
-                Toastify({ text: "Event added successfully!", duration: 3000 }).showToast();
-                addEventForm.reset();
-            }
+            localStorage.removeItem('userRole');
+            localStorage.removeItem('userId');
+            window.location.href = 'index.html';
         });
     }
 
-    renderWeekdaysHeader();
-    renderCalendar();
+    renderEvents();
 });

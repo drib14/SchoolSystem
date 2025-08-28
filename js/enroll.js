@@ -55,17 +55,57 @@ document.addEventListener('DOMContentLoaded', () => {
         // ... (existing logic)
     }
 
+    function validateStep(stepIndex) {
+        const inputs = formSteps[stepIndex].querySelectorAll('input[required], select[required]');
+        for (const input of inputs) {
+            if (!input.value.trim()) {
+                Toastify({ text: `Please fill out the ${input.name} field.`, duration: 3000, className: "toast-warning" }).showToast();
+                return false;
+            }
+        }
+        if(stepIndex === 0) { // Personal Info
+             applicantData.firstName = document.getElementById('firstName').value;
+             applicantData.lastName = document.getElementById('lastName').value;
+             applicantData.email = document.getElementById('email').value;
+             applicantData.phone = document.getElementById('phone').value;
+        }
+        if(stepIndex === 1) { // Course Selection
+            const selectedCourseCode = courseSelection.value;
+            const course = courses.find(c => c.code === selectedCourseCode);
+            applicantData.course = course;
+        }
+        return true;
+    }
+
     nextBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // ... (existing logic)
+            if (validateStep(currentStep)) {
+                currentStep++;
+                if (currentStep >= formSteps.length) {
+                    currentStep = formSteps.length - 1;
+                }
+                updateFormSteps();
+                updateProgress();
+            }
         });
     });
 
     prevBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // ... (existing logic)
+            currentStep--;
+            if (currentStep < 0) {
+                currentStep = 0;
+            }
+            updateFormSteps();
+            updateProgress();
         });
     });
+
+    function updateFormSteps() {
+        formSteps.forEach((step, idx) => {
+            step.style.display = idx === currentStep ? 'block' : 'none';
+        });
+    }
 
     function updateProgress() {
         // ... (existing logic, but update labels)
@@ -95,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (!allFilesChosen) {
-            alert('Please upload all required documents before submitting.');
+            Toastify({ text: 'Please upload all required documents before submitting.', duration: 3000, className: "toast-warning", gravity: "top", position: "center" }).showToast();
             return;
         }
 
@@ -126,9 +166,19 @@ document.addEventListener('DOMContentLoaded', () => {
         students.push(applicantData);
         localStorage.setItem('students', JSON.stringify(students));
 
-        alert(`Application Submitted!\nYour ID is: ${id}\nYour Password is: ${password}\nPlease wait for admin approval.`);
+        Toastify({
+            text: `Application Submitted!\nYour ID is: ${id}\nYour Password is: ${password}\nPlease wait for admin approval.`,
+            duration: -1,
+            close: true,
+            gravity: "top",
+            position: "center",
+            className: "toast-success-long",
+            stopOnFocus: true,
+        }).showToast();
 
-        window.location.href = 'index.html';
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 5000);
     });
 
     populateCourses();

@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (!allFilesChosen) {
-            alert('Please upload all required documents before submitting.');
+            Toastify({ text: 'Please upload all required documents before submitting.', duration: 3000, className: "toast-warning" }).showToast();
             return;
         }
 
@@ -112,9 +112,19 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('teachers', JSON.stringify(teachers));
 
         // --- Notify User and Redirect ---
-        alert(`Application Submitted!\nYour Teacher ID is: ${id}\nYour Password is: ${password}\nPlease wait for an administrator to review your application.`);
+        Toastify({
+            text: `Application Submitted!\nYour Teacher ID is: ${id}\nYour Password is: ${password}\nPlease wait for an administrator to review your application.`,
+            duration: -1,
+            close: true,
+            gravity: "top",
+            position: "center",
+            className: "toast-success-long",
+            stopOnFocus: true,
+        }).showToast();
 
-        window.location.href = 'index.html';
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 5000);
     });
 
     buildRequirementsList();

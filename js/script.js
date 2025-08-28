@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('userId', username); // Store userId for all roles
             window.location.href = `${role}.html`;
         } else {
-            alert('Invalid username or password');
+            Toastify({ text: 'Invalid username or password', duration: 3000, className: "toast-error", gravity: "top", position: "center" }).showToast();
         }
     });
 });

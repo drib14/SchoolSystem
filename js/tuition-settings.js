@@ -21,9 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const newRate = pricePerUnitInput.value;
         if (newRate && !isNaN(newRate) && parseFloat(newRate) >= 0) {
             localStorage.setItem('tuitionRate', newRate);
-            alert('Tuition rate has been saved successfully.');
+            Toastify({ text: 'Tuition rate has been saved successfully.', duration: 3000, className: "toast-success" }).showToast();
         } else {
-            alert('Please enter a valid, non-negative number for the rate.');
+            Toastify({ text: 'Please enter a valid, non-negative number for the rate.', duration: 3000, className: "toast-warning" }).showToast();
         }
     });
 
@@ -70,8 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
             saveFees();
             renderFees();
             addFeeForm.reset();
+            Toastify({ text: 'Fee added successfully.', duration: 3000, className: "toast-success" }).showToast();
         } else {
-            alert('Please enter a valid name and non-negative amount for the fee.');
+            Toastify({ text: 'Please enter a valid name and non-negative amount for the fee.', duration: 3000, className: "toast-warning" }).showToast();
         }
     });
 
