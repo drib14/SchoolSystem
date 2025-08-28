@@ -1,29 +1,21 @@
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("Teacher Attendance Script Loaded.");
+// --- Absolute Bare-Bones Script ---
 
-    const checkInBtn = document.getElementById('check-in-btn');
-    const checkOutBtn = document.getElementById('check-out-btn');
-    const loggedInTeacherId = localStorage.getItem('userId');
-    const todayString = new Date().toISOString().split('T')[0];
+// Get elements directly. Assume DOM is loaded.
+const checkInBtn = document.getElementById('check-in-btn');
+const checkOutBtn = document.getElementById('check-out-btn');
 
-    if (!checkInBtn || !checkOutBtn) {
-        console.error("Check-in or Check-out button not found.");
-        return;
-    }
+// Check if buttons exist to prevent errors
+if (checkInBtn && checkOutBtn) {
 
-    if (!loggedInTeacherId) {
-        console.error("Teacher ID not found in localStorage.");
-        return;
-    }
-
-    // Bare-bones Check-in
     checkInBtn.addEventListener('click', () => {
-        console.log("Check-in button clicked.");
+        const loggedInTeacherId = localStorage.getItem('userId');
+        const todayString = new Date().toISOString().split('T')[0];
         let attendanceRecords = JSON.parse(localStorage.getItem('teacherAttendanceRecords')) || [];
         const todaysRecord = attendanceRecords.find(rec => rec.teacherId === loggedInTeacherId && rec.date === todayString);
 
         if (todaysRecord) {
-            Toastify({ text: "Already checked in today.", duration: 3000 }).showToast();
+            // Do nothing, just alert for debugging.
+            alert('DEBUG: Already checked in.');
             return;
         }
 
@@ -34,26 +26,25 @@ document.addEventListener('DOMContentLoaded', () => {
             checkOut: null
         });
         localStorage.setItem('teacherAttendanceRecords', JSON.stringify(attendanceRecords));
-        Toastify({ text: "Checked In.", duration: 3000, backgroundColor: "green" }).showToast();
-        // No UI update, to keep it simple. User will have to refresh to see change.
+        alert('DEBUG: Check-in successful. Please refresh to see changes.');
     });
 
-    // Bare-bones Check-out
     checkOutBtn.addEventListener('click', () => {
-        console.log("Check-out button clicked.");
+        const loggedInTeacherId = localStorage.getItem('userId');
+        const todayString = new Date().toISOString().split('T')[0];
         let attendanceRecords = JSON.parse(localStorage.getItem('teacherAttendanceRecords')) || [];
         const recordIndex = attendanceRecords.findIndex(rec => rec.teacherId === loggedInTeacherId && rec.date === todayString);
 
         if (recordIndex > -1) {
-            if (attendanceRecords[recordIndex].checkOut) {
-                Toastify({ text: "Already checked out today.", duration: 3000 }).showToast();
-                return;
-            }
             attendanceRecords[recordIndex].checkOut = new Date().toISOString();
             localStorage.setItem('teacherAttendanceRecords', JSON.stringify(attendanceRecords));
-            Toastify({ text: "Checked Out.", duration: 3000, backgroundColor: "green" }).showToast();
+            alert('DEBUG: Check-out successful. Please refresh to see changes.');
         } else {
-            Toastify({ text: "Cannot check out before checking in.", duration: 3000 }).showToast();
+            alert('DEBUG: Cannot check out before checking in.');
         }
     });
-});
+
+} else {
+    // If the buttons aren't found, this is the root problem.
+    alert('DEBUG: Check-in/out buttons not found on the page.');
+}
