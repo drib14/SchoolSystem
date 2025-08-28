@@ -59,6 +59,11 @@ document.addEventListener('DOMContentLoaded', () => {
     teacherApplyForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
+        if (!photoUrl) {
+            Toastify({ text: "Please upload a profile photo.", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)" }).showToast();
+            return;
+        }
+
         const uploads = teacherRequirementsList.querySelectorAll('.requirement-upload');
         let allFilesChosen = true;
         uploads.forEach(upload => {
@@ -68,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (!allFilesChosen) {
-            alert('Please upload all required documents before submitting.');
+            Toastify({ text: "Please upload all required documents.", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)" }).showToast();
             return;
         }
 

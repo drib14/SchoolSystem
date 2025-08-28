@@ -66,23 +66,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     nextBtns.forEach(btn => {
         btn.addEventListener('click', () => {
+            let isValid = true;
             if (currentStep === 0) {
-                // Save personal info
-                applicantData.firstName = document.getElementById('firstName').value;
-                applicantData.lastName = document.getElementById('lastName').value;
-                applicantData.email = document.getElementById('email').value;
-                applicantData.phone = document.getElementById('phone').value;
+                const firstName = document.getElementById('firstName').value;
+                const lastName = document.getElementById('lastName').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                if (!firstName || !lastName || !email || !phone || !applicantData.photoUrl) {
+                    isValid = false;
+                    Toastify({ text: "Please fill out all fields and upload a photo.", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)" }).showToast();
+                } else {
+                    applicantData.firstName = firstName;
+                    applicantData.lastName = lastName;
+                    applicantData.email = email;
+                    applicantData.phone = phone;
+                }
             } else if (currentStep === 1) {
-                // Save academic info
                 const courseCode = courseSelection.value;
-                const selectedCourse = courses.find(c => c.code === courseCode);
-                applicantData.course = selectedCourse;
-                applicantData.academicYear = document.getElementById('academic-year').value;
-                applicantData.yearLevel = document.getElementById('year-level').value;
+                if (!courseCode) {
+                    isValid = false;
+                    Toastify({ text: "Please select a course.", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)" }).showToast();
+                } else {
+                    const selectedCourse = courses.find(c => c.code === courseCode);
+                    applicantData.course = selectedCourse;
+                    applicantData.academicYear = document.getElementById('academic-year').value;
+                    applicantData.yearLevel = document.getElementById('year-level').value;
+                }
             }
-            currentStep++;
-            updateFormSteps();
-            updateProgress();
+
+            if (isValid) {
+                currentStep++;
+                updateFormSteps();
+                updateProgress();
+            }
         });
     });
 
