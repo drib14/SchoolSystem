@@ -110,24 +110,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    modalBody.addEventListener('change', (e) => {
-        if (e.target.type === 'checkbox') {
-            const applicantId = e.target.dataset.applicantId;
-            const reqId = parseInt(e.target.dataset.reqId, 10);
-            const isChecked = e.target.checked;
+    document.getElementById('save-req-changes-btn').addEventListener('click', () => {
+        const checkboxes = modalBody.querySelectorAll('input[type="checkbox"]');
+        let applicantId = null;
+
+        checkboxes.forEach(checkbox => {
+            applicantId = checkbox.dataset.applicantId; // All checkboxes belong to the same applicant
+            const reqId = parseInt(checkbox.dataset.reqId, 10);
+            const isChecked = checkbox.checked;
+            const newStatus = isChecked ? 'Submitted' : 'Pending';
 
             const teacherIndex = allTeachers.findIndex(t => t.id === applicantId);
             if (teacherIndex > -1) {
                 const reqIndex = allTeachers[teacherIndex].requirements.findIndex(r => r.id === reqId);
                 if (reqIndex > -1) {
-                    const newStatus = isChecked ? 'Submitted' : 'Pending';
                     allTeachers[teacherIndex].requirements[reqIndex].status = newStatus;
-                    localStorage.setItem('teachers', JSON.stringify(allTeachers));
-
-                    const statusSpan = e.target.closest('li').querySelector('span');
-                    statusSpan.textContent = newStatus;
                 }
             }
+        });
+
+        if (applicantId) {
+            localStorage.setItem('teachers', JSON.stringify(allTeachers));
+            Toastify({ text: "Requirement changes saved!", duration: 3000, className: "toast-success" }).showToast();
+            closeRequirementsModal();
         }
     });
 

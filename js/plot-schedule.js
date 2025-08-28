@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const allStudents = JSON.parse(localStorage.getItem('students')) || [];
     const allSubjects = JSON.parse(localStorage.getItem('subjects')) || [];
     const allSchedules = JSON.parse(localStorage.getItem('schedules')) || [];
+    const allTeachers = JSON.parse(localStorage.getItem('teachers')) || [];
 
     const currentUser = allStudents.find(s => s.id === loggedInUserId);
 
@@ -33,7 +34,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Rendering Logic ---
     function renderAvailableClasses() {
         availableClassesTbody.innerHTML = '';
-        const courseSubjects = allSubjects.filter(s => s.courseCode === currentUser.course.code);
+
+        // Filter subjects by the student's course AND year level
+        const courseSubjects = allSubjects.filter(s =>
+            s.courseCode === currentUser.course.code &&
+            s.yearLevel === currentUser.yearLevel
+        );
+
         const courseSubjectCodes = courseSubjects.map(s => s.code);
         const availableSchedules = allSchedules.filter(s => courseSubjectCodes.includes(s.subjectCode));
 
@@ -48,12 +55,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isPlotted) return;
 
             const subject = allSubjects.find(s => s.code === schedule.subjectCode);
+            const teacher = allTeachers.find(t => t.id === schedule.teacherId);
+            const teacherName = teacher ? `${teacher.firstName} ${teacher.lastName}` : 'N/A';
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td data-label="Subject">${subject ? subject.name : 'N/A'}</td>
                 <td data-label="Section">${schedule.sectionCode}</td>
                 <td data-label="Schedule">${schedule.time}</td>
-                <td data-label="Teacher">${schedule.teacher}</td>
+                <td data-label="Teacher">${teacherName}</td>
                 <td data-label="Action">
                     <button class="action-btn approve-btn add-btn" data-subject-code="${schedule.subjectCode}" data-section-code="${schedule.sectionCode}">Add</button>
                 </td>
@@ -75,12 +84,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         studentPlottedSchedules.forEach(schedule => {
             const subject = allSubjects.find(s => s.code === schedule.subjectCode);
+            const teacher = allTeachers.find(t => t.id === schedule.teacherId);
+            const teacherName = teacher ? `${teacher.firstName} ${teacher.lastName}` : 'N/A';
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td data-label="Subject">${subject ? subject.name : 'N/A'}</td>
                 <td data-label="Section">${schedule.sectionCode}</td>
                 <td data-label="Schedule">${schedule.time}</td>
-                <td data-label="Teacher">${schedule.teacher}</td>
+                <td data-label="Teacher">${teacherName}</td>
                 <td data-label="Action">
                     <button class="action-btn deny-btn remove-btn" data-subject-code="${schedule.subjectCode}" data-section-code="${schedule.sectionCode}">Remove</button>
                 </td>

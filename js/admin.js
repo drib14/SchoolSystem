@@ -34,32 +34,45 @@ document.addEventListener('DOMContentLoaded', () => {
     const enrolledStudentList = allStudents.filter(s => s.status === 'enrolled');
     const miscellaneousFeesTotal = feeComponents.reduce((sum, fee) => sum + fee.amount, 0);
     enrolledStudentList.forEach(student => {
-        let totalUnits = 0;
-        (student.plottedClasses || []).forEach(schedule => {
-            const subject = allSubjects.find(s => s.code === schedule.subjectCode);
-            if (subject) totalUnits += parseFloat(subject.units) || 0;
-        });
+        if (!student.course || !student.course.code) return; // Skip students with no course assigned
+
+        // Correctly calculate units based on the student's assigned course
+        const courseSubjects = allSubjects.filter(s => s.courseCode === student.course.code);
+        const totalUnits = courseSubjects.reduce((sum, subject) => sum + (parseFloat(subject.units) || 0), 0);
+
         totalTuition += (totalUnits * tuitionRate) + miscellaneousFeesTotal;
     });
 
     // Total Payroll
     let totalPayroll = 0;
-    const currentMonth = new Date().getMonth();
-    const currentYear = new Date().getFullYear();
+    const today = new Date();
+    const currentMonth = today.getMonth();
+    const currentYear = today.getFullYear();
+    const payrollSettings = JSON.parse(localStorage.getItem('payrollSettings')) || { workingDays: [1,2,3,4,5], deductionPerAbsence: 0, components: [] };
+
+    const getWorkDaysInMonth = (year, month, workingDays) => {
+        const date = new Date(year, month, 1);
+        let workDays = 0;
+        while (date.getMonth() === month) {
+            if (workingDays.includes(date.getDay())) workDays++;
+            date.setDate(date.getDate() + 1);
+        }
+        return workDays;
+    };
+    const totalWorkDays = getWorkDaysInMonth(currentYear, currentMonth, payrollSettings.workingDays);
+
     const approvedTeacherList = allTeachers.filter(t => t.status === 'approved');
     approvedTeacherList.forEach(teacher => {
-        const monthlyRecords = attendanceRecords.filter(rec => {
-            const recDate = new Date(rec.date);
-            return rec.teacherId === teacher.id && recDate.getMonth() === currentMonth && recDate.getFullYear() === currentYear;
-        });
-        let totalHours = 0;
-        monthlyRecords.forEach(rec => {
-            if (rec.checkIn && rec.checkOut) totalHours += (new Date(rec.checkOut) - new Date(rec.checkIn)) / 1000 / 60 / 60;
-        });
-        const grossSalary = totalHours * hourlyRate;
-        const totalAllowances = payrollComponents.filter(c => c.type === 'allowance').reduce((sum, c) => sum + c.amount, 0);
-        const totalDeductions = payrollComponents.filter(c => c.type === 'deduction').reduce((sum, c) => sum + c.amount, 0);
-        totalPayroll += grossSalary + totalAllowances - totalDeductions;
+        const baseSalary = teacher.monthlySalary || 0;
+        const teacherRecords = attendanceRecords.filter(rec => rec.teacherId === teacher.id && new Date(rec.date).getMonth() === currentMonth && new Date(rec.date).getFullYear() === currentYear);
+        const daysPresent = new Set(teacherRecords.map(rec => rec.date)).size;
+        const absences = totalWorkDays - daysPresent;
+        const absenceDeductions = absences * payrollSettings.deductionPerAbsence;
+
+        const totalAllowances = payrollSettings.components.filter(c => c.type === 'allowance').reduce((sum, c) => sum + c.amount, 0);
+        const totalDeductions = payrollSettings.components.filter(c => c.type === 'deduction').reduce((sum, c) => sum + c.amount, 0);
+
+        totalPayroll += baseSalary - absenceDeductions + totalAllowances - totalDeductions;
     });
 
     // --- Update UI ---

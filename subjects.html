@@ -45,6 +45,15 @@
                             <input type="number" id="subjectUnits" placeholder="Units" required min="1">
                         </div>
                         <div class="input-group">
+                            <label for="yearLevel">Year Level:</label>
+                            <select id="yearLevel" required>
+                                <option value="1">1st Year</option>
+                                <option value="2">2nd Year</option>
+                                <option value="3">3rd Year</option>
+                                <option value="4">4th Year</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
                             <label for="course-assignment">Assign to Course:</label>
                             <select id="course-assignment" required>
                                 <option value="">--Select a Course--</option>
@@ -63,6 +72,7 @@
                                 <th>Code</th>
                                 <th>Name</th>
                                 <th>Units</th>
+                                <th>Year Level</th>
                                 <th>Assigned Course</th>
                                 <th>Actions</th>
                             </tr>
