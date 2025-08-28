@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISCP - Library Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/panel.css">
+    <style>
+        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .search-container form { display: flex; gap: 10px; }
+        .results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 15px;}
+        .book-card { background: #fff; padding: 10px; border-radius: 8px; text-align: center; font-size: 0.9rem; }
+        .book-card img { max-width: 100%; height: 150px; object-fit: cover; }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.js"></script>
+    <div class="panel-container">
+        <div class="sidebar">
+            <div class="sidebar-header"><div class="profile-info"><i class="fas fa-user-circle profile-pic"></i><h3 class="user-name">Loading...</h3></div></div>
+            <ul class="sidebar-menu"></ul>
+            <div class="sidebar-footer"><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <div class="header-left"><button class="hamburger-btn"><i class="fas fa-bars"></i></button><h1>Library Admin</h1></div>
+                <div class="header-right"><div class="notification-area"><button class="notification-btn"><i class="fas fa-bell"></i><span class="notification-badge" style="display: none;">0</span></button><div class="notification-panel"><div class="notification-panel-header"><h4>Notifications</h4></div><ul class="notification-list"></ul></div></div></div>
+            </div>
+            <div class="content">
+                <div class="grid-container">
+                    <div class="form-section">
+                        <h3>Add Book to Collection</h3>
+                        <div class="search-container">
+                            <form id="book-api-search-form">
+                                <input type="text" id="api-search-query" placeholder="Search Open Library for a book..." style="width: 100%;">
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </form>
+                        </div>
+                        <div class="results-grid" id="api-search-results"></div>
+                    </div>
+                    <div class="form-section">
+                        <h3>Manage Loans</h3>
+                        <form id="loan-form">
+                            <div class="form-group"><label for="book-select">Book:</label><select id="book-select" required></select></div>
+                            <div class="form-group"><label for="user-select">User (Student/Teacher ID):</label><select id="user-select" required></select></div>
+                            <div class="form-group"><label for="due-date">Due Date:</label><input type="date" id="due-date" required></div>
+                            <button type="submit" class="btn btn-primary">Check Out</button>
+                        </form>
+                        <hr style="margin: 20px 0;">
+                        <h3>Manage Returns</h3>
+                        <form id="return-form">
+                           <div class="form-group"><label for="loaned-book-select">Select Loaned Book to Return:</label><select id="loaned-book-select" required></select></div>
+                           <button type="submit" class="btn">Check In</button>
+                        </form>
+                    </div>
+                </div>
+                 <div class="course-list-container" style="margin-top: 20px;">
+                    <h3>Current Library Collection</h3>
+                    <table class="applicants-table">
+                        <thead><tr><th>Cover</th><th>Title</th><th>Author</th><th>Status</th><th>Actions</th></tr></thead>
+                        <tbody id="library-collection-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="overlay"></div>
+    <script src="js/auth.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/library-admin.js"></script>
+</body>
+</html>

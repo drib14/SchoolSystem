@@ -29,10 +29,17 @@ document.addEventListener('DOMContentLoaded', () => {
             { href: 'tuition-management.html', icon: 'fa-file-invoice-dollar', text: 'Tuition Management' },
             { href: 'tuition-settings.html', icon: 'fa-cogs', text: 'Tuition Settings' },
             { href: 'payroll.html', icon: 'fa-dollar-sign', text: 'Payroll' },
-            { href: 'payroll-settings.html', icon: 'fa-money-check-alt', text: 'Payroll Settings' }
+            { href: 'payroll-settings.html', icon: 'fa-money-check-alt', text: 'Payroll Settings' },
+            { href: 'messaging.html', icon: 'fa-comments', text: 'Messages' },
+            { href: 'events.html', icon: 'fa-calendar-star', text: 'Events' },
+            { href: 'library.html', icon: 'fa-book-bookmark', text: 'Library' },
+            { href: 'library-admin.html', icon: 'fa-book-reader', text: 'Library Admin' }
         ],
         teacher: [
             { href: 'teacher.html', icon: 'fa-tachometer-alt', text: 'Dashboard' },
+            { href: 'messaging.html', icon: 'fa-comments', text: 'Messages' },
+            { href: 'events.html', icon: 'fa-calendar-star', text: 'Events' },
+            { href: 'library.html', icon: 'fa-book-bookmark', text: 'Library' },
             { href: 'my-classes.html', icon: 'fa-chalkboard-teacher', text: 'My Classes' },
             { href: 'teacher-attendance.html', icon: 'fa-user-clock', text: 'My Attendance' },
             { href: 'my-payslips.html', icon: 'fa-wallet', text: 'My Payslips' },
@@ -42,6 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
         ],
         student: [
             { href: 'student.html', icon: 'fa-tachometer-alt', text: 'Dashboard' },
+            { href: 'messaging.html', icon: 'fa-comments', text: 'Messages' },
+            { href: 'events.html', icon: 'fa-calendar-star', text: 'Events' },
+            { href: 'library.html', icon: 'fa-book-bookmark', text: 'Library' },
             { href: 'plot-schedule.html', icon: 'fa-calendar-plus', text: 'Class Enrollment' },
             { href: 'my-attendance.html', icon: 'fa-user-check', text: 'My Attendance' },
             { href: 'my-grades.html', icon: 'fa-graduation-cap', text: 'My Grades' },
@@ -53,13 +63,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const profileInfo = document.querySelector('.profile-info');
     const logoutBtn = document.getElementById('logout-btn');
 
+    console.log(`[Auth.js] Running for role: ${userRole}`);
+
     if (!sidebarMenu || !profileInfo || !logoutBtn) {
-        // This script is not on a panel page, so do nothing.
+        console.error("[Auth.js] Critical element not found. Is this a panel page?");
+        console.log(`[Auth.js] sidebarMenu: ${sidebarMenu}, profileInfo: ${profileInfo}, logoutBtn: ${logoutBtn}`);
         return;
     }
 
+    console.log("[Auth.js] All critical elements found.");
+
     // Populate sidebar menu
     const links = navLinks[userRole];
+    if (!links) {
+        console.error(`[Auth.js] No nav links found for role: ${userRole}`);
+        return;
+    }
+    console.log(`[Auth.js] Found ${links.length} nav links for role ${userRole}.`);
     const currentPage = window.location.pathname.split('/').pop();
     sidebarMenu.innerHTML = links.map(link => `
         <li>

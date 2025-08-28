@@ -85,13 +85,26 @@ document.addEventListener('DOMContentLoaded', () => {
             if (studentIndex > -1) {
                 allStudents[studentIndex].status = 'enrolled';
                 localStorage.setItem('students', JSON.stringify(allStudents));
-                alert(`Applicant ${applicantId} has been approved.`);
+                Toastify({ text: `Applicant ${applicantId} has been approved.`, duration: 3000 }).showToast();
+
+                // Create notification for the student
+                let notifications = JSON.parse(localStorage.getItem('notifications')) || [];
+                notifications.push({
+                    id: Date.now(),
+                    userId: applicantId,
+                    message: "Congratulations! Your application has been approved. You can now enroll in classes.",
+                    link: "plot-schedule.html",
+                    isRead: false,
+                    timestamp: new Date().toISOString()
+                });
+                localStorage.setItem('notifications', JSON.stringify(notifications));
+
                 renderTable();
             }
         } else if (target.classList.contains('deny-btn')) {
             allStudents = allStudents.filter(s => s.id !== applicantId);
             localStorage.setItem('students', JSON.stringify(allStudents));
-            alert(`Applicant ${applicantId} has been denied and removed.`);
+            Toastify({ text: `Applicant ${applicantId} has been denied and removed.`, duration: 3000 }).showToast();
             renderTable();
         }
     });
