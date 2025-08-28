@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISCP - Class Analytics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/panel.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.js"></script>
+    <div class="panel-container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="profile-info">
+                    <i class="fas fa-user-circle profile-pic"></i>
+                    <h3 class="user-name">Loading...</h3>
+                </div>
+            </div>
+            <ul class="sidebar-menu">
+                <!-- Populated by auth.js -->
+            </ul>
+            <div class="sidebar-footer">
+                <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
+                <h1>Class Analytics</h1>
+                <p>View grade distributions and statistics for your classes.</p>
+            </div>
+            <div class="content">
+                <div class="form-group">
+                    <label for="class-select">Select a Class:</label>
+                    <select id="class-select">
+                        <option value="">-- Choose a class --</option>
+                    </select>
+                </div>
+                <div id="analytics-container" style="display: none;">
+                    <div class="chart-container" style="margin-top: 20px;">
+                        <canvas id="grade-distribution-chart"></canvas>
+                    </div>
+                    <div id="stats-container" style="margin-top: 20px;">
+                        <h3>Class Statistics</h3>
+                        <p><strong>Average Grade:</strong> <span id="avg-grade">N/A</span></p>
+                        <p><strong>Highest Grade:</strong> <span id="high-grade">N/A</span></p>
+                        <p><strong>Lowest Grade:</strong> <span id="low-grade">N/A</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="overlay"></div>
+    <script src="js/auth.js"></script>
+    <script src="js/class-analytics.js"></script>
+</body>
+</html>

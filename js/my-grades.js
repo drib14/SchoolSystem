@@ -76,6 +76,42 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.head.appendChild(style);
 
+    function renderGradesChart() {
+        const myGradeRecords = gradeRecords.filter(rec => rec.studentId === loggedInUserId && rec.calculated && rec.calculated.finalGrade);
+
+        if (myGradeRecords.length === 0) return;
+
+        const labels = myGradeRecords.map(rec => {
+            const subject = allSubjects.find(s => s.code === rec.scheduleId.split('_')[0]);
+            return subject ? subject.name : 'Unknown';
+        });
+        const data = myGradeRecords.map(rec => parseFloat(rec.calculated.finalGrade));
+
+        const chartCanvas = document.getElementById('grades-chart');
+        new Chart(chartCanvas, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Final Grade',
+                    data: data,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+    }
+
     // --- Initial Load ---
     renderGrades();
+    renderGradesChart();
 });

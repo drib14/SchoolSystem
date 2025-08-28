@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { href: 'teacher-attendance.html', icon: 'fa-user-clock', text: 'My Attendance' },
             { href: 'my-payslips.html', icon: 'fa-wallet', text: 'My Payslips' },
             { href: 'grade-entry.html', icon: 'fa-marker', text: 'Grades' },
+            { href: 'class-analytics.html', icon: 'fa-chart-bar', text: 'Class Analytics' },
             { href: 'profile.html', icon: 'fa-user-cog', text: 'Profile' }
         ],
         student: [
