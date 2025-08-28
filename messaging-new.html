@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISCP - New Message</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/panel.css">
+</head>
+<body>
+    <div class="panel-container">
+        <div class="sidebar">
+            <ul id="sidebar-menu" class="sidebar-menu"></ul>
+            <div class="sidebar-footer">
+                <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <div class="header-left">
+                    <a href="messaging-inbox.html" class="btn" style="margin-right: 15px;"><i class="fas fa-arrow-left"></i> Back to Inbox</a>
+                    <h1>New Message</h1>
+                </div>
+                <div class="header-right">
+                    <div class="profile-info"></div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Select a Recipient</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="new-message-form">
+                            <div class="form-group">
+                                <label for="recipient-select">Select a user to message:</label>
+                                <select id="recipient-select" class="form-control" required>
+                                    <!-- Options populated by JS -->
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Start Conversation</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/auth.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/messaging-new.js"></script>
+</body>
+</html>

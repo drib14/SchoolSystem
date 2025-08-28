@@ -101,54 +101,22 @@
                     </div>
                 </div>
             </div>
-            <div class="content" style="padding:0;">
-                <div class="messaging-container">
-                    <div class="conversation-list">
-                        <button id="new-message-btn" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;">New Message</button>
-                        <div id="conversation-list-items">
-                            <!-- Conversations will be loaded here -->
-                        </div>
+            <div class="content">
+                <div class="card">
+                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                        <h2>My Conversations</h2>
+                        <a href="messaging-new.html" class="btn btn-primary">New Message</a>
                     </div>
-                    <div class="message-view">
-                        <div id="welcome-view">
-                             <div style="text-align: center; padding: 50px;">
-                                <h3>Welcome to Messaging</h3>
-                                <p>Select a conversation or start a new one.</p>
-                            </div>
-                        </div>
-                        <div id="conversation-view" style="display: none; height: 100%; display: flex; flex-direction: column;">
-                            <div class="message-header">
-                                <button class="mobile-back-btn btn" style="display: none;"><i class="fas fa-arrow-left"></i></button>
-                                <h3 id="conversation-with-name"></h3>
-                            </div>
-                            <div class="message-body" id="message-body">
-                                <!-- Messages will be loaded here -->
-                            </div>
-                            <div class="message-footer">
-                                <form id="message-form">
-                                    <input type="text" id="message-input" class="form-control" placeholder="Type a message..." required>
-                                    <button type="submit" class="btn btn-primary">Send</button>
-                                </form>
-                            </div>
-                        </div>
-                         <div id="new-message-view" style="display: none;">
-                            <div class="new-message-container">
-                                <h3>Start a New Conversation</h3>
-                                <div class="form-group">
-                                    <label for="recipient-select">Select a user to message:</label>
-                                    <select id="recipient-select" class="form-control"></select>
-                                </div>
-                                <button id="start-conversation-btn" class="btn btn-primary">Start Conversation</button>
-                                <button id="cancel-new-message-btn" class="btn btn-secondary">Cancel</button>
-                            </div>
-                        </div>
+                    <div class="card-body" id="conversation-list-items">
+                        <!-- Conversations will be loaded here as a list -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="js/auth.js"></script>
     <script src="js/nav.js"></script>
-    <script src="js/messaging.js"></script>
+    <script src="js/messaging-inbox.js"></script>
     <script src="js/notifications.js"></script>
     <div class="overlay"></div>
 </body>

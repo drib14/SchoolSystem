@@ -274,6 +274,83 @@
     align-items: center;
     gap: 20px;
 }
+
+/* --- Notification Area --- */
+.notification-area {
+    position: relative;
+}
+.notification-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    cursor: pointer;
+    position: relative;
+}
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #e74c3c;
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.notification-panel {
+    display: none;
+    position: absolute;
+    top: 150%;
+    right: 0;
+    width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 1010;
+}
+.notification-panel-header {
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+.notification-panel-header h4 {
+    margin: 0;
+}
+.notification-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.notification-list li a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
+}
+.notification-list li a:hover {
+    background-color: var(--light-grey);
+}
+.notification-list li:last-child a {
+    border-bottom: none;
+}
+.notification-text {
+    font-size: 0.9em;
+    margin: 4px 0;
+}
+.notification-time {
+    font-size: 0.75em;
+    color: #6c757d;
+}
+
+
 .header h1 {
     margin: 0;
     font-size: 1.5rem;
@@ -362,10 +439,15 @@
 
     .applicants-table td {
         text-align: right;
-        padding-left: 50%;
+        padding-left: 45%;
+        padding-top: 10px;
+        padding-bottom: 10px;
         position: relative;
         border: none;
         border-bottom: 1px solid var(--border-color);
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
     }
 
     .applicants-table td:last-child {

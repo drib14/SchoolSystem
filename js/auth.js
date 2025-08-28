@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { href: 'schedules.html', icon: 'fa-calendar-alt', text: 'Schedules' },
             { href: 'library-admin.html', icon: 'fa-book-reader', text: 'Library Admin' },
             { href: 'events.html', icon: 'fa-calendar-star', text: 'Events' },
-            { href: 'messaging.html', icon: 'fa-comments', text: 'Messaging' },
+            { href: 'messaging-inbox.html', icon: 'fa-comments', text: 'Messaging' },
             { href: 'requirements.html', icon: 'fa-file-alt', text: 'Requirements' },
             { href: 'tuition-management.html', icon: 'fa-file-invoice-dollar', text: 'Tuition' },
             { href: 'payroll.html', icon: 'fa-dollar-sign', text: 'Payroll' }
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { href: 'teacher-attendance.html', icon: 'fa-user-clock', text: 'My Attendance' },
             { href: 'library.html', icon: 'fa-book-bookmark', text: 'Library' },
             { href: 'events.html', icon: 'fa-calendar-star', text: 'Events' },
-            { href: 'messaging.html', icon: 'fa-comments', text: 'Messaging' },
+            { href: 'messaging-inbox.html', icon: 'fa-comments', text: 'Messaging' },
             { href: 'profile.html', icon: 'fa-user-cog', text: 'Profile' }
         ],
         student: [
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { href: 'my-grades.html', icon: 'fa-graduation-cap', text: 'My Grades' },
             { href: 'library.html', icon: 'fa-book-bookmark', text: 'Library' },
             { href: 'events.html', icon: 'fa-calendar-star', text: 'Events' },
-            { href: 'messaging.html', icon: 'fa-comments', text: 'Messaging' },
+            { href: 'messaging-inbox.html', icon: 'fa-comments', text: 'Messaging' },
             { href: 'profile.html', icon: 'fa-user-cog', text: 'Profile' }
         ]
     };
