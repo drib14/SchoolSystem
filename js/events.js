@@ -43,8 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p>${event.description}</p>
                 ${currentUserRole === 'admin' ? `
                 <div class="actions">
-                    <button class="btn btn-sm btn-primary" data-action="edit" data-id="${event.id}">Edit</button>
-                    <button class="btn btn-sm btn-danger" data-action="delete" data-id="${event.id}">Delete</button>
+                    <button class="btn btn-sm btn-secondary" data-action="edit" data-id="${event.id}">Edit</button>
+                    <button class="btn btn-sm deny-btn" data-action="delete" data-id="${event.id}">Delete</button>
                 </div>
                 ` : ''}
             `;
