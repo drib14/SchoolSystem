@@ -5,21 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISCP - My Grades</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
 </head>
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.js"></script>
     <div class="panel-container">
         <div class="sidebar">
             <div class="sidebar-header">
-                <div class="profile-info">
-                    <!-- Populated by auth.js -->
-                </div>
+                <h2>ISCP</h2>
+                <p>Student Panel</p>
             </div>
             <ul class="sidebar-menu">
-                <!-- Populated by auth.js -->
+                <li><a href="student.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="plot-schedule.html"><i class="fas fa-calendar-plus"></i> Class Enrollment</a></li>
+                <li><a href="my-attendance.html"><i class="fas fa-user-check"></i> My Attendance</a></li>
+                <li><a href="my-grades.html" class="active"><i class="fas fa-graduation-cap"></i> My Grades</a></li>
+                <li><a href="profile.html"><i class="fas fa-user-cog"></i> Profile</a></li>
             </ul>
             <div class="sidebar-footer">
                 <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -27,20 +28,14 @@
         </div>
         <div class="main-content">
             <div class="header">
-                <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
                 <h1>My Grades</h1>
                 <p>Here is a summary of your academic performance.</p>
             </div>
-            <div class="chart-container" style="margin-bottom: 20px;">
-                <h3>Grades per Subject</h3>
-                <canvas id="grades-chart"></canvas>
-            </div>
-            <div id="grades-content">
+            <div class="content" id="grades-content">
                 <!-- Grade tables will be inserted here by JS -->
             </div>
         </div>
     </div>
-    <script src="js/auth.js"></script>
     <script src="js/my-grades.js"></script>
 </body>
 </html>

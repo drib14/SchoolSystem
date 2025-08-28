@@ -5,19 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISCP - Student Panel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
 </head>
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.js"></script>
     <div class="panel-container">
         <div class="sidebar">
             <div class="sidebar-header">
-                <div class="profile-info">
-                    <i class="fas fa-user-circle profile-pic"></i>
-                    <h3 class="user-name">Student Name</h3>
-                </div>
+                <h2>ISCP</h2>
+                <p>Student Panel</p>
             </div>
             <ul class="sidebar-menu">
                 <li><a href="student.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
@@ -32,95 +28,13 @@
         </div>
         <div class="main-content">
             <div class="header">
-                <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
-                <h1>Student Dashboard</h1>
+                <h1>Welcome, Student!</h1>
             </div>
-            <div class="analytics-grid">
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-book-open"></i></div>
-                    <div class="card-info">
-                        <p>Enrolled Subjects</p>
-                        <h3 id="student-subject-count">0</h3>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
-                    <div class="card-info">
-                        <p>Overall GPA</p>
-                        <h3 id="student-gpa">N/A</h3>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-user-times"></i></div>
-                    <div class="card-info">
-                        <p>Total Absences</p>
-                        <h3 id="student-absence-count">0</h3>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-file-invoice-dollar"></i></div>
-                    <div class="card-info">
-                        <p>Total Tuition</p>
-                        <h3 id="student-total-tuition">₱0.00</h3>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-money-check-alt"></i></div>
-                    <div class="card-info">
-                        <p>Amount Paid</p>
-                        <h3 id="student-amount-paid">₱0.00</h3>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-wallet"></i></div>
-                    <div class="card-info">
-                        <p>Remaining Balance</p>
-                        <h3 id="student-remaining-balance">₱0.00</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="content" style="margin-top: 20px;">
-                <button id="submit-payment-btn" class="btn btn-primary">Submit Payment Receipt</button>
-                <div id="payment-history-container" style="margin-top: 20px;">
-                    <h3>Payment History</h3>
-                    <table class="applicants-table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Amount</th>
-                                <th>Status</th>
-                                <th>Notes</th>
-                            </tr>
-                        </thead>
-                        <tbody id="payment-history-tbody">
-                            <!-- Payment history will be inserted here -->
-                        </tbody>
-                    </table>
-                </div>
+            <div class="content">
+                <p>This is your student dashboard. You can view your courses, grades, and profile information here.</p>
             </div>
         </div>
     </div>
-    <script src="js/auth.js"></script>
     <script src="js/student.js"></script>
-
-    <!-- Payment Modal -->
-    <div id="payment-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>Submit Payment</h2>
-            <form id="payment-form">
-                <div class="form-group">
-                    <label for="payment-amount">Amount Paid (in ₱)</label>
-                    <input type="number" id="payment-amount" required min="1" step="0.01">
-                </div>
-                <div class="form-group">
-                    <label for="receipt-upload">Upload Receipt</label>
-                    <input type="file" id="receipt-upload" accept="image/*" required>
-                    <img id="receipt-preview" src="" alt="Receipt Preview" style="max-width: 100%; max-height: 200px; margin-top: 10px; display: none;">
-                </div>
-                <button type="submit" class="btn btn-primary">Submit for Verification</button>
-            </form>
-        </div>
-    </div>
 </body>
 </html>

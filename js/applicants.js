@@ -85,25 +85,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (studentIndex > -1) {
                 allStudents[studentIndex].status = 'enrolled';
                 localStorage.setItem('students', JSON.stringify(allStudents));
-                Toastify({
-                    text: `Applicant ${applicantId} has been approved.`,
-                    duration: 3000,
-                    gravity: "top",
-                    position: "center",
-                    backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-                }).showToast();
+                alert(`Applicant ${applicantId} has been approved.`);
                 renderTable();
             }
         } else if (target.classList.contains('deny-btn')) {
             allStudents = allStudents.filter(s => s.id !== applicantId);
             localStorage.setItem('students', JSON.stringify(allStudents));
-            Toastify({
-                text: `Applicant ${applicantId} has been denied and removed.`,
-                duration: 3000,
-                gravity: "top",
-                position: "center",
-                backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)",
-            }).showToast();
+            alert(`Applicant ${applicantId} has been denied and removed.`);
             renderTable();
         }
     });
@@ -136,7 +124,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Logout functionality is handled by auth.js
+    // Logout functionality
+    const logoutBtn = document.getElementById('logout-btn');
+    if(logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('userRole');
+            window.location.href = 'index.html';
+        });
+    }
 
     renderTable();
 });

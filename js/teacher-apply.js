@@ -59,11 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
     teacherApplyForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        if (!photoUrl) {
-            Toastify({ text: "Please upload a profile photo.", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)" }).showToast();
-            return;
-        }
-
         const uploads = teacherRequirementsList.querySelectorAll('.requirement-upload');
         let allFilesChosen = true;
         uploads.forEach(upload => {
@@ -73,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (!allFilesChosen) {
-            Toastify({ text: "Please upload all required documents.", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)" }).showToast();
+            alert('Please upload all required documents before submitting.');
             return;
         }
 
@@ -84,13 +79,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const date = new Date();
         const year = date.getFullYear().toString().slice(-2);
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
 
-        let lastTeacherIdCounter = parseInt(localStorage.getItem('lastTeacherIdCounter') || '0');
-        lastTeacherIdCounter++;
-        localStorage.setItem('lastTeacherIdCounter', lastTeacherIdCounter);
+        const teachers = JSON.parse(localStorage.getItem('teachers')) || [];
+        const sequentialNumber = (teachers.length + 1).toString().padStart(3, '0');
 
-        const sequentialNumber = lastTeacherIdCounter.toString().padStart(4, '0');
-        const id = `T${year}${month}${sequentialNumber}`;
+        const id = `T${year}${month}${day}${sequentialNumber}`;
         const password = `${id}${lastName.charAt(0).toUpperCase()}`;
 
         const applicantRequirements = teacherReqs.map(req => ({
@@ -118,19 +112,9 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('teachers', JSON.stringify(teachers));
 
         // --- Notify User and Redirect ---
-        localStorage.setItem('userRole', 'teacher');
-        localStorage.setItem('userId', id);
+        alert(`Application Submitted!\nYour Teacher ID is: ${id}\nYour Password is: ${password}\nPlease wait for an administrator to review your application.`);
 
-        Toastify({
-            text: "Application Submitted! You are now being redirected to your dashboard.",
-            duration: 5000,
-            gravity: "top",
-            position: "center",
-            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-            close: true,
-        }).showToast();
-
-        setTimeout(() => { window.location.href = 'teacher.html'; }, 5000);
+        window.location.href = 'index.html';
     });
 
     buildRequirementsList();

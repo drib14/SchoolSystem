@@ -44,4 +44,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Logout functionality
+    const logoutBtn = document.getElementById('logout-btn');
+    if(logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('userRole');
+            localStorage.removeItem('userId');
+            window.location.href = 'index.html';
+        });
+    }
+
+    // Initial Render
+    renderMyClasses();
 });

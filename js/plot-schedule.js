@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Rendering Logic ---
     function renderAvailableClasses() {
         availableClassesTbody.innerHTML = '';
-        const courseSubjects = allSubjects.filter(s => s.courseCode === currentUser.course.code && s.yearLevel === currentUser.yearLevel);
+        const courseSubjects = allSubjects.filter(s => s.courseCode === currentUser.course.code);
         const courseSubjectCodes = courseSubjects.map(s => s.code);
         const availableSchedules = allSchedules.filter(s => courseSubjectCodes.includes(s.subjectCode));
 
@@ -139,5 +139,4 @@ document.addEventListener('DOMContentLoaded', () => {
         renderPlottedClasses();
     }
     renderAll();
-});
 });

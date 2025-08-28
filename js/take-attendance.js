@@ -25,14 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentSubject = allSubjects.find(s => s.code === subjectCode);
 
     if (!currentSchedule || !currentSubject) {
-        Toastify({
-            text: "Error: Could not find class details.",
-            duration: 3000,
-            gravity: "top",
-            position: "center",
-            backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)",
-            stopOnFocus: true,
-        }).showToast();
+        alert('Could not find class details.');
         return;
     }
 
@@ -110,14 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         localStorage.setItem('attendanceRecords', JSON.stringify(attendanceRecords));
-        Toastify({
-            text: "Attendance has been submitted successfully!",
-            duration: 3000,
-            gravity: "top",
-            position: "center",
-            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-            stopOnFocus: true,
-        }).showToast();
+        alert('Attendance has been submitted successfully!');
         renderRoster(); // Re-render to disable fields
     });
 
@@ -134,5 +120,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Initial Load ---
     renderRoster();
-});
 });

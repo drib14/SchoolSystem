@@ -71,50 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Conflict Checking Logic ---
-    function checkForConflicts(teacherId, newTime) {
-        const teacher = teachers.find(t => t.id === teacherId);
-        if (!teacher) return;
-
-        const teacherWorkSchedule = teacher.workSchedule || {};
-        const teacherSchedules = schedules.filter(s => s.teacherId === teacherId);
-
-        // Simple time parsing (assumes "DAYS HH:MM-HH:MM AM/PM" format)
-        const timeParts = newTime.match(/([A-Z,a-z]+)\s*(\d{1,2}):\d{2}-(\d{1,2}):\d{2}/);
-        if (!timeParts) return; // Cannot parse time
-
-        const daysStr = timeParts[1];
-        const startHour = parseInt(timeParts[2]);
-        const endHour = parseInt(timeParts[3]);
-
-        const dayMap = { M: 0, T: 1, W: 2, Th: 3, F: 4, S: 5 };
-        const days = daysStr.match(/S(?!a)|M|T(?!h)|W|Th|F/g).map(d => dayMap[d]).filter(d => d !== undefined);
-
-        // 1. Check against teacher's general availability and day off
-        if (days.some(d => d === teacher.dayOff)) {
-            Toastify({ text: `Warning: This schedule conflicts with the teacher's assigned day off.`, duration: 5000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #ffc107, #ff9a4f)" }).showToast();
-        }
-        days.forEach(day => {
-            for (let hour = startHour; hour < endHour; hour++) {
-                if (!teacherWorkSchedule[day] || !teacherWorkSchedule[day].includes(hour)) {
-                    Toastify({ text: `Warning: Teacher is not available on this day/time.`, duration: 5000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #ffc107, #ff9a4f)" }).showToast();
-                    return; // Show one warning and stop
-                }
-            }
-        });
-
-        // 2. Check against other classes for the same teacher
-        teacherSchedules.forEach(existingSchedule => {
-            const existingParts = existingSchedule.time.match(/([A-Z,a-z]+)\s*(\d{1,2}):\d{2}-(\d{1,2}):\d{2}/);
-            if (!existingParts) return;
-
-            const existingDays = existingParts[1].split('').map(d => dayMap[d]).filter(d => d !== undefined);
-            if (days.some(d => existingDays.includes(d))) { // If any day overlaps
-                 Toastify({ text: `Warning: Teacher already has a class scheduled at this time.`, duration: 5000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #ffc107, #ff9a4f)" }).showToast();
-            }
-        });
-    }
-
     // --- Form Submission ---
     addScheduleForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -125,8 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
             room: document.getElementById('roomNumber').value,
             teacherId: teacherSelection.value
         };
-
-        checkForConflicts(newSchedule.teacherId, newSchedule.time);
 
         schedules.push(newSchedule);
         localStorage.setItem('schedules', JSON.stringify(schedules));
@@ -146,7 +100,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Logout is handled by auth.js ---
+    // --- Logout ---
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('userRole');
+            window.location.href = 'index.html';
+        });
+    }
 
     // --- Initial Load ---
     populateSubjectsDropdown();

@@ -43,16 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
             code: courseCodeInput.value
         };
 
-        let pendingActions = JSON.parse(localStorage.getItem('pendingActions')) || [];
-        pendingActions.push({
-            type: 'newCourse',
-            payload: newCourse,
-            date: new Date().toISOString()
-        });
-        localStorage.setItem('pendingActions', JSON.stringify(pendingActions));
-
-        Toastify({ text: "Course submitted for admin approval.", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)" }).showToast();
-
+        courses.push(newCourse);
+        saveCourses();
+        renderCourses();
         addCourseForm.reset();
     });
 
@@ -67,4 +60,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Logout functionality
+    const logoutBtn = document.getElementById('logout-btn');
+    if(logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('userRole');
+            window.location.href = 'index.html';
+        });
+    }
+
+    // Initial render
+    renderCourses();
 });

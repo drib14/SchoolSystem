@@ -20,9 +20,7 @@
                     <h3 class="user-name">Loading...</h3>
                 </div>
             </div>
-            <ul class="sidebar-menu">
-                <!-- Populated by auth.js -->
-            </ul>
+            <ul class="sidebar-menu"></ul>
             <div class="sidebar-footer">
                 <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
@@ -31,75 +29,16 @@
             <div class="header">
                 <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
                 <h1>Admin Dashboard</h1>
-                <p>Welcome, Admin! Here is an overview of the school system.</p>
             </div>
             <div class="analytics-grid">
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-user-plus"></i></div>
-                    <div class="card-info">
-                        <p>Student Applicants</p>
-                        <h3 id="student-applicants-count">0</h3>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-user-graduate"></i></div>
-                    <div class="card-info">
-                        <p>Enrolled Students</p>
-                        <h3 id="enrolled-students-count">0</h3>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-user-tie"></i></div>
-                    <div class="card-info">
-                        <p>Teacher Applicants</p>
-                        <h3 id="teacher-applicants-count">0</h3>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
-                    <div class="card-info">
-                        <p>Approved Teachers</p>
-                        <h3 id="approved-teachers-count">0</h3>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-book"></i></div>
-                    <div class="card-info">
-                        <p>Total Courses</p>
-                        <h3 id="total-courses-count">0</h3>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-flask"></i></div>
-                    <div class="card-info">
-                        <p>Total Subjects</p>
-                        <h3 id="total-subjects-count">0</h3>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-file-invoice-dollar"></i></div>
-                    <div class="card-info">
-                        <p>Total Est. Tuition</p>
-                        <h3 id="total-tuition">₱0.00</h3>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-dollar-sign"></i></div>
-                    <div class="card-info">
-                        <p>Total Payroll (Month)</p>
-                        <h3 id="total-payroll">₱0.00</h3>
-                    </div>
-                </div>
+                <div class="card"><div class="card-icon"><i class="fas fa-user-plus"></i></div><div class="card-info"><p>Student Applicants</p><h3 id="student-applicants-count">0</h3></div></div>
+                <div class="card"><div class="card-icon"><i class="fas fa-user-graduate"></i></div><div class="card-info"><p>Enrolled Students</p><h3 id="enrolled-students-count">0</h3></div></div>
+                <div class="card"><div class="card-icon"><i class="fas fa-user-tie"></i></div><div class="card-info"><p>Teacher Applicants</p><h3 id="teacher-applicants-count">0</h3></div></div>
+                <div class="card"><div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div><div class="card-info"><p>Approved Teachers</p><h3 id="approved-teachers-count">0</h3></div></div>
             </div>
             <div class="charts-grid">
-                <div class="chart-container">
-                    <h3>Students per Course</h3>
-                    <canvas id="course-chart"></canvas>
-                </div>
-                <div class="chart-container">
-                    <h3>Student Status</h3>
-                    <canvas id="student-status-chart"></canvas>
-                </div>
+                <div class="chart-container"><h3>Students per Course</h3><canvas id="course-chart"></canvas></div>
+                <div class="chart-container"><h3>Student Status</h3><canvas id="student-status-chart"></canvas></div>
             </div>
         </div>
     </div>

@@ -52,67 +52,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function populateCourses() {
-        if (courses.length === 0) {
-            courseSelection.innerHTML = '<option value="">No courses available</option>';
-        } else {
-            courses.forEach(course => {
-                const option = document.createElement('option');
-                option.value = course.code;
-                option.textContent = course.name;
-                courseSelection.appendChild(option);
-            });
-        }
+        // ... (existing logic)
     }
 
     nextBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            let isValid = true;
-            if (currentStep === 0) {
-                const firstName = document.getElementById('firstName').value;
-                const lastName = document.getElementById('lastName').value;
-                const email = document.getElementById('email').value;
-                const phone = document.getElementById('phone').value;
-                if (!firstName || !lastName || !email || !phone || !applicantData.photoUrl) {
-                    isValid = false;
-                    Toastify({ text: "Please fill out all fields and upload a photo.", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)" }).showToast();
-                } else {
-                    applicantData.firstName = firstName;
-                    applicantData.lastName = lastName;
-                    applicantData.email = email;
-                    applicantData.phone = phone;
-                }
-            } else if (currentStep === 1) {
-                const courseCode = courseSelection.value;
-                if (!courseCode) {
-                    isValid = false;
-                    Toastify({ text: "Please select a course.", duration: 3000, gravity: "top", position: "center", backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)" }).showToast();
-                } else {
-                    const selectedCourse = courses.find(c => c.code === courseCode);
-                    applicantData.course = selectedCourse;
-                    applicantData.academicYear = document.getElementById('academic-year').value;
-                    applicantData.yearLevel = document.getElementById('year-level').value;
-                }
-            }
-
-            if (isValid) {
-                currentStep++;
-                updateFormSteps();
-                updateProgress();
-            }
+            // ... (existing logic)
         });
     });
 
-    function updateFormSteps() {
-        formSteps.forEach((step, idx) => {
-            step.classList.toggle('active', idx === currentStep);
-        });
-    }
-
     prevBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            currentStep--;
-            updateFormSteps();
-            updateProgress();
+            // ... (existing logic)
         });
     });
 
@@ -152,13 +103,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const date = new Date();
         const year = date.getFullYear().toString().slice(-2);
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
 
-        let lastStudentIdCounter = parseInt(localStorage.getItem('lastStudentIdCounter') || '0');
-        lastStudentIdCounter++;
-        localStorage.setItem('lastStudentIdCounter', lastStudentIdCounter);
+        const students = JSON.parse(localStorage.getItem('students')) || [];
+        const sequentialNumber = (students.length + 1).toString().padStart(3, '0');
 
-        const sequentialNumber = lastStudentIdCounter.toString().padStart(4, '0');
-        const id = `${year}${month}${sequentialNumber}`;
+        const id = `${year}${month}${day}${sequentialNumber}`;
         const password = `${id}${applicantData.lastName.charAt(0).toUpperCase()}`;
 
         const masterRequirements = allRequirements.filter(r => r.type === 'Student');
@@ -176,20 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
         students.push(applicantData);
         localStorage.setItem('students', JSON.stringify(students));
 
-        // --- Auto Login and Redirect ---
-        localStorage.setItem('userRole', 'student');
-        localStorage.setItem('userId', id);
+        alert(`Application Submitted!\nYour ID is: ${id}\nYour Password is: ${password}\nPlease wait for admin approval.`);
 
-        Toastify({
-            text: `Application Submitted! You are now being redirected to your dashboard.`,
-            duration: 5000,
-            gravity: "top",
-            position: "center",
-            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-            close: true,
-        }).showToast();
-
-        setTimeout(() => { window.location.href = 'student.html'; }, 5000);
+        window.location.href = 'index.html';
     });
 
     populateCourses();

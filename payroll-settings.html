@@ -5,21 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISCP - Payroll Settings</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
 </head>
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.js"></script>
     <div class="panel-container">
         <div class="sidebar">
             <div class="sidebar-header">
-                <div class="profile-info">
-                    <!-- Populated by auth.js -->
-                </div>
+                <h2>ISCP</h2>
+                <p>Admin Panel</p>
             </div>
             <ul class="sidebar-menu">
-                <!-- Populated by auth.js -->
+                <li><a href="admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="applicants.html"><i class="fas fa-user-plus"></i> Student Applicants</a></li>
+                <li><a href="#"><i class="fas fa-user-graduate"></i> Students</a></li>
+                <li><a href="teacher-applicants.html"><i class="fas fa-user-tie"></i> Teacher Applicants</a></li>
+                <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
+                <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
+                <li><a href="subjects.html"><i class="fas fa-flask"></i> Subjects</a></li>
+                <li><a href="schedules.html"><i class="fas fa-calendar-alt"></i> Schedules</a></li>
+                <li><a href="requirements.html"><i class="fas fa-file-alt"></i> Requirements</a></li>
+                <li><a href="tuition-management.html"><i class="fas fa-file-invoice-dollar"></i> Tuition Management</a></li>
+                <li><a href="tuition-settings.html"><i class="fas fa-cogs"></i> Tuition Settings</a></li>
+                <li><a href="payroll.html"><i class="fas fa-dollar-sign"></i> Payroll</a></li>
+                <li><a href="payroll-settings.html" class="active"><i class="fas fa-money-check-alt"></i> Payroll Settings</a></li>
             </ul>
             <div class="sidebar-footer">
                 <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -27,54 +36,57 @@
         </div>
         <div class="main-content">
             <div class="header">
-                <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
                 <h1>Payroll Settings</h1>
-                <p>Configure the parameters for teacher payroll calculation.</p>
             </div>
             <div class="content">
-                <form id="payroll-settings-form">
-                    <div class="form-section">
-                        <h2>Salary and Deductions</h2>
-                        <div class="form-group">
-                            <label for="monthlySalary">Standard Monthly Salary (in ₱)</label>
-                            <input type="number" id="monthlySalary" placeholder="e.g., 25000" required min="0" step="100">
+                <div class="course-form-container">
+                    <h3>Set Standard Hourly Rate</h3>
+                    <form id="payroll-rate-form">
+                        <div class="input-group">
+                            <label for="hourlyRate">Hourly Rate (in ₱)</label>
+                            <input type="number" id="hourlyRate" placeholder="e.g., 500" required min="0" step="0.01">
                         </div>
-                        <div class="form-group">
-                            <label for="absenceDeduction">Deduction per Absence (in ₱)</label>
-                            <input type="number" id="absenceDeduction" placeholder="e.g., 500" required min="0" step="10">
+                        <button type="submit" class="action-btn approve-btn">Save Rate</button>
+                    </form>
+                </div>
+                <hr style="margin: 30px 0;">
+                <div class="course-form-container">
+                    <h3>Manage Payroll Components</h3>
+                    <form id="add-payroll-component-form">
+                        <div class="input-group">
+                            <input type="text" id="componentName" placeholder="Component Name (e.g., Health Insurance)" required>
                         </div>
-                        <div class="form-group">
-                            <label for="lateDeduction">Deduction per Late Arrival (in ₱)</label>
-                            <input type="number" id="lateDeduction" placeholder="e.g., 100" required min="0" step="10">
+                        <div class="input-group">
+                            <input type="number" id="componentAmount" placeholder="Amount (in ₱)" required step="0.01">
                         </div>
-                        <div class="form-group">
-                            <label for="taxRate">Tax Rate (%)</label>
-                            <input type="number" id="taxRate" placeholder="e.g., 10" required min="0" max="100" step="1">
-                        </div>
-                    </div>
-                    <div class="form-section">
-                        <h2>Pay Period Configuration</h2>
-                        <div class="form-group">
-                            <label for="payday">Payroll Distribution Day</label>
-                            <select id="payday" required>
-                                <option value="5">Friday</option>
-                                <option value="1">Monday</option>
-                                <option value="2">Tuesday</option>
-                                <option value="3">Wednesday</option>
-                                <option value="4">Thursday</option>
+                        <div class="input-group">
+                            <select id="componentType" required>
+                                <option value="allowance">Allowance</option>
+                                <option value="deduction">Deduction</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>Pay Period Cycle</label>
-                            <p class="form-help-text">Payroll is calculated bi-weekly based on the selected distribution day.</p>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Save Settings</button>
-                </form>
+                        <button type="submit" class="action-btn approve-btn">Add Component</button>
+                    </form>
+                </div>
+                <div class="course-list-container" style="margin-top: 20px;">
+                    <h3>Existing Payroll Components</h3>
+                    <table class="applicants-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Amount</th>
+                                <th>Type</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="payroll-components-tbody">
+                            <!-- Components will be inserted here by JS -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-    <script src="js/auth.js"></script>
     <script src="js/payroll-settings.js"></script>
 </body>
 </html>

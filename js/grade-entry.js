@@ -1,31 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // This will be handled by auth.js, but we repeat it here for safety
+    // --- Auth & URL Param ---
+    const loggedInTeacherId = localStorage.getItem('userId');
     const userRole = localStorage.getItem('userRole');
-    if (userRole !== 'teacher') {
-        // window.location.href = 'index.html'; // auth.js will handle this
+    if (userRole !== 'teacher' || !loggedInTeacherId) {
+        window.location.href = 'index.html';
         return;
     }
-
     const urlParams = new URLSearchParams(window.location.search);
     const scheduleId = urlParams.get('scheduleId');
     if (!scheduleId) {
-        // window.location.href = 'my-classes.html'; // or show an error
+        window.location.href = 'my-classes.html';
         return;
     }
     const [subjectCode, sectionCode] = scheduleId.split('_');
-
-    // --- Grade Weight Configuration ---
-    const WEIGHTS = {
-        midterm: {
-            quizzes: 0.3,
-            assignments: 0.3,
-            midtermExam: 0.4
-        },
-        final: {
-            midtermGrade: 0.5,
-            finalExam: 0.5
-        }
-    };
 
     // --- Data Loading ---
     const allStudents = JSON.parse(localStorage.getItem('students')) || [];
@@ -37,14 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentSubject = allSubjects.find(s => s.code === subjectCode);
 
     if (!currentSchedule || !currentSubject) {
-        Toastify({
-            text: "Error: Could not find class details.",
-            duration: 3000,
-            gravity: "top",
-            position: "center",
-            backgroundColor: "linear-gradient(to right, #dc3545, #ef5350)",
-            stopOnFocus: true,
-        }).showToast();
+        alert('Could not find class details.');
         return;
     }
 
@@ -67,25 +47,24 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderRoster() {
         rosterTbody.innerHTML = '';
         if (enrolledStudents.length === 0) {
-            rosterTbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">No students are enrolled in this class.</td></tr>';
+            rosterTbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No students are enrolled in this class.</td></tr>';
             gradesForm.querySelector('button').style.display = 'none';
         } else {
             enrolledStudents.forEach(student => {
                 const existingRecord = gradeRecords.find(rec => rec.scheduleId === scheduleId && rec.studentId === student.id);
-                const grades = existingRecord ? existingRecord.grades : { quizzes: '', assignments: '', midtermExam: '', finalExam: '' };
-                const calculatedGrades = existingRecord ? existingRecord.calculated : { midtermGrade: 'N/A', finalGrade: 'N/A' };
+                const grades = existingRecord ? existingRecord.grades : { quizzes: '', assignments: '', midterm: '', finalExam: '' };
+                const finalGrade = existingRecord ? existingRecord.finalGrade : 'N/A';
 
                 const row = document.createElement('tr');
                 row.dataset.studentId = student.id;
                 row.innerHTML = `
                     <td>${student.id}</td>
                     <td>${student.firstName} ${student.lastName}</td>
-                    <td class="grade-inputs"><input type="number" name="quizzes" value="${grades.quizzes || ''}" min="0" max="100"></td>
-                    <td class="grade-inputs"><input type="number" name="assignments" value="${grades.assignments || ''}" min="0" max="100"></td>
-                    <td class="grade-inputs"><input type="number" name="midtermExam" value="${grades.midtermExam || ''}" min="0" max="100"></td>
-                    <td class="grade-inputs"><input type="text" name="midtermGrade" value="${calculatedGrades.midtermGrade}" readonly class="final-grade-input"></td>
-                    <td class="grade-inputs"><input type="number" name="finalExam" value="${grades.finalExam || ''}" min="0" max="100"></td>
-                    <td class="grade-inputs"><input type="text" name="finalGrade" value="${calculatedGrades.finalGrade}" readonly class="final-grade-input"></td>
+                    <td class="grade-inputs"><input type="number" class="grade-component" name="quizzes" value="${grades.quizzes || ''}" min="0" max="100"></td>
+                    <td class="grade-inputs"><input type="number" class="grade-component" name="assignments" value="${grades.assignments || ''}" min="0" max="100"></td>
+                    <td class="grade-inputs"><input type="number" class="grade-component" name="midterm" value="${grades.midterm || ''}" min="0" max="100"></td>
+                    <td class="grade-inputs"><input type="number" class="grade-component" name="finalExam" value="${grades.finalExam || ''}" min="0" max="100"></td>
+                    <td class="grade-inputs"><input type="text" class="final-grade-input" name="finalGrade" value="${finalGrade}" readonly></td>
                 `;
                 rosterTbody.appendChild(row);
             });
@@ -101,59 +80,46 @@ document.addEventListener('DOMContentLoaded', () => {
             const studentId = row.dataset.studentId;
             if (!studentId) return;
 
-            // Get raw scores from inputs
-            const rawScores = {
-                quizzes: parseFloat(row.querySelector('input[name="quizzes"]').value) || 0,
-                assignments: parseFloat(row.querySelector('input[name="assignments"]').value) || 0,
-                midtermExam: parseFloat(row.querySelector('input[name="midtermExam"]').value) || 0,
-                finalExam: parseFloat(row.querySelector('input[name="finalExam"]').value) || 0
+            const grades = {
+                quizzes: row.querySelector('input[name="quizzes"]').value,
+                assignments: row.querySelector('input[name="assignments"]').value,
+                midterm: row.querySelector('input[name="midterm"]').value,
+                finalExam: row.querySelector('input[name="finalExam"]').value
             };
 
-            // Calculate midterm grade
-            const midtermGrade = (rawScores.quizzes * WEIGHTS.midterm.quizzes) +
-                                 (rawScores.assignments * WEIGHTS.midterm.assignments) +
-                                 (rawScores.midtermExam * WEIGHTS.midterm.midtermExam);
+            const gradeValues = Object.values(grades).map(g => parseFloat(g) || 0);
+            const finalGrade = gradeValues.reduce((sum, g) => sum + g, 0) / gradeValues.length;
 
-            // Calculate final grade
-            const finalGrade = (midtermGrade * WEIGHTS.final.midtermGrade) +
-                               (rawScores.finalExam * WEIGHTS.final.finalExam);
-
-            // Find existing record or create a new one
             const recordIndex = gradeRecords.findIndex(rec => rec.scheduleId === scheduleId && rec.studentId === studentId);
 
-            const record = {
-                scheduleId: scheduleId,
-                studentId: studentId,
-                grades: { // Store raw input values
-                    quizzes: row.querySelector('input[name="quizzes"]').value,
-                    assignments: row.querySelector('input[name="assignments"]').value,
-                    midtermExam: row.querySelector('input[name="midtermExam"]').value,
-                    finalExam: row.querySelector('input[name="finalExam"]').value
-                },
-                calculated: {
-                    midtermGrade: midtermGrade.toFixed(2),
-                    finalGrade: finalGrade.toFixed(2)
-                }
-            };
-
             if (recordIndex > -1) {
-                gradeRecords[recordIndex] = record;
+                gradeRecords[recordIndex].grades = grades;
+                gradeRecords[recordIndex].finalGrade = finalGrade.toFixed(2);
             } else {
-                gradeRecords.push(record);
+                gradeRecords.push({
+                    scheduleId: scheduleId,
+                    studentId: studentId,
+                    grades: grades,
+                    finalGrade: finalGrade.toFixed(2)
+                });
             }
         });
 
         localStorage.setItem('gradeRecords', JSON.stringify(gradeRecords));
-        Toastify({
-            text: "All grades have been saved and calculated successfully!",
-            duration: 3000,
-            gravity: "top",
-            position: "center",
-            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-            stopOnFocus: true,
-        }).showToast();
-        renderRoster(); // Re-render to show calculated grades
+        alert('All grades have been saved successfully!');
+        renderRoster(); // Re-render to show calculated final grade
     });
+
+    // --- Logout ---
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('userRole');
+            localStorage.removeItem('userId');
+            window.location.href = 'index.html';
+        });
+    }
 
     // --- Initial Load ---
     renderRoster();

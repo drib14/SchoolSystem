@@ -72,7 +72,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('total-tuition').textContent = `₱ ${totalTuition.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     document.getElementById('total-payroll').textContent = `₱ ${totalPayroll.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
-    // --- Logout is handled by auth.js ---
+    // --- Logout ---
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('userRole');
+            window.location.href = 'index.html';
+        });
+    }
 
     // --- Chart Rendering ---
 

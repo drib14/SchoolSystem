@@ -5,19 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISCP - Teacher Panel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
 </head>
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.js"></script>
     <div class="panel-container">
         <div class="sidebar">
             <div class="sidebar-header">
-                <div class="profile-info">
-                    <i class="fas fa-user-circle profile-pic"></i>
-                    <h3 class="user-name">Teacher Name</h3>
-                </div>
+                <h2>ISCP</h2>
+                <p>Teacher Panel</p>
             </div>
             <ul class="sidebar-menu">
                 <li><a href="teacher.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
@@ -32,36 +28,13 @@
         </div>
         <div class="main-content">
             <div class="header">
-                <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
-                <h1>Teacher Dashboard</h1>
+                <h1>Welcome, Teacher!</h1>
             </div>
-            <div id="announcements-container"></div>
-            <div class="analytics-grid">
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-chalkboard"></i></div>
-                    <div class="card-info">
-                        <p>My Classes</p>
-                        <h3 id="teacher-class-count">0</h3>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-user-graduate"></i></div>
-                    <div class="card-info">
-                        <p>Total Students</p>
-                        <h3 id="teacher-student-count">0</h3>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="fas fa-user-clock"></i></div>
-                    <div class="card-info">
-                        <p>Attendance Today</p>
-                        <h3 id="teacher-attendance-status">Not Recorded</h3>
-                    </div>
-                </div>
+            <div class="content">
+                <p>This is the teacher dashboard. You can manage your students, courses, and grades from here.</p>
             </div>
         </div>
     </div>
-    <script src="js/auth.js"></script>
     <script src="js/teacher.js"></script>
 </body>
 </html>

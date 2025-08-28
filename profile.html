@@ -5,68 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISCP - My Profile</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
 </head>
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.js"></script>
     <div class="panel-container">
         <div class="sidebar">
             <div class="sidebar-header">
-                <div class="profile-info">
-                    <i class="fas fa-user-circle profile-pic"></i>
-                    <h3 class="user-name">User</h3>
-                </div>
+                <h2>ISCP</h2>
+                <p>Student Panel</p>
             </div>
             <ul class="sidebar-menu">
-                <!-- Links will be dynamically populated by auth.js -->
+                <li><a href="student.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="plot-schedule.html"><i class="fas fa-calendar-plus"></i> Class Enrollment</a></li>
+                <li><a href="my-attendance.html"><i class="fas fa-user-check"></i> My Attendance</a></li>
+                <li><a href="my-grades.html"><i class="fas fa-graduation-cap"></i> My Grades</a></li>
+                <li><a href="profile.html" class="active"><i class="fas fa-user-cog"></i> Profile</a></li>
             </ul>
             <div class="sidebar-footer">
                 <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
         </div>
         <div class="main-content">
-            <div class="header">
-                <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
-                <h1>Edit Profile</h1>
-                <p>Update your personal information and profile picture.</p>
-            </div>
-            <div class="content">
-                <form id="profile-form">
-                    <div class="form-section photo-section">
-                        <h2>Profile Picture</h2>
-                        <div class="photo-preview-container">
-                            <img id="photo-preview" src="https://via.placeholder.com/150" alt="Profile Preview">
-                        </div>
-                        <input type="file" id="photo-upload" accept="image/*">
-                        <label for="photo-upload" class="btn">Upload New Photo</label>
-                    </div>
-                    <div class="form-section details-section">
-                        <h2>Personal Details</h2>
-                        <div class="form-group">
-                            <label for="firstName">First Name</label>
-                            <input type="text" id="firstName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName">Last Name</label>
-                            <input type="text" id="lastName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                </form>
+            <div class="header"><h1>My Profile</h1></div>
+            <div class="content" id="profile-content">
+                <!-- Profile data populated by JS -->
+                <p>Loading profile...</p>
             </div>
         </div>
     </div>
-    <script src="js/auth.js"></script>
-    <script src="js/profile.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userRole = localStorage.getItem('userRole');
+            const userId = localStorage.getItem('userId');
+            if (!userRole || !userId) { window.location.href = 'index.html'; return; }
+
+            const profileContent = document.getElementById('profile-content');
+            let currentUser;
+
+            if (userRole === 'student') {
+                const allStudents = JSON.parse(localStorage.getItem('students')) || [];
+                currentUser = allStudents.find(s => s.id === userId);
+            } else if (userRole === 'teacher') {
+                const allTeachers = JSON.parse(localStorage.getItem('teachers')) || [];
+                currentUser = allTeachers.find(t => t.id === userId);
+            }
+
+            if (currentUser) {
+                const photoPreviewHtml = currentUser.photoUrl
+                    ? `<img src="${currentUser.photoUrl}" alt="Profile Photo">`
+                    : '<i class="fas fa-user-circle"></i>';
+
+                let profileDetails = `
+                    <div class="photo-upload-container" style="margin-bottom: 30px;">
+                        <div class="photo-preview">${photoPreviewHtml}</div>
+                    </div>
+                    <p><strong>ID:</strong> ${currentUser.id}</p>
+                    <p><strong>Name:</strong> ${currentUser.firstName} ${currentUser.lastName}</p>
+                    <p><strong>Email:</strong> ${currentUser.email}</p>
+                    <p><strong>Phone:</strong> ${currentUser.phone}</p>
+                    <p><strong>Status:</strong> <span style="text-transform: capitalize;">${currentUser.status}</span></p>
+                `;
+
+                if (userRole === 'student') {
+                    profileDetails += `<p><strong>Course:</strong> ${currentUser.course ? currentUser.course.name : 'N/A'}</p>`;
+                }
+
+                profileContent.innerHTML = profileDetails;
+            } else {
+                profileContent.innerHTML = '<p>Could not load profile data.</p>';
+            }
+
+            const logoutBtn = document.getElementById('logout-btn');
+            if(logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.removeItem('userRole');
+                    localStorage.removeItem('userId');
+                    window.location.href = 'index.html';
+                });
+            }
+        });
+    </script>
 </body>
 </html>

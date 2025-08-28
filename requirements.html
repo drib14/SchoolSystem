@@ -5,21 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISCP - Manage Requirements</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
 </head>
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.js"></script>
     <div class="panel-container">
         <div class="sidebar">
             <div class="sidebar-header">
-                <div class="profile-info">
-                    <!-- Populated by auth.js -->
-                </div>
+                <h2>ISCP</h2>
+                <p>Admin Panel</p>
             </div>
             <ul class="sidebar-menu">
-                <!-- Populated by auth.js -->
+                <li><a href="admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="applicants.html"><i class="fas fa-user-plus"></i> Student Applicants</a></li>
+                <li><a href="#"><i class="fas fa-user-graduate"></i> Students</a></li>
+                <li><a href="teacher-applicants.html"><i class="fas fa-user-tie"></i> Teacher Applicants</a></li>
+                <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
+                <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
+                <li><a href="subjects.html"><i class="fas fa-flask"></i> Subjects</a></li>
+                <li><a href="schedules.html"><i class="fas fa-calendar-alt"></i> Schedules</a></li>
+                <li><a href="requirements.html" class="active"><i class="fas fa-file-alt"></i> Requirements</a></li>
+                <li><a href="tuition-management.html"><i class="fas fa-file-invoice-dollar"></i> Tuition Management</a></li>
+                <li><a href="tuition-settings.html"><i class="fas fa-cogs"></i> Tuition Settings</a></li>
+                <li><a href="payroll.html"><i class="fas fa-dollar-sign"></i> Payroll</a></li>
+                <li><a href="payroll-settings.html"><i class="fas fa-money-check-alt"></i> Payroll Settings</a></li>
             </ul>
             <div class="sidebar-footer">
                 <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -27,7 +36,6 @@
         </div>
         <div class="main-content">
             <div class="header">
-                <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
                 <h1>Manage Application Requirements</h1>
             </div>
             <div class="content">
@@ -44,15 +52,16 @@
                                 <option value="Teacher">Teacher</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Add Requirement</button>
+                        <button type="submit" class="action-btn approve-btn">Add Requirement</button>
                     </form>
                 </div>
-                <div class="course-list-container" style="margin-top: 20px;">
+                <hr style="margin: 30px 0;">
+                <div class="course-list-container">
                     <h3>Existing Requirements</h3>
                     <table class="applicants-table">
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Requirement Name</th>
                                 <th>Type</th>
                                 <th>Actions</th>
                             </tr>
@@ -65,7 +74,6 @@
             </div>
         </div>
     </div>
-    <script src="js/auth.js"></script>
     <script src="js/requirements.js"></script>
 </body>
 </html>

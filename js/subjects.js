@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderSubjects() {
         subjectsTbody.innerHTML = '';
         if (subjects.length === 0) {
-            subjectsTbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No subjects found.</td></tr>';
+            subjectsTbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No subjects found.</td></tr>';
         } else {
             subjects.forEach((subject, index) => {
                 const row = document.createElement('tr');
@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td data-label="Name">${subject.name}</td>
                     <td data-label="Units">${subject.units}</td>
                     <td data-label="Assigned Course">${courseName} (${subject.courseCode})</td>
-                    <td data-label="Year Level">${subject.yearLevel || 'N/A'}</td>
                     <td data-label="Actions">
                         <button class="action-btn deny-btn delete-btn" data-index="${index}">Delete</button>
                     </td>
@@ -60,8 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
             code: document.getElementById('subjectCode').value,
             name: document.getElementById('subjectName').value,
             units: document.getElementById('subjectUnits').value,
-            courseCode: document.getElementById('course-assignment').value,
-            yearLevel: document.getElementById('year-level-assignment').value
+            courseCode: courseAssignmentSelect.value
         };
 
         subjects.push(newSubject);
@@ -95,5 +93,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initial Load ---
     populateCoursesDropdown();
     renderSubjects();
-});
 });

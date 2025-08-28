@@ -5,42 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISCP - Approved Teachers</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
 </head>
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.6.1/toastify.min.js"></script>
     <div class="panel-container">
         <div class="sidebar">
             <div class="sidebar-header">
-                <div class="profile-info">
-                    <i class="fas fa-user-circle profile-pic"></i>
-                    <h3 class="user-name">Loading...</h3>
-                </div>
+                <h2>ISCP</h2>
+                <p>Admin Panel</p>
             </div>
             <ul class="sidebar-menu">
-                <!-- Populated by auth.js -->
+                <li><a href="admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="applicants.html"><i class="fas fa-user-plus"></i> Student Applicants</a></li>
+                <li><a href="teacher-applicants.html"><i class="fas fa-user-tie"></i> Teacher Applicants</a></li>
+                <li><a href="enrolled-students.html"><i class="fas fa-user-graduate"></i> Students</a></li>
+                <li><a href="approved-teachers.html" class="active"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
+                <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
+                <li><a href="subjects.html"><i class="fas fa-flask"></i> Subjects</a></li>
+                <li><a href="schedules.html"><i class="fas fa-calendar-alt"></i> Schedules</a></li>
+                <li><a href="requirements.html"><i class="fas fa-file-alt"></i> Requirements</a></li>
+                <li><a href="tuition-management.html"><i class="fas fa-file-invoice-dollar"></i> Tuition Management</a></li>
+                <li><a href="tuition-settings.html"><i class="fas fa-cogs"></i> Tuition Settings</a></li>
+                <li><a href="payroll.html"><i class="fas fa-dollar-sign"></i> Payroll</a></li>
+                <li><a href="payroll-settings.html"><i class="fas fa-money-check-alt"></i> Payroll Settings</a></li>
             </ul>
             <div class="sidebar-footer">
                 <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
         </div>
         <div class="main-content">
-            <div class="header">
-                <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
-                <h1>Approved Teachers</h1>
-            </div>
+            <div class="header"><h1>Approved Teachers</h1></div>
             <div class="content">
                 <table class="applicants-table">
                     <thead>
                         <tr>
-                            <th>Photo</th>
+                                <th>Photo</th>
                             <th>Teacher ID</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="approved-teachers-tbody">
@@ -50,8 +54,30 @@
             </div>
         </div>
     </div>
-    <div class="overlay"></div>
-    <script src="js/auth.js"></script>
-    <script src="js/approved-teachers.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('userRole') !== 'admin') { window.location.href = 'index.html'; return; }
+            const tbody = document.getElementById('approved-teachers-tbody');
+            const allTeachers = JSON.parse(localStorage.getItem('teachers')) || [];
+            const approved = allTeachers.filter(t => t.status === 'approved');
+            if(approved.length > 0) {
+                approved.forEach(t => {
+                    const row = tbody.insertRow();
+                    const photoHtml = t.photoUrl ? `<img src="${t.photoUrl}" width="40" height="40" style="border-radius: 50%; object-fit: cover;">` : '<i class="fas fa-user-circle" style="font-size: 2rem; color: #ccc;"></i>';
+                    row.innerHTML = `<td data-label="Photo" style="width: 60px;">${photoHtml}</td><td data-label="ID">${t.id}</td><td data-label="Name">${t.firstName} ${t.lastName}</td><td data-label="Email">${t.email}</td><td data-label="Phone">${t.phone}</td>`;
+                });
+            } else {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No approved teachers found.</td></tr>';
+            }
+            const logoutBtn = document.getElementById('logout-btn');
+            if(logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.removeItem('userRole');
+                    window.location.href = 'index.html';
+                });
+            }
+        });
+    </script>
 </body>
 </html>

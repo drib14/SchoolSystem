@@ -1,24 +1,71 @@
-// --- Absolute Bare-Bones Script ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Auth Check
+    const loggedInTeacherId = localStorage.getItem('userId');
+    const userRole = localStorage.getItem('userRole');
+    if (userRole !== 'teacher' || !loggedInTeacherId) {
+        window.location.href = 'index.html';
+        return;
+    }
 
-// Get elements directly. Assume DOM is loaded.
-const checkInBtn = document.getElementById('check-in-btn');
-const checkOutBtn = document.getElementById('check-out-btn');
+    // DOM Elements
+    const statusEl = document.getElementById('current-status');
+    const checkInBtn = document.getElementById('check-in-btn');
+    const checkOutBtn = document.getElementById('check-out-btn');
+    const historyTbody = document.getElementById('attendance-history-tbody');
 
-// Check if buttons exist to prevent errors
-if (checkInBtn && checkOutBtn) {
+    let attendanceRecords = JSON.parse(localStorage.getItem('teacherAttendanceRecords')) || [];
+    const todayString = new Date().toISOString().split('T')[0];
+
+    function getTodaysRecord() {
+        return attendanceRecords.find(rec => rec.teacherId === loggedInTeacherId && rec.date === todayString);
+    }
+
+    function updateUI() {
+        const todaysRecord = getTodaysRecord();
+        if (!todaysRecord) {
+            statusEl.textContent = 'Not Checked In';
+            checkInBtn.disabled = false;
+            checkOutBtn.disabled = true;
+        } else if (todaysRecord.checkIn && !todaysRecord.checkOut) {
+            statusEl.textContent = `Checked In at ${new Date(todaysRecord.checkIn).toLocaleTimeString()}`;
+            checkInBtn.disabled = true;
+            checkOutBtn.disabled = false;
+        } else if (todaysRecord.checkIn && todaysRecord.checkOut) {
+            statusEl.textContent = 'Checked Out for the day';
+            checkInBtn.disabled = true;
+            checkOutBtn.disabled = true;
+        }
+        renderHistory();
+    }
+
+    function renderHistory() {
+        historyTbody.innerHTML = '';
+        const myRecords = attendanceRecords.filter(rec => rec.teacherId === loggedInTeacherId).sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        myRecords.forEach(rec => {
+            const row = document.createElement('tr');
+            let totalHours = 'N/A';
+            if (rec.checkIn && rec.checkOut) {
+                const hours = (new Date(rec.checkOut) - new Date(rec.checkIn)) / 1000 / 60 / 60;
+                totalHours = hours.toFixed(2);
+            }
+            row.innerHTML = `
+                <td>${new Date(rec.date).toDateString()}</td>
+                <td>${rec.checkIn ? new Date(rec.checkIn).toLocaleTimeString() : 'N/A'}</td>
+                <td>${rec.checkOut ? new Date(rec.checkOut).toLocaleTimeString() : 'N/A'}</td>
+                <td>${totalHours}</td>
+            `;
+            historyTbody.appendChild(row);
+        });
+    }
 
     checkInBtn.addEventListener('click', () => {
-        const loggedInTeacherId = localStorage.getItem('userId');
-        const todayString = new Date().toISOString().split('T')[0];
-        let attendanceRecords = JSON.parse(localStorage.getItem('teacherAttendanceRecords')) || [];
-        const todaysRecord = attendanceRecords.find(rec => rec.teacherId === loggedInTeacherId && rec.date === todayString);
-
+        const todaysRecord = getTodaysRecord();
         if (todaysRecord) {
-            // Do nothing, just alert for debugging.
-            alert('DEBUG: Already checked in.');
+            alert('You have already checked in today.');
             return;
         }
-
+        alert('Biometric simulation successful. You are checked in.');
         attendanceRecords.push({
             teacherId: loggedInTeacherId,
             date: todayString,
@@ -26,25 +73,32 @@ if (checkInBtn && checkOutBtn) {
             checkOut: null
         });
         localStorage.setItem('teacherAttendanceRecords', JSON.stringify(attendanceRecords));
-        alert('DEBUG: Check-in successful. Please refresh to see changes.');
+        updateUI();
     });
 
     checkOutBtn.addEventListener('click', () => {
-        const loggedInTeacherId = localStorage.getItem('userId');
-        const todayString = new Date().toISOString().split('T')[0];
-        let attendanceRecords = JSON.parse(localStorage.getItem('teacherAttendanceRecords')) || [];
         const recordIndex = attendanceRecords.findIndex(rec => rec.teacherId === loggedInTeacherId && rec.date === todayString);
-
         if (recordIndex > -1) {
+            alert('Biometric simulation successful. You are checked out.');
             attendanceRecords[recordIndex].checkOut = new Date().toISOString();
             localStorage.setItem('teacherAttendanceRecords', JSON.stringify(attendanceRecords));
-            alert('DEBUG: Check-out successful. Please refresh to see changes.');
+            updateUI();
         } else {
-            alert('DEBUG: Cannot check out before checking in.');
+            alert('Error: Could not find your check-in record for today.');
         }
     });
 
-} else {
-    // If the buttons aren't found, this is the root problem.
-    alert('DEBUG: Check-in/out buttons not found on the page.');
-}
+    // Logout
+    const logoutBtn = document.getElementById('logout-btn');
+    if(logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('userRole');
+            localStorage.removeItem('userId');
+            window.location.href = 'index.html';
+        });
+    }
+
+    // Initial Load
+    updateUI();
+});
