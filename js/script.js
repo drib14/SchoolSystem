@@ -67,10 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (userIsValid) {
             localStorage.setItem('userRole', role);
-            localStorage.setItem('userId', username); // Store userId for all roles
+            // Store userId for both students and teachers
+            if (role === 'student' || role === 'teacher') {
+                localStorage.setItem('userId', username);
+            }
             window.location.href = `${role}.html`;
         } else {
-            Toastify({ text: 'Invalid username or password', duration: 3000, className: "toast-error", gravity: "top", position: "center" }).showToast();
+            alert('Invalid username or password');
         }
     });
 });

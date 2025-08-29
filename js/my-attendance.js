@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     checkInBtn.addEventListener('click', () => {
         const selectedScheduleId = classCheckInSelect.value;
         if (!selectedScheduleId) {
-            Toastify({ text: 'Please select a class to check in for.', duration: 3000, className: "toast-warning" }).showToast();
+            alert('Please select a class to check in for.');
             return;
         }
 
@@ -71,12 +71,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const alreadyAttended = attendanceRecords.some(rec => rec.studentId === loggedInUserId && rec.scheduleId === selectedScheduleId && rec.date === todayString);
 
         if (alreadyAttended) {
-            Toastify({ text: 'You have already checked in or been marked for this class today.', duration: 3000, className: "toast-warning" }).showToast();
+            alert('You have already checked in or been marked for this class today.');
             return;
         }
 
         // Simulate successful biometric scan
-        Toastify({ text: 'Biometric scan successful! You have been checked in.', duration: 3000, className: "toast-success" }).showToast();
+        alert('Biometric scan successful! You have been checked in.');
 
         // Add the new record
         attendanceRecords.push({

@@ -16,7 +16,11 @@
                 <p>Student Panel</p>
             </div>
             <ul class="sidebar-menu">
-                <!-- Links are now dynamically inserted by js/auth.js -->
+                <li><a href="student.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="plot-schedule.html"><i class="fas fa-calendar-plus"></i> Class Enrollment</a></li>
+                <li><a href="my-attendance.html"><i class="fas fa-user-check"></i> My Attendance</a></li>
+                <li><a href="my-grades.html"><i class="fas fa-graduation-cap"></i> My Grades</a></li>
+                <li><a href="profile.html" class="active"><i class="fas fa-user-cog"></i> Profile</a></li>
             </ul>
             <div class="sidebar-footer">
                 <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -24,6 +28,7 @@
         </div>
         <div class="main-content">
             <div class="header">
+                <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
                 <h1>My Profile</h1>
                 <div class="header-right">
                     <div class="profile-info">
@@ -31,12 +36,17 @@
                     </div>
                 </div>
             </div>
-            <div class="content" id="profile-content">
-                <!-- Profile data populated by JS -->
-                <p>Loading profile...</p>
+            <div class="content">
+                <div id="profile-view">
+                    <!-- Profile view is dynamically generated here -->
+                </div>
+                <form id="profile-edit-form" class="card" style="display:none; padding: 20px;">
+                     <!-- Edit form is dynamically generated here -->
+                </form>
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="js/auth.js"></script>
     <script src="js/nav.js"></script>
     <script src="js/profile.js"></script>

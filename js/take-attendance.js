@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentSubject = allSubjects.find(s => s.code === subjectCode);
 
     if (!currentSchedule || !currentSubject) {
-        Toastify({ text: 'Could not find class details.', duration: 3000, className: "toast-error" }).showToast();
+        alert('Could not find class details.');
         return;
     }
 
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         localStorage.setItem('attendanceRecords', JSON.stringify(attendanceRecords));
-        Toastify({ text: 'Attendance has been submitted successfully!', duration: 3000, className: "toast-success" }).showToast();
+        alert('Attendance has been submitted successfully!');
         renderRoster(); // Re-render to disable fields
     });
 

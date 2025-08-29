@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const attendanceRecords = JSON.parse(localStorage.getItem('teacherAttendanceRecords')) || [];
     const payrollSettings = JSON.parse(localStorage.getItem('payrollSettings')) || {
         deductionPerAbsence: 0,
-        workingDays: [1, 2, 3, 4, 5], // Mon-Fri
-        components: []
+        workingDays: [1, 2, 3, 4, 5]
     };
+    const payrollComponents = JSON.parse(localStorage.getItem('payrollComponents')) || [];
 
     // --- DOM Elements ---
     const payrollTbody = document.getElementById('payroll-tbody');
@@ -56,12 +56,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const daysPresent = new Set(teacherRecords.map(rec => rec.date)).size;
             const absences = totalWorkDays - daysPresent;
-            const absenceDeductions = absences * payrollSettings.deductionPerAbsence;
+            const absenceDeductions = absences > 0 ? absences * payrollSettings.deductionPerAbsence : 0;
 
-            const totalAllowances = payrollSettings.components.filter(c => c.type === 'allowance').reduce((sum, c) => sum + c.amount, 0);
-            const totalDeductions = payrollSettings.components.filter(c => c.type === 'deduction').reduce((sum, c) => sum + c.amount, 0);
+            const totalAllowances = payrollComponents.filter(c => c.type === 'allowance').reduce((sum, c) => sum + c.amount, 0);
+            const totalDeductions = payrollComponents.filter(c => c.type === 'deduction').reduce((sum, c) => sum + c.amount, 0);
 
-            const netSalary = baseSalary - absenceDeductions + totalAllowances - totalDeductions;
+            const netSalary = baseSalary + totalAllowances - totalDeductions - absenceDeductions;
 
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td data-label="Absences">${absences > 0 ? absences : 0}</td>
                 <td data-label="Net Salary">₱ ${netSalary.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                 <td data-label="Actions">
-                    <button class="action-btn view-breakdown-btn" data-id="${teacher.id}" style="background-color: #17a2b8;">View Breakdown</button>
+                    <button class="action-btn view-breakdown-btn" data-id="${teacher.id}">View Breakdown</button>
                 </td>
             `;
             payrollTbody.appendChild(row);
@@ -90,27 +90,32 @@ document.addEventListener('DOMContentLoaded', () => {
         const teacherRecords = attendanceRecords.filter(rec => rec.teacherId === teacher.id && new Date(rec.date).getMonth() === currentMonth && new Date(rec.date).getFullYear() === currentYear);
         const daysPresent = new Set(teacherRecords.map(rec => rec.date)).size;
         const absences = totalWorkDays - daysPresent;
-        const absenceDeductions = absences * payrollSettings.deductionPerAbsence;
+        const absenceDeductions = absences > 0 ? absences * payrollSettings.deductionPerAbsence : 0;
         const baseSalary = teacher.monthlySalary || 0;
 
         let breakdownHtml = '<ul>';
         breakdownHtml += `<li><span>Base Monthly Salary</span><span>₱ ${baseSalary.toLocaleString()}</span></li>`;
-        breakdownHtml += `<li style="border-top: 1px solid #ddd; padding-top: 10px; margin-top: 10px;"><strong>Allowances</strong></li>`;
 
+        breakdownHtml += '<li style="border-top: 1px solid #ddd; padding-top: 10px; margin-top: 10px;"><strong>Allowances</strong></li>';
         let totalAllowances = 0;
-        payrollSettings.components.filter(c => c.type === 'allowance').forEach(allowance => {
-            breakdownHtml += `<li><span>${allowance.name}</span><span>+ ₱ ${allowance.amount.toLocaleString()}</span></li>`;
-            totalAllowances += allowance.amount;
-        });
+        if (payrollComponents.filter(c => c.type === 'allowance').length === 0) {
+            breakdownHtml += '<li><span>None</span><span>-</span></li>';
+        } else {
+            payrollComponents.filter(c => c.type === 'allowance').forEach(allowance => {
+                breakdownHtml += `<li><span>${allowance.name}</span><span>+ ₱ ${allowance.amount.toLocaleString()}</span></li>`;
+                totalAllowances += allowance.amount;
+            });
+        }
 
         breakdownHtml += '<li style="border-top: 1px solid #ddd; padding-top: 10px; margin-top: 10px;"><strong>Deductions</strong></li>';
         breakdownHtml += `<li><span>Absences (${absences > 0 ? absences : 0} days)</span><span>- ₱ ${absenceDeductions.toLocaleString()}</span></li>`;
-
         let totalDeductions = absenceDeductions;
-        payrollSettings.components.filter(c => c.type === 'deduction').forEach(deduction => {
-            breakdownHtml += `<li><span>${deduction.name}</span><span>- ₱ ${deduction.amount.toLocaleString()}</span></li>`;
-            totalDeductions += deduction.amount;
-        });
+        if (payrollComponents.filter(c => c.type === 'deduction').length > 0) {
+            payrollComponents.filter(c => c.type === 'deduction').forEach(deduction => {
+                breakdownHtml += `<li><span>${deduction.name}</span><span>- ₱ ${deduction.amount.toLocaleString()}</span></li>`;
+                totalDeductions += deduction.amount;
+            });
+        }
 
         const netSalary = baseSalary + totalAllowances - totalDeductions;
         breakdownHtml += `<li style="font-weight: bold; border-top: 2px solid #333; margin-top: 10px; padding-top: 10px;"><span>NET SALARY</span><span>₱ ${netSalary.toLocaleString()}</span></li>`;

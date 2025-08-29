@@ -31,23 +31,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         enrolledStudents.forEach(student => {
-            if (!student.course || !student.course.code) {
-                // Handle student with no course, maybe show 0 tuition or a message
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td data-label="Student ID">${student.id}</td>
-                    <td data-label="Name">${student.firstName} ${student.lastName}</td>
-                    <td data-label="Course">N/A</td>
-                    <td data-label="Total Units">0</td>
-                    <td data-label="Total Tuition">₱ 0.00</td>
-                    <td data-label="Actions">N/A</td>
-                `;
-                tuitionTbody.appendChild(row);
-                return;
-            }
-
-            const courseSubjects = allSubjects.filter(s => s.courseCode === student.course.code);
-            const totalUnits = courseSubjects.reduce((sum, subject) => sum + (parseFloat(subject.units) || 0), 0);
+            const plottedClasses = student.plottedClasses || [];
+            let totalUnits = 0;
+            plottedClasses.forEach(schedule => {
+                const subject = allSubjects.find(s => s.code === schedule.subjectCode);
+                if (subject) {
+                    totalUnits += parseFloat(subject.units) || 0;
+                }
+            });
 
             const tuitionPerUnit = totalUnits * tuitionRate;
             const miscellaneousFeesTotal = feeComponents.reduce((sum, fee) => sum + fee.amount, 0);
@@ -74,8 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         modalTitle.textContent = `Tuition Breakdown for ${student.firstName} ${student.lastName}`;
 
-        const courseSubjects = allSubjects.filter(s => s.courseCode === student.course.code);
-        const totalUnits = courseSubjects.reduce((sum, subject) => sum + (parseFloat(subject.units) || 0), 0);
+        let totalUnits = 0;
+        (student.plottedClasses || []).forEach(schedule => {
+            const subject = allSubjects.find(s => s.code === schedule.subjectCode);
+            if (subject) totalUnits += parseFloat(subject.units) || 0;
+        });
 
         const tuitionPerUnit = totalUnits * tuitionRate;
         let breakdownHtml = '<ul>';

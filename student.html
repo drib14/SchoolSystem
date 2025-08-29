@@ -16,7 +16,11 @@
                 <p>Student Panel</p>
             </div>
             <ul class="sidebar-menu">
-                <!-- Links are now dynamically inserted by js/auth.js -->
+                <li><a href="student.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="plot-schedule.html"><i class="fas fa-calendar-plus"></i> Class Enrollment</a></li>
+                <li><a href="my-attendance.html"><i class="fas fa-user-check"></i> My Attendance</a></li>
+                <li><a href="my-grades.html"><i class="fas fa-graduation-cap"></i> My Grades</a></li>
+                <li><a href="profile.html"><i class="fas fa-user-cog"></i> Profile</a></li>
             </ul>
             <div class="sidebar-footer">
                 <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -24,29 +28,55 @@
         </div>
         <div class="main-content">
             <div class="header">
+                <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
                 <h1>Welcome, Student!</h1>
                 <div class="header-right">
-                    <div class="notification-area">
-                    <button class="notification-btn"><i class="fas fa-bell"></i><span class="notification-badge" style="display: none;">0</span></button>
-                    <div class="notification-panel">
-                        <div class="notification-panel-header"><h4>Notifications</h4></div>
-                        <ul class="notification-list"></ul>
+                    <div class="profile-info">
+                        <!-- Populated by js/auth.js -->
                     </div>
                 </div>
-                <div class="profile-info">
-                    <!-- Populated by js/auth.js -->
+            </div>
+            <div class="content" id="dashboard-content">
+                <div class="analytics-grid">
+                    <!-- Grade Summary Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Grade Summary</h3>
+                        </div>
+                        <div class="card-body" style="text-align: center;">
+                            <p>Overall GPA (out of 4.0)</p>
+                            <h2 id="gpa-summary" style="font-size: 2.5rem; margin: 10px 0;">N/A</h2>
+                            <a href="my-grades.html">View Detailed Grades</a>
+                        </div>
+                    </div>
+
+                    <!-- Attendance Summary Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Attendance Summary</h3>
+                        </div>
+                        <div class="card-body" style="text-align: center;">
+                            <p>Overall Presence Rate</p>
+                            <h2 id="attendance-summary" style="font-size: 2.5rem; margin: 10px 0;">N/A</h2>
+                            <a href="my-attendance.html">View Attendance History</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            </div>
-            <div class="content">
-                <p>This is your student dashboard. You can view your courses, grades, and profile information here.</p>
+
+                <!-- Schedule Card -->
+                <div class="card" style="margin-top: 20px;">
+                    <div class="card-header">
+                        <h3>Today's Schedule</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul id="schedule-today-list" style="list-style: none; padding: 0;">
+                            <!-- Schedule items will be populated by JS -->
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <script src="js/auth.js"></script>
-    <script src="js/nav.js"></script>
     <script src="js/student.js"></script>
-    <script src="js/notifications.js"></script>
-    <div class="overlay"></div>
 </body>
 </html>

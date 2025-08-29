@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (newRequirementName) {
             if (requirements.some(r => r.name.toLowerCase() === newRequirementName.toLowerCase())) {
-            Toastify({ text: 'This requirement already exists.', duration: 3000, className: "toast-warning" }).showToast();
+                alert('This requirement already exists.');
                 return;
             }
             requirements.push({ id: Date.now(), name: newRequirementName, type: newRequirementType });

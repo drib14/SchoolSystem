@@ -5,102 +5,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISCP - Library Admin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
 </head>
 <body>
     <div class="panel-container">
         <div class="sidebar">
-            <div class="sidebar-header">
-                <h2>ISCP</h2>
-                <p>Admin Panel</p>
-            </div>
             <ul class="sidebar-menu">
-                <li><a href="admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                <li><a href="applicants.html"><i class="fas fa-user-plus"></i> Student Applicants</a></li>
-                <li><a href="teacher-applicants.html"><i class="fas fa-user-tie"></i> Teacher Applicants</a></li>
-                <li><a href="enrolled-students.html"><i class="fas fa-user-graduate"></i> Students</a></li>
-                <li><a href="approved-teachers.html"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
-                <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
-                <li><a href="subjects.html"><i class="fas fa-flask"></i> Subjects</a></li>
-                <li><a href="schedules.html"><i class="fas fa-calendar-alt"></i> Schedules</a></li>
-                <li><a href="library-admin.html" class="active"><i class="fas fa-book-reader"></i> Library Admin</a></li>
-                <li><a href="requirements.html"><i class="fas fa-file-alt"></i> Requirements</a></li>
-                <li><a href="tuition-management.html"><i class="fas fa-file-invoice-dollar"></i> Tuition Management</a></li>
-                <li><a href="tuition-settings.html"><i class="fas fa-cogs"></i> Tuition Settings</a></li>
-                <li><a href="payroll.html"><i class="fas fa-dollar-sign"></i> Payroll</a></li>
-                <li><a href="payroll-settings.html"><i class="fas fa-money-check-alt"></i> Payroll Settings</a></li>
+                <!-- Populated by auth.js -->
             </ul>
-            <div class="sidebar-footer">
-                <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
-            </div>
         </div>
         <div class="main-content">
             <div class="header">
                 <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
-                <h1>Library Management</h1>
-                <div class="notification-area">
-                    <button class="notification-btn"><i class="fas fa-bell"></i><span class="notification-badge" style="display: none;">0</span></button>
-                    <div class="notification-panel">
-                        <div class="notification-panel-header"><h4>Notifications</h4></div>
-                        <ul class="notification-list"></ul>
-                    </div>
+                <h1>Library Administration</h1>
+                <div class="header-right">
+                    <div class="profile-info"></div>
                 </div>
             </div>
             <div class="content">
-                <div class="grid-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
-                    <div class="card">
-                        <div class="card-header"><h3>Add Book to Collection</h3></div>
-                        <div class="card-body">
-                            <form id="book-api-search-form" style="display: flex; gap: 10px; margin-bottom: 15px;">
-                                <input type="text" id="api-search-query" placeholder="Search Open Library for a book..." class="form-control" style="width: 100%;">
+                <!-- Search & Add Books -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Add Books from Open Library</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="book-api-search-form">
+                            <div class="input-group">
+                                <input type="text" id="api-search-query" class="form-control" placeholder="Search by title or author...">
                                 <button type="submit" class="btn btn-primary">Search</button>
-                            </form>
-                            <div id="api-search-results" style="max-height: 250px; overflow-y: auto;"></div>
-                        </div>
-                    </div>
-                     <div class="card">
-                        <div class="card-header"><h3>Manage Loans</h3></div>
-                        <div class="card-body">
-                            <form id="loan-form">
-                                <div class="form-group"><label for="book-select">Book:</label><select id="book-select" class="form-control" required></select></div>
-                                <div class="form-group"><label for="user-select">User (Student/Teacher ID):</label><select id="user-select" class="form-control" required></select></div>
-                                <div class="form-group"><label for="due-date">Due Date:</label><input type="date" id="due-date" class="form-control" required></div>
-                                <button type="submit" class="btn btn-primary">Check Out</button>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
+                        <div id="api-search-results" style="margin-top: 20px;"></div>
                     </div>
                 </div>
 
+                <!-- Pending Suggestions -->
                 <div class="card" style="margin-top: 20px;">
-                    <div class="card-header"><h3>Current Library Collection</h3></div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="applicants-table">
-                                <thead><tr><th>Title</th><th>Author</th><th>Published</th><th>Status</th><th>Actions</th></tr></thead>
-                                <tbody id="library-collection-tbody"></tbody>
-                            </table>
-                        </div>
+                     <div class="card-header">
+                        <h3>Pending Teacher Suggestions</h3>
+                    </div>
+                    <div class="card-body" id="pending-suggestions">
+                        <!-- Suggestions will be loaded here by JS -->
                     </div>
                 </div>
 
+                <!-- Manual Loan Form -->
                 <div class="card" style="margin-top: 20px;">
-                    <div class="card-header"><h3>Currently Loaned Books</h3></div>
+                    <div class="card-header">
+                        <h3>Manual Check-out</h3>
+                    </div>
                     <div class="card-body">
-                         <div class="table-responsive">
-                            <table class="applicants-table">
-                                <thead><tr><th>Book</th><th>User</th><th>Loan Date</th><th>Due Date</th><th>Actions</th></tr></thead>
-                                <tbody id="loaned-books-tbody"></tbody>
-                            </table>
-                        </div>
+                        <form id="loan-form">
+                            <div class="form-group">
+                                <label for="book-select">Book:</label>
+                                <select id="book-select" class="form-control" required></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="user-select">User:</label>
+                                <select id="user-select" class="form-control" required></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="due-date">Due Date:</label>
+                                <input type="date" id="due-date" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Check Out Book</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Current Library Collection -->
+                <div class="card" style="margin-top: 20px;">
+                    <div class="card-header">
+                        <h3>Library Collection</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="applicants-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Author</th>
+                                    <th>Published</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="library-collection-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Loaned Books -->
+                <div class="card" style="margin-top: 20px;">
+                    <div class="card-header">
+                        <h3>Currently Loaned Books</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="applicants-table">
+                             <thead>
+                                <tr>
+                                    <th>Book</th>
+                                    <th>User</th>
+                                    <th>Loan Date</th>
+                                    <th>Due Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="loaned-books-tbody"></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="js/auth.js"></script>
     <script src="js/nav.js"></script>
     <script src="js/library-admin.js"></script>
-    <script src="js/notifications.js"></script>
-    <div class="overlay"></div>
 </body>
 </html>

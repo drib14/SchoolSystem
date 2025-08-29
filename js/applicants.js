@@ -85,21 +85,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (studentIndex > -1) {
                 allStudents[studentIndex].status = 'enrolled';
                 localStorage.setItem('students', JSON.stringify(allStudents));
-                Toastify({ text: `Applicant ${applicantId} has been approved.`, duration: 3000, className: "toast-success", gravity: "top", position: "right" }).showToast();
-
-                // Create a notification for the student
-                createNotification(applicantId, "Congratulations! Your application has been approved.", "student.html");
-
+                alert(`Applicant ${applicantId} has been approved.`);
                 renderTable();
             }
         } else if (target.classList.contains('deny-btn')) {
-            const studentIndex = allStudents.findIndex(s => s.id === applicantId);
-            if (studentIndex > -1) {
-                allStudents[studentIndex].status = 'denied'; // Soft delete
-                localStorage.setItem('students', JSON.stringify(allStudents));
-                Toastify({ text: `Applicant ${applicantId} has been denied.`, duration: 3000, className: "toast-info", gravity: "top", position: "right" }).showToast();
-                renderTable();
-            }
+            allStudents = allStudents.filter(s => s.id !== applicantId);
+            localStorage.setItem('students', JSON.stringify(allStudents));
+            alert(`Applicant ${applicantId} has been denied and removed.`);
+            renderTable();
         }
     });
 
@@ -110,29 +103,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    document.getElementById('save-req-changes-btn').addEventListener('click', () => {
-        const checkboxes = modalBody.querySelectorAll('input[type="checkbox"]');
-        let applicantId = null;
-
-        checkboxes.forEach(checkbox => {
-            applicantId = checkbox.dataset.applicantId; // All checkboxes belong to the same applicant
-            const reqId = parseInt(checkbox.dataset.reqId, 10);
-            const isChecked = checkbox.checked;
-            const newStatus = isChecked ? 'Submitted' : 'Pending';
+    modalBody.addEventListener('change', (e) => {
+        if (e.target.type === 'checkbox') {
+            const applicantId = e.target.dataset.applicantId;
+            const reqId = parseInt(e.target.dataset.reqId, 10);
+            const isChecked = e.target.checked;
 
             const studentIndex = allStudents.findIndex(s => s.id === applicantId);
             if (studentIndex > -1) {
                 const reqIndex = allStudents[studentIndex].requirements.findIndex(r => r.id === reqId);
                 if (reqIndex > -1) {
+                    const newStatus = isChecked ? 'Submitted' : 'Pending';
                     allStudents[studentIndex].requirements[reqIndex].status = newStatus;
+                    localStorage.setItem('students', JSON.stringify(allStudents));
+
+                    const statusSpan = e.target.closest('li').querySelector('span');
+                    statusSpan.textContent = newStatus;
                 }
             }
-        });
-
-        if (applicantId) {
-            localStorage.setItem('students', JSON.stringify(allStudents));
-            Toastify({ text: "Requirement changes saved!", duration: 3000, className: "toast-success" }).showToast();
-            closeRequirementsModal();
         }
     });
 

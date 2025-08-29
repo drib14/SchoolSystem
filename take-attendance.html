@@ -25,7 +25,9 @@
                 <p>Teacher Panel</p>
             </div>
             <ul class="sidebar-menu">
-                <!-- Links are now dynamically inserted by js/auth.js -->
+                <li><a href="teacher.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="my-classes.html" class="active"><i class="fas fa-chalkboard-teacher"></i> My Classes</a></li>
+                <li><a href="#"><i class="fas fa-marker"></i> Grades</a></li>
             </ul>
             <div class="sidebar-footer">
                 <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -33,15 +35,9 @@
         </div>
         <div class="main-content">
             <div class="header" id="attendance-header">
-                <div class="header-left">
-                    <h1>Take Attendance</h1>
-                    <p>Loading class details...</p>
-                </div>
-                <div class="header-right">
-                    <div class="profile-info">
-                        <!-- Populated by js/auth.js -->
-                    </div>
-                </div>
+                <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
+                <h1>Take Attendance</h1>
+                <p>Loading class details...</p>
             </div>
             <div class="content">
                 <form id="attendance-form">
@@ -62,9 +58,6 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/nav.js"></script>
     <script src="js/take-attendance.js"></script>
 </body>
 </html>

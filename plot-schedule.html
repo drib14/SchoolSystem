@@ -16,7 +16,11 @@
                 <p>Student Panel</p>
             </div>
             <ul class="sidebar-menu">
-                <!-- Links are now dynamically inserted by js/auth.js -->
+                <li><a href="student.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="plot-schedule.html" class="active"><i class="fas fa-calendar-plus"></i> Class Enrollment</a></li>
+                <li><a href="my-attendance.html"><i class="fas fa-user-check"></i> My Attendance</a></li>
+                <li><a href="my-grades.html"><i class="fas fa-graduation-cap"></i> My Grades</a></li>
+                <li><a href="profile.html"><i class="fas fa-user-cog"></i> Profile</a></li>
             </ul>
             <div class="sidebar-footer">
                 <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -24,15 +28,9 @@
         </div>
         <div class="main-content">
             <div class="header">
-                <div class="header-left">
-                    <h1>Class Enrollment</h1>
-                    <p>Select your classes for the semester.</p>
-                </div>
-                <div class="header-right">
-                    <div class="profile-info">
-                        <!-- Populated by js/auth.js -->
-                    </div>
-                </div>
+                <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
+                <h1>Class Enrollment</h1>
+                <p>Select your classes for the semester.</p>
             </div>
             <div class="content">
                 <div class="course-list-container">
@@ -76,8 +74,6 @@
             </div>
         </div>
     </div>
-    <script src="js/auth.js"></script>
-    <script src="js/nav.js"></script>
     <script src="js/plot-schedule.js"></script>
 </body>
 </html>

@@ -1,4 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Auth Check
+    if (localStorage.getItem('userRole') !== 'admin') {
+        window.location.href = 'index.html';
+        return;
+    }
+
     // Forms & Inputs
     const apiSearchForm = document.getElementById("book-api-search-form");
     const apiSearchQuery = document.getElementById("api-search-query");
@@ -11,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const apiSearchResults = document.getElementById("api-search-results");
     const libraryCollectionTbody = document.getElementById("library-collection-tbody");
     const loanedBooksTbody = document.getElementById("loaned-books-tbody");
+    const pendingSuggestionsContainer = document.getElementById("pending-suggestions");
 
     // Local Storage DB
     const DB = {
@@ -27,15 +34,15 @@ document.addEventListener("DOMContentLoaded", () => {
     let localLibrary = DB.getItem("library");
     let students = DB.getItem("students") || [];
     let teachers = DB.getItem("teachers") || [];
-    let users = [...students, ...teachers];
+    let users = [...students, ...teachers, {id: 'admin', firstName: 'Admin', lastName: ''}]; // Include admin for lookups
     let loans = DB.getItem("loans");
+    let suggestions = DB.getItem("librarySuggestions");
 
     // --- RENDER FUNCTIONS ---
-
     const renderLibraryCollection = () => {
         libraryCollectionTbody.innerHTML = "";
         if (localLibrary.length === 0) {
-            libraryCollectionTbody.innerHTML = "<tr><td colspan='5'>The library is empty.</td></tr>";
+            libraryCollectionTbody.innerHTML = "<tr><td colspan='5'>The library is empty. Use the search above to add books.</td></tr>";
             return;
         }
         localLibrary.forEach(book => {
@@ -46,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td data-label="Author">${book.author_name ? book.author_name.join(', ') : 'N/A'}</td>
                 <td data-label="Published">${book.first_publish_year || 'N/A'}</td>
                 <td data-label="Status"><span class="badge ${isOnLoan ? 'bg-secondary' : 'bg-success'}">${isOnLoan ? 'On Loan' : 'Available'}</span></td>
-                <td data-label="Actions"><button class="btn btn-sm btn-danger" data-action="delete" data-key="${book.key}">Delete</button></td>
+                <td data-label="Actions"><button class="action-btn deny-btn" data-action="delete" data-key="${book.key}">Delete</button></td>
             `;
             libraryCollectionTbody.appendChild(tr);
         });
@@ -69,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td data-label="User">${user.firstName} ${user.lastName} (${user.id})</td>
                 <td data-label="Loan Date">${new Date(loan.loanDate).toLocaleDateString()}</td>
                 <td data-label="Due Date">${new Date(loan.dueDate).toLocaleDateString()}</td>
-                <td data-label="Actions"><button class="btn btn-sm btn-success" data-action="checkin" data-loan-id="${loan.id}">Check In</button></td>
+                <td data-label="Actions"><button class="action-btn approve-btn" data-action="checkin" data-loan-id="${loan.id}">Check In</button></td>
             `;
             loanedBooksTbody.appendChild(tr);
         });
@@ -78,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const renderApiResults = (books) => {
         apiSearchResults.innerHTML = "";
         if (!books || books.length === 0) {
-            apiSearchResults.innerHTML = "<p>No books found.</p>";
+            apiSearchResults.innerHTML = "<p>No books found for your query.</p>";
             return;
         }
         const list = document.createElement("ul");
@@ -86,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
         books.slice(0, 5).forEach(book => { // Show top 5 results
             const li = document.createElement("li");
             li.className = "list-group-item d-flex justify-content-between align-items-center";
-            li.innerHTML = `<span>${book.title} by ${book.author_name ? book.author_name.join(', ') : 'N/A'}</span> <button class="btn btn-sm btn-success" data-book-key="${book.key}">Add</button>`;
+            li.innerHTML = `<span>${book.title} by ${book.author_name ? book.author_name.join(', ') : 'N/A'}</span> <button class="btn btn-sm btn-primary" data-book-key="${book.key}">Add</button>`;
             li.querySelector("button").addEventListener("click", () => addBookToLibrary(book));
             list.appendChild(li);
         });
@@ -100,15 +107,44 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         userSelect.innerHTML = '<option value="">Select a user...</option>';
-        users.forEach(user => {
+        users.filter(u => u.id !== 'admin').forEach(user => {
             userSelect.innerHTML += `<option value="${user.id}">${user.firstName} ${user.lastName} (${user.role})</option>`;
         });
+    };
+
+    const renderSuggestions = () => {
+        pendingSuggestionsContainer.innerHTML = "";
+        const pending = suggestions.filter(s => s.status === 'pending');
+        if (pending.length === 0) {
+            pendingSuggestionsContainer.innerHTML = "<p>No pending suggestions.</p>";
+            return;
+        }
+        const list = document.createElement("ul");
+        list.className = "list-group";
+        pending.forEach(book => {
+            const suggester = users.find(u => u.id === book.suggestedBy);
+            const li = document.createElement("li");
+            li.className = "list-group-item d-flex justify-content-between align-items-center";
+            li.innerHTML = `
+                <span>
+                    <strong>${book.title}</strong><br>
+                    <small>Suggested by: ${suggester ? suggester.firstName : 'Unknown'}</small>
+                </span>
+                <div>
+                    <button class="btn btn-sm btn-success approve-suggestion-btn" data-key="${book.key}">Approve</button>
+                    <button class="btn btn-sm btn-danger deny-suggestion-btn" data-key="${book.key}">Deny</button>
+                </div>
+            `;
+            list.appendChild(li);
+        });
+        pendingSuggestionsContainer.appendChild(list);
     };
 
     const rerenderAll = () => {
         renderLibraryCollection();
         renderLoanedBooks();
         populateLoanDropdowns();
+        renderSuggestions();
     };
 
     // --- EVENT LISTENERS ---
@@ -186,6 +222,27 @@ document.addEventListener("DOMContentLoaded", () => {
             loans = loans.filter(l => l.id !== loanId);
             DB.setItem("loans", loans);
             rerenderAll();
+        }
+    });
+
+    pendingSuggestionsContainer.addEventListener("click", (e) => {
+        const key = e.target.dataset.key;
+        if (!key) return;
+
+        if (e.target.classList.contains("approve-suggestion-btn")) {
+            const suggestion = suggestions.find(s => s.key === key);
+            if (suggestion) {
+                addBookToLibrary(suggestion); // Re-use the existing add function
+                suggestions = suggestions.filter(s => s.key !== key); // Remove from suggestions
+                DB.setItem("librarySuggestions", suggestions);
+                rerenderAll();
+            }
+        } else if (e.target.classList.contains("deny-suggestion-btn")) {
+             if (confirm("Are you sure you want to deny this suggestion?")) {
+                suggestions = suggestions.filter(s => s.key !== key);
+                DB.setItem("librarySuggestions", suggestions);
+                rerenderAll();
+            }
         }
     });
 

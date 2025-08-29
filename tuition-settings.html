@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISCP - Tuition Settings</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
 </head>
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <div class="panel-container">
         <div class="sidebar">
             <div class="sidebar-header">
@@ -18,7 +16,19 @@
                 <p>Admin Panel</p>
             </div>
             <ul class="sidebar-menu">
-                <!-- Links are now dynamically inserted by js/auth.js -->
+                <li><a href="admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="applicants.html"><i class="fas fa-user-plus"></i> Student Applicants</a></li>
+                <li><a href="#"><i class="fas fa-user-graduate"></i> Students</a></li>
+                <li><a href="teacher-applicants.html"><i class="fas fa-user-tie"></i> Teacher Applicants</a></li>
+                <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
+                <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
+                <li><a href="subjects.html"><i class="fas fa-flask"></i> Subjects</a></li>
+                <li><a href="schedules.html"><i class="fas fa-calendar-alt"></i> Schedules</a></li>
+                <li><a href="requirements.html"><i class="fas fa-file-alt"></i> Requirements</a></li>
+                <li><a href="tuition-management.html"><i class="fas fa-file-invoice-dollar"></i> Tuition Management</a></li>
+                <li><a href="tuition-settings.html" class="active"><i class="fas fa-cogs"></i> Tuition Settings</a></li>
+                <li><a href="payroll.html"><i class="fas fa-dollar-sign"></i> Payroll</a></li>
+                <li><a href="payroll-settings.html"><i class="fas fa-money-check-alt"></i> Payroll Settings</a></li>
             </ul>
             <div class="sidebar-footer">
                 <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -26,6 +36,7 @@
         </div>
         <div class="main-content">
             <div class="header">
+                <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
                 <h1>Tuition Settings</h1>
                 <div class="header-right">
                     <div class="profile-info">
@@ -75,7 +86,6 @@
             </div>
         </div>
     </div>
-    <script src="js/auth.js"></script>
     <script src="js/nav.js"></script>
     <script src="js/tuition-settings.js"></script>
 </body>

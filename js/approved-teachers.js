@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(approved.length > 0) {
             approved.forEach(t => {
                 const row = tbody.insertRow();
-                const photoHtml = t.photoUrl ? `<img src="${t.photoUrl}" width="40" height="40" style="border-radius: 50%; object-fit: cover;">` : '<i class="fas fa-user-circle" style="font-size: 2rem; color: #ccc;"></i>';
+                const photoHtml = t.photoUrl ? `<img src="${t.photoUrl}" alt="Profile" class="user-avatar">` : '<i class="fas fa-user-circle user-avatar-icon"></i>';
                 const salary = t.monthlySalary ? `₱ ${t.monthlySalary.toLocaleString()}` : 'Not Set';
                 row.innerHTML = `
                     <td data-label="Photo" style="width: 60px;">${photoHtml}</td>
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td data-label="Name">${t.firstName} ${t.lastName}</td>
                     <td data-label="Email">${t.email}</td>
                     <td data-label="Monthly Salary">${salary}</td>
-                    <td data-label="Actions"><button class="action-btn btn-sm" data-id="${t.id}" style="background-color: #17a2b8;">Edit Salary</button></td>
+                    <td data-label="Actions"><button class="action-btn edit-salary-btn" data-id="${t.id}">Edit Salary</button></td>
                 `;
             });
         } else {
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     tbody.addEventListener('click', (e) => {
-        if (e.target.classList.contains('action-btn')) {
+        if (e.target.classList.contains('edit-salary-btn')) {
             openSalaryModal(e.target.dataset.id);
         }
     });
@@ -63,15 +63,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const teacherId = teacherIdInput.value;
         const newSalary = parseFloat(monthlySalaryInput.value);
 
+        if (isNaN(newSalary) || newSalary < 0) {
+            Toastify({ text: "Please enter a valid, non-negative salary.", duration: 3000, className: "toast-error" }).showToast();
+            return;
+        }
+
         const teacherIndex = allTeachers.findIndex(t => t.id === teacherId);
-        if (teacherIndex > -1 && !isNaN(newSalary) && newSalary >= 0) {
+        if (teacherIndex > -1) {
             allTeachers[teacherIndex].monthlySalary = newSalary;
             localStorage.setItem('teachers', JSON.stringify(allTeachers));
             Toastify({ text: "Salary updated successfully!", duration: 3000, className: "toast-success" }).showToast();
             closeSalaryModal();
             renderTable();
-        } else {
-            Toastify({ text: "Please enter a valid salary.", duration: 3000, className: "toast-error" }).showToast();
         }
     });
 

@@ -3,10 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const teacherRequirementsList = document.getElementById('teacher-requirements-list');
     const photoUpload = document.getElementById('photo-upload');
     const photoPreview = document.getElementById('photo-preview');
-    const courseSelection = document.getElementById('course-selection');
 
-    let photoFilename = null; // To store the filename
-    const courses = JSON.parse(localStorage.getItem('courses')) || [];
+    let photoUrl = null; // To store the base64 string
     const allRequirements = JSON.parse(localStorage.getItem('requirements')) || [];
     const teacherReqs = allRequirements.filter(r => r.type === 'Teacher');
 
@@ -52,9 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const reader = new FileReader();
             reader.onload = (e) => {
                 photoPreview.innerHTML = `<img src="${e.target.result}" alt="Profile Photo Preview">`;
+                photoUrl = e.target.result;
             };
             reader.readAsDataURL(file);
-            photoFilename = file.name;
         }
     });
 
@@ -70,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (!allFilesChosen) {
-            Toastify({ text: 'Please upload all required documents before submitting.', duration: 3000, className: "toast-warning" }).showToast();
+            alert('Please upload all required documents before submitting.');
             return;
         }
 
@@ -96,9 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }));
 
         // --- Create Teacher Object ---
-        const selectedCourseCode = courseSelection.value;
-        const course = courses.find(c => c.code === selectedCourseCode);
-
         const newTeacher = {
             id: id,
             password: password,
@@ -107,11 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
             email: document.getElementById('email').value,
             phone: document.getElementById('phone').value,
             qualifications: document.getElementById('qualifications').value,
-            course: course, // Add selected course
             status: 'pending',
-            role: 'teacher',
             requirements: applicantRequirements,
-            photoFilename: photoFilename
+            photoUrl: photoUrl
         };
 
         // --- Save to Local Storage ---
@@ -119,34 +112,10 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('teachers', JSON.stringify(teachers));
 
         // --- Notify User and Redirect ---
-        Toastify({
-            text: `Application Submitted!\nYour Teacher ID is: ${id}\nYour Password is: ${password}\nPlease wait for an administrator to review your application.`,
-            duration: -1,
-            close: true,
-            gravity: "top",
-            position: "center",
-            className: "toast-success-long",
-            stopOnFocus: true,
-        }).showToast();
+        alert(`Application Submitted!\nYour Teacher ID is: ${id}\nYour Password is: ${password}\nPlease wait for an administrator to review your application.`);
 
-        setTimeout(() => {
-            window.location.href = 'index.html';
-        }, 5000);
+        window.location.href = 'index.html';
     });
 
-    function populateCoursesDropdown() {
-        if (courses.length === 0) {
-            courseSelection.innerHTML = '<option value="" disabled>No courses available</option>';
-        } else {
-            courses.forEach(course => {
-                const option = document.createElement('option');
-                option.value = course.code;
-                option.textContent = course.name;
-                courseSelection.appendChild(option);
-            });
-        }
-    }
-
     buildRequirementsList();
-    populateCoursesDropdown();
 });

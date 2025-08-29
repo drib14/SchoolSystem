@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentSubject = allSubjects.find(s => s.code === subjectCode);
 
     if (!currentSchedule || !currentSubject) {
-        Toastify({ text: 'Could not find class details.', duration: 3000, className: "toast-error", gravity: "top", position: "center" }).showToast();
+        alert('Could not find class details.');
         return;
     }
 
@@ -106,16 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         localStorage.setItem('gradeRecords', JSON.stringify(gradeRecords));
-        Toastify({ text: 'All grades have been saved successfully!', duration: 3000, className: "toast-success", gravity: "top", position: "right" }).showToast();
-
-        // Create notifications for each student
-        rosterRows.forEach(row => {
-            const studentId = row.dataset.studentId;
-            if (studentId) {
-                createNotification(studentId, `New grades have been posted for ${currentSubject.name}.`, 'my-grades.html');
-            }
-        });
-
+        alert('All grades have been saved successfully!');
         renderRoster(); // Re-render to show calculated final grade
     });
 

@@ -16,7 +16,19 @@
                 <p>Admin Panel</p>
             </div>
             <ul class="sidebar-menu">
-                <!-- Links are now dynamically inserted by js/auth.js -->
+                <li><a href="admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="applicants.html"><i class="fas fa-user-plus"></i> Student Applicants</a></li>
+                <li><a href="#"><i class="fas fa-user-graduate"></i> Students</a></li>
+                <li><a href="teacher-applicants.html"><i class="fas fa-user-tie"></i> Teacher Applicants</a></li>
+                <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
+                <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
+                <li><a href="subjects.html" class="active"><i class="fas fa-flask"></i> Subjects</a></li>
+                <li><a href="schedules.html"><i class="fas fa-calendar-alt"></i> Schedules</a></li>
+                <li><a href="requirements.html"><i class="fas fa-file-alt"></i> Requirements</a></li>
+                <li><a href="tuition-management.html"><i class="fas fa-file-invoice-dollar"></i> Tuition Management</a></li>
+                <li><a href="tuition-settings.html"><i class="fas fa-cogs"></i> Tuition Settings</a></li>
+                <li><a href="payroll.html"><i class="fas fa-dollar-sign"></i> Payroll</a></li>
+                <li><a href="payroll-settings.html"><i class="fas fa-money-check-alt"></i> Payroll Settings</a></li>
             </ul>
             <div class="sidebar-footer">
                 <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -24,12 +36,8 @@
         </div>
         <div class="main-content">
             <div class="header">
+                <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
                 <h1>Manage Subjects</h1>
-                <div class="header-right">
-                    <div class="profile-info">
-                        <!-- Populated by js/auth.js -->
-                    </div>
-                </div>
             </div>
             <div class="content">
                 <div class="course-form-container">
@@ -43,15 +51,6 @@
                         </div>
                         <div class="input-group">
                             <input type="number" id="subjectUnits" placeholder="Units" required min="1">
-                        </div>
-                        <div class="input-group">
-                            <label for="yearLevel">Year Level:</label>
-                            <select id="yearLevel" required>
-                                <option value="1">1st Year</option>
-                                <option value="2">2nd Year</option>
-                                <option value="3">3rd Year</option>
-                                <option value="4">4th Year</option>
-                            </select>
                         </div>
                         <div class="input-group">
                             <label for="course-assignment">Assign to Course:</label>
@@ -72,7 +71,6 @@
                                 <th>Code</th>
                                 <th>Name</th>
                                 <th>Units</th>
-                                <th>Year Level</th>
                                 <th>Assigned Course</th>
                                 <th>Actions</th>
                             </tr>
@@ -85,8 +83,6 @@
             </div>
         </div>
     </div>
-    <script src="js/auth.js"></script>
-    <script src="js/nav.js"></script>
     <script src="js/subjects.js"></script>
 </body>
 </html>
