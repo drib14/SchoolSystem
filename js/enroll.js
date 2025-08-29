@@ -52,7 +52,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function populateCourses() {
-        // ... (existing logic)
+        courseSelection.innerHTML = '<option value="">-- Select a Course --</option>';
+        if (courses.length === 0) {
+            courseSelection.innerHTML = '<option value="" disabled>No courses available</option>';
+            // Disable the next button if there are no courses
+            document.querySelector('.form-step.active .next-btn').disabled = true;
+        } else {
+            courses.forEach(course => {
+                const option = document.createElement('option');
+                option.value = course.code;
+                option.textContent = course.name;
+                courseSelection.appendChild(option);
+            });
+        }
     }
 
     function validateStep(stepIndex) {
@@ -161,6 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
         applicantData.id = id;
         applicantData.password = password;
         applicantData.status = 'pending';
+        applicantData.role = 'student'; // Fix: Add role property
         applicantData.requirements = applicantRequirements;
 
         students.push(applicantData);

@@ -3,8 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const teacherRequirementsList = document.getElementById('teacher-requirements-list');
     const photoUpload = document.getElementById('photo-upload');
     const photoPreview = document.getElementById('photo-preview');
+    const courseSelection = document.getElementById('course-selection');
 
     let photoUrl = null; // To store the base64 string
+    const courses = JSON.parse(localStorage.getItem('courses')) || [];
     const allRequirements = JSON.parse(localStorage.getItem('requirements')) || [];
     const teacherReqs = allRequirements.filter(r => r.type === 'Teacher');
 
@@ -94,6 +96,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }));
 
         // --- Create Teacher Object ---
+        const selectedCourseCode = courseSelection.value;
+        const course = courses.find(c => c.code === selectedCourseCode);
+
         const newTeacher = {
             id: id,
             password: password,
@@ -102,7 +107,9 @@ document.addEventListener('DOMContentLoaded', () => {
             email: document.getElementById('email').value,
             phone: document.getElementById('phone').value,
             qualifications: document.getElementById('qualifications').value,
+            course: course, // Add selected course
             status: 'pending',
+            role: 'teacher',
             requirements: applicantRequirements,
             photoUrl: photoUrl
         };
@@ -127,5 +134,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 5000);
     });
 
+    function populateCoursesDropdown() {
+        if (courses.length === 0) {
+            courseSelection.innerHTML = '<option value="" disabled>No courses available</option>';
+        } else {
+            courses.forEach(course => {
+                const option = document.createElement('option');
+                option.value = course.code;
+                option.textContent = course.name;
+                courseSelection.appendChild(option);
+            });
+        }
+    }
+
     buildRequirementsList();
+    populateCoursesDropdown();
 });
