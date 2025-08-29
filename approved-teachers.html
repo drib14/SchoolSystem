@@ -35,20 +35,16 @@
             </div>
         </div>
         <div class="main-content">
-            <div class="header">
-                <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
-                <h1>Approved Teachers</h1>
-            </div>
+            <div class="header"><h1>Approved Teachers</h1></div>
             <div class="content">
                 <table class="applicants-table">
                     <thead>
                         <tr>
-                            <th>Photo</th>
+                                <th>Photo</th>
                             <th>Teacher ID</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Monthly Salary</th>
-                            <th>Actions</th>
+                            <th>Phone</th>
                         </tr>
                     </thead>
                     <tbody id="approved-teachers-tbody">
@@ -58,26 +54,30 @@
             </div>
         </div>
     </div>
-
-    <!-- Edit Salary Modal -->
-    <div id="edit-salary-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h3>Edit Salary</h3>
-            <form id="edit-salary-form">
-                <input type="hidden" id="teacherId-salary">
-                <div class="form-group">
-                    <label for="monthlySalary">Monthly Salary (in ₱)</label>
-                    <input type="number" id="monthlySalary" class="form-control" required min="0" step="100">
-                </div>
-                <button type="submit" class="action-btn approve-btn">Save Salary</button>
-            </form>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/nav.js"></script>
-    <script src="js/approved-teachers.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('userRole') !== 'admin') { window.location.href = 'index.html'; return; }
+            const tbody = document.getElementById('approved-teachers-tbody');
+            const allTeachers = JSON.parse(localStorage.getItem('teachers')) || [];
+            const approved = allTeachers.filter(t => t.status === 'approved');
+            if(approved.length > 0) {
+                approved.forEach(t => {
+                    const row = tbody.insertRow();
+                    const photoHtml = t.photoUrl ? `<img src="${t.photoUrl}" width="40" height="40" style="border-radius: 50%; object-fit: cover;">` : '<i class="fas fa-user-circle" style="font-size: 2rem; color: #ccc;"></i>';
+                    row.innerHTML = `<td data-label="Photo" style="width: 60px;">${photoHtml}</td><td data-label="ID">${t.id}</td><td data-label="Name">${t.firstName} ${t.lastName}</td><td data-label="Email">${t.email}</td><td data-label="Phone">${t.phone}</td>`;
+                });
+            } else {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No approved teachers found.</td></tr>';
+            }
+            const logoutBtn = document.getElementById('logout-btn');
+            if(logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.removeItem('userRole');
+                    window.location.href = 'index.html';
+                });
+            }
+        });
+    </script>
 </body>
 </html>

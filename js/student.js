@@ -2,16 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const userRole = localStorage.getItem('userRole');
     const userId = localStorage.getItem('userId');
 
-    if (userRole !== 'student' || !userId) {
-        window.location.href = 'index.html';
-        return;
-    }
+    // Auth check is handled by auth.js
 
     // --- DOM Elements ---
     const gpaSummaryEl = document.getElementById('gpa-summary');
     const attendanceSummaryEl = document.getElementById('attendance-summary');
     const scheduleTodayListEl = document.getElementById('schedule-today-list');
-    const headerEl = document.querySelector('.header h1');
+    const welcomeHeader = document.querySelector('#page-title');
 
     // --- Data Loading ---
     const allStudents = JSON.parse(localStorage.getItem('students')) || [];
@@ -25,11 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // This is now handled by auth.js, but we can personalize it more here.
-    if (headerEl) {
-        headerEl.textContent = `Welcome, ${currentUser.firstName}!`;
+    if(welcomeHeader) {
+        // This is handled by auth.js now, but we can personalize it more if needed.
+        // welcomeHeader.textContent = `Welcome, ${currentUser.firstName}!`;
     }
-
 
     // --- GPA Calculation ---
     function calculateGpa() {
@@ -78,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const todaysClasses = myPlottedClasses.filter(schedule => {
             const scheduleDay = schedule.time.substring(0, 3).trim();
-            return scheduleDay.includes(dayOfWeek);
+            return schedule.time.toLowerCase().includes(dayOfWeek.toLowerCase());
         });
 
         scheduleTodayListEl.innerHTML = '';

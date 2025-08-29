@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const userRole = localStorage.getItem('userRole');
     const userId = localStorage.getItem('userId');
     if (!userRole || !userId) {
-        // This case is technically handled by auth.js, but it's good practice
         window.location.href = 'index.html';
         return;
     }
@@ -23,9 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Use a placeholder if photoUrl is missing, consistent with auth.js
         const photoPreviewHtml = currentUser.photoUrl
-            ? `<img src="${currentUser.photoUrl}" alt="Profile Photo" class="user-avatar">`
+            ? `<img src="${currentUser.photoUrl}" alt="Profile Photo" class="user-avatar" style="width: 80px; height: 80px;">`
             : '<i class="fas fa-user-circle" style="font-size: 80px; color: #ccc;"></i>';
 
         let profileDetails = `
@@ -44,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p><strong>Phone:</strong> ${currentUser.phone || 'N/A'}</p>
                 <p><strong>Status:</strong> <span style="text-transform: capitalize;">${currentUser.status}</span></p>
                 ${userRole === 'student' ? `<p><strong>Course:</strong> ${currentUser.course ? currentUser.course.name : 'N/A'}</p>` : ''}
-                 ${userRole === 'teacher' ? `<p><strong>Qualifications:</strong> ${currentUser.qualifications || 'N/A'}</p>` : ''}
+                ${userRole === 'teacher' ? `<p><strong>Qualifications:</strong> ${currentUser.qualifications || 'N/A'}</p>` : ''}
             </div>
         `;
         profileView.innerHTML = profileDetails;
@@ -77,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="form-group">
                 <label for="photo">Update Profile Photo</label>
                 <input type="file" id="photo" class="form-control" accept="image/*">
-                <small>Leave blank to keep current photo. A new photo cannot be displayed until next login due to browser limitations.</small>
+                <small>Leave blank to keep current photo.</small>
             </div>
             <div class="form-actions" style="margin-top: 20px;">
                 <button type="submit" class="action-btn approve-btn">Save Changes</button>
@@ -105,38 +103,47 @@ document.addEventListener('DOMContentLoaded', () => {
             phone: document.getElementById('phone').value,
         };
 
-        if (newPhotoFile) {
-            updatedUser.photoFilename = newPhotoFile.name;
-            updatedUser.photoUrl = null; // Invalidate old photoUrl
-        }
+        const handlePhoto = (readerEvent) => {
+            if (readerEvent) {
+                updatedUser.photoUrl = readerEvent.target.result;
+            }
 
-        const userIndex = allUsers.findIndex(u => u.id === userId);
-        if (userIndex > -1) {
-            allUsers[userIndex] = updatedUser;
-            localStorage.setItem(storageKey, JSON.stringify(allUsers));
-            currentUser = updatedUser;
-            newPhotoFile = null; // Reset file input state
-            Toastify({ text: "Profile updated successfully!", duration: 3000, className: "toast-success" }).showToast();
-            renderViewMode();
+            const userIndex = allUsers.findIndex(u => u.id === userId);
+            if (userIndex > -1) {
+                allUsers[userIndex] = updatedUser;
+                localStorage.setItem(storageKey, JSON.stringify(allUsers));
+                currentUser = updatedUser;
+                newPhotoFile = null;
+                Toastify({ text: "Profile updated successfully!", duration: 3000, className: "toast-success" }).showToast();
+                renderViewMode();
+                 // Force a reload of the auth script's header part if it has already run
+                if (window.renderProfileHeader) window.renderProfileHeader();
+            } else {
+                Toastify({ text: "Error updating profile.", duration: 3000, className: "toast-error" }).showToast();
+            }
+        };
+
+        if (newPhotoFile) {
+            const reader = new FileReader();
+            reader.onload = handlePhoto;
+            reader.readAsDataURL(newPhotoFile);
         } else {
-            Toastify({ text: "Error updating profile.", duration: 3000, className: "toast-error" }).showToast();
+            handlePhoto(null);
         }
     });
 
     profileEditForm.addEventListener('click', (e) => {
         if (e.target.id === 'cancel-edit-btn') {
-            newPhotoFile = null; // Reset file input state
+            newPhotoFile = null;
             renderViewMode();
         }
     });
 
-    // Use event delegation for the file input
     profileEditForm.addEventListener('change', (e) => {
         if (e.target.id === 'photo' && e.target.files.length > 0) {
             newPhotoFile = e.target.files[0];
         }
     });
 
-    // Initial Render
     renderViewMode();
 });

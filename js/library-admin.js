@@ -1,9 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Auth Check
-    if (localStorage.getItem('userRole') !== 'admin') {
-        window.location.href = 'index.html';
-        return;
-    }
+    // Auth Check is handled by auth.js
 
     // Forms & Inputs
     const apiSearchForm = document.getElementById("book-api-search-form");
@@ -34,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let localLibrary = DB.getItem("library");
     let students = DB.getItem("students") || [];
     let teachers = DB.getItem("teachers") || [];
-    let users = [...students, ...teachers, {id: 'admin', firstName: 'Admin', lastName: ''}]; // Include admin for lookups
+    let users = [...students, ...teachers, {id: 'admin', firstName: 'Admin', lastName: ''}];
     let loans = DB.getItem("loans");
     let suggestions = DB.getItem("librarySuggestions");
 
@@ -42,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const renderLibraryCollection = () => {
         libraryCollectionTbody.innerHTML = "";
         if (localLibrary.length === 0) {
-            libraryCollectionTbody.innerHTML = "<tr><td colspan='5'>The library is empty. Use the search above to add books.</td></tr>";
+            libraryCollectionTbody.innerHTML = "<tr><td colspan='5'>The library is empty.</td></tr>";
             return;
         }
         localLibrary.forEach(book => {
@@ -68,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
         loans.forEach(loan => {
             const book = localLibrary.find(b => b.key === loan.bookKey);
             const user = users.find(u => u.id === loan.userId);
-            if (!book || !user) return; // Data integrity check
+            if (!book || !user) return;
 
             const tr = document.createElement("tr");
             tr.innerHTML = `
@@ -85,31 +81,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const renderApiResults = (books) => {
         apiSearchResults.innerHTML = "";
         if (!books || books.length === 0) {
-            apiSearchResults.innerHTML = "<p>No books found for your query.</p>";
+            apiSearchResults.innerHTML = "<p>No books found.</p>";
             return;
         }
         const list = document.createElement("ul");
         list.className = "list-group";
-        books.slice(0, 5).forEach(book => { // Show top 5 results
+        books.slice(0, 5).forEach(book => {
             const li = document.createElement("li");
             li.className = "list-group-item d-flex justify-content-between align-items-center";
-            li.innerHTML = `<span>${book.title} by ${book.author_name ? book.author_name.join(', ') : 'N/A'}</span> <button class="btn btn-sm btn-primary" data-book-key="${book.key}">Add</button>`;
+            li.innerHTML = `<span>${book.title} by ${book.author_name ? book.author_name.join(', ') : 'N/A'}</span> <button class="btn btn-sm btn-success" data-book-key="${book.key}">Add</button>`;
             li.querySelector("button").addEventListener("click", () => addBookToLibrary(book));
             list.appendChild(li);
         });
         apiSearchResults.appendChild(list);
-    };
-
-    const populateLoanDropdowns = () => {
-        bookSelect.innerHTML = '<option value="">Select a book...</option>';
-        localLibrary.filter(book => !loans.some(l => l.bookKey === book.key)).forEach(book => {
-            bookSelect.innerHTML += `<option value="${book.key}">${book.title}</option>`;
-        });
-
-        userSelect.innerHTML = '<option value="">Select a user...</option>';
-        users.filter(u => u.id !== 'admin').forEach(user => {
-            userSelect.innerHTML += `<option value="${user.id}">${user.firstName} ${user.lastName} (${user.role})</option>`;
-        });
     };
 
     const renderSuggestions = () => {
@@ -140,6 +124,18 @@ document.addEventListener("DOMContentLoaded", () => {
         pendingSuggestionsContainer.appendChild(list);
     };
 
+    const populateLoanDropdowns = () => {
+        bookSelect.innerHTML = '<option value="">Select a book...</option>';
+        localLibrary.filter(book => !loans.some(l => l.bookKey === book.key)).forEach(book => {
+            bookSelect.innerHTML += `<option value="${book.key}">${book.title}</option>`;
+        });
+
+        userSelect.innerHTML = '<option value="">Select a user...</option>';
+        users.filter(u => u.role !== 'admin').forEach(user => {
+            userSelect.innerHTML += `<option value="${user.id}">${user.firstName} ${user.lastName} (${user.role})</option>`;
+        });
+    };
+
     const rerenderAll = () => {
         renderLibraryCollection();
         renderLoanedBooks();
@@ -148,7 +144,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // --- EVENT LISTENERS ---
-
     apiSearchForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const query = apiSearchQuery.value;
@@ -202,14 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const loan = {
-            id: `loan_${Date.now()}`,
-            userId,
-            bookKey,
-            loanDate: new Date().toISOString().split('T')[0],
-            dueDate,
-        };
-
+        const loan = { id: `loan_${Date.now()}`, userId, bookKey, loanDate: new Date().toISOString().split('T')[0], dueDate };
         loans.push(loan);
         DB.setItem("loans", loans);
         loanForm.reset();
@@ -229,15 +217,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const key = e.target.dataset.key;
         if (!key) return;
 
-        if (e.target.classList.contains("approve-suggestion-btn")) {
+        const button = e.target;
+        if (button.classList.contains("approve-suggestion-btn")) {
             const suggestion = suggestions.find(s => s.key === key);
             if (suggestion) {
-                addBookToLibrary(suggestion); // Re-use the existing add function
-                suggestions = suggestions.filter(s => s.key !== key); // Remove from suggestions
+                addBookToLibrary(suggestion);
+                suggestions = suggestions.filter(s => s.key !== key);
                 DB.setItem("librarySuggestions", suggestions);
                 rerenderAll();
             }
-        } else if (e.target.classList.contains("deny-suggestion-btn")) {
+        } else if (button.classList.contains("deny-suggestion-btn")) {
              if (confirm("Are you sure you want to deny this suggestion?")) {
                 suggestions = suggestions.filter(s => s.key !== key);
                 DB.setItem("librarySuggestions", suggestions);

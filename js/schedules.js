@@ -86,16 +86,32 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('schedules', JSON.stringify(schedules));
         renderSchedules();
         addScheduleForm.reset();
+        Toastify({ text: "Schedule added successfully.", duration: 3000, className: "toast-success" }).showToast();
     });
 
     // --- Delete Schedule ---
     schedulesTbody.addEventListener('click', (e) => {
         if (e.target.classList.contains('delete-btn')) {
             const scheduleIndex = e.target.dataset.index;
+            const scheduleToDelete = schedules[scheduleIndex];
+
+            const students = JSON.parse(localStorage.getItem('students')) || [];
+            const isScheduleInUse = students.some(student =>
+                student.plottedClasses && student.plottedClasses.some(plotted =>
+                    plotted.subjectCode === scheduleToDelete.subjectCode && plotted.sectionCode === scheduleToDelete.sectionCode
+                )
+            );
+
+            if (isScheduleInUse) {
+                Toastify({ text: `Cannot delete this schedule because students have already enrolled in it.`, duration: 3000, className: "toast-error" }).showToast();
+                return;
+            }
+
             if (confirm(`Are you sure you want to delete this schedule?`)) {
                 schedules.splice(scheduleIndex, 1);
                 localStorage.setItem('schedules', JSON.stringify(schedules));
                 renderSchedules();
+                Toastify({ text: "Schedule deleted successfully.", duration: 3000, className: "toast-success" }).showToast();
             }
         }
     });

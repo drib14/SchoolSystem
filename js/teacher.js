@@ -2,16 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const userRole = localStorage.getItem('userRole');
     const userId = localStorage.getItem('userId');
 
-    if (userRole !== 'teacher' || !userId) {
-        window.location.href = 'index.html';
-        return;
-    }
+    // Auth check is handled by auth.js
 
     // --- DOM Elements ---
     const classCountEl = document.getElementById('class-count');
     const attendanceOverviewEl = document.getElementById('attendance-overview');
     const todoListEl = document.getElementById('todo-list');
-    const headerEl = document.querySelector('.header h1');
+    const welcomeHeader = document.querySelector('#page-title');
 
     // --- Data Loading ---
     const allTeachers = JSON.parse(localStorage.getItem('teachers')) || [];
@@ -27,8 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    if (headerEl) {
-        headerEl.textContent = `Welcome, ${currentUser.firstName}!`;
+    if (welcomeHeader) {
+        // This is handled by auth.js now
     }
     const mySchedules = allSchedules.filter(s => s.teacherId === userId);
 
@@ -38,9 +35,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Attendance Overview ---
     function calculateAttendanceOverview() {
         const myScheduleIds = mySchedules.map(s => `${s.subjectCode}_${s.sectionCode}`);
+        if (myScheduleIds.length === 0) {
+            attendanceOverviewEl.textContent = 'N/A';
+            return;
+        }
         const relevantRecords = attendanceRecords.filter(rec => myScheduleIds.includes(rec.scheduleId));
         if (relevantRecords.length === 0) {
-            attendanceOverviewEl.textContent = 'N/A';
+            attendanceOverviewEl.textContent = '100%'; // No records means no absences
             return;
         }
         const presentCount = relevantRecords.filter(rec => rec.status === 'Present').length;

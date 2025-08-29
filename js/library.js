@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         if (filteredBooks.length === 0) {
-            catalogTbody.innerHTML = "<tr><td colspan='5'>No books found.</td></tr>";
+            catalogTbody.innerHTML = "<tr><td colspan='5'>No books found in our catalog.</td></tr>";
             return;
         }
 
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td data-label="Title">${book.title}</td>
                 <td data-label="Author(s)">${book.author_name ? book.author_name.join(', ') : 'N/A'}</td>
                 <td data-label="Publish Year">${book.first_publish_year || 'N/A'}</td>
-                <td data-label="Status"><span class="badge ${isOnLoan ? 'text-bg-secondary' : 'text-bg-success'}">${isOnLoan ? 'On Loan' : 'Available'}</span></td>
+                <td data-label="Status"><span class="badge ${isOnLoan ? 'bg-secondary' : 'bg-success'}">${isOnLoan ? 'On Loan' : 'Available'}</span></td>
                 <td data-label="Actions">${actionButton}</td>
             `;
             catalogTbody.appendChild(tr);
@@ -81,14 +81,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    searchBtn.addEventListener("click", () => {
+    const rerenderAll = () => {
         renderCatalog(searchInput.value);
-    });
+        renderMyLoans();
+    };
 
+    // --- Event Listeners ---
+    searchBtn.addEventListener("click", () => renderCatalog(searchInput.value));
     searchInput.addEventListener("keyup", (e) => {
-        if (e.key === 'Enter') {
-            renderCatalog(searchInput.value);
-        }
+        if (e.key === 'Enter') renderCatalog(searchInput.value);
     });
 
     catalogTbody.addEventListener("click", (e) => {
@@ -99,20 +100,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 const dueDate = new Date();
                 dueDate.setDate(today.getDate() + 14);
 
-                const newLoan = {
-                    id: `loan_${Date.now()}`,
-                    userId: currentUserId,
-                    bookKey: bookKey,
-                    loanDate: today.toISOString().split('T')[0],
-                    dueDate: dueDate.toISOString().split('T')[0],
-                };
-
+                const newLoan = { id: `loan_${Date.now()}`, userId: currentUserId, bookKey: bookKey, loanDate: today.toISOString().split('T')[0], dueDate: dueDate.toISOString().split('T')[0] };
                 allLoans.push(newLoan);
                 DB.setItem("loans", allLoans);
                 Toastify({ text: "Book borrowed successfully!", duration: 3000, className: "toast-success" }).showToast();
-
-                renderCatalog(searchInput.value);
-                renderMyLoans();
+                rerenderAll();
             }
         }
     });
@@ -137,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const renderApiResults = (books) => {
         apiSearchResults.innerHTML = "";
         if (!books || books.length === 0) {
-            apiSearchResults.innerHTML = "<p>No books found for your query.</p>";
+            apiSearchResults.innerHTML = "<p>No books found from Open Library.</p>";
             return;
         }
         const list = document.createElement("ul");
@@ -152,10 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
             li.innerHTML = `<span>${book.title} by ${book.author_name ? book.author_name.join(', ') : 'N/A'}</span> ${buttonHtml}`;
 
             if (currentUserRole === 'teacher') {
-                const suggestBtn = li.querySelector('.suggest-btn');
-                if (suggestBtn) {
-                    suggestBtn.addEventListener("click", () => addBookSuggestion(book));
-                }
+                li.querySelector('.suggest-btn').addEventListener("click", () => addBookSuggestion(book));
             }
             list.appendChild(li);
         });
@@ -174,8 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
         Toastify({ text: `Your suggestion for "${book.title}" has been submitted for review.`, duration: 3000, className: "toast-success" }).showToast();
     };
 
-
-    // Initial Render
-    renderCatalog();
-    renderMyLoans();
+    // --- Initial Render ---
+    rerenderAll();
 });
