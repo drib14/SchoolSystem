@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const photoPreview = document.getElementById('photo-preview');
     const courseSelection = document.getElementById('course-selection');
 
-    let photoUrl = null; // To store the base64 string
+    let photoFilename = null; // To store the filename
     const courses = JSON.parse(localStorage.getItem('courses')) || [];
     const allRequirements = JSON.parse(localStorage.getItem('requirements')) || [];
     const teacherReqs = allRequirements.filter(r => r.type === 'Teacher');
@@ -52,9 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const reader = new FileReader();
             reader.onload = (e) => {
                 photoPreview.innerHTML = `<img src="${e.target.result}" alt="Profile Photo Preview">`;
-                photoUrl = e.target.result;
             };
             reader.readAsDataURL(file);
+            photoFilename = file.name;
         }
     });
 
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
             status: 'pending',
             role: 'teacher',
             requirements: applicantRequirements,
-            photoUrl: photoUrl
+            photoFilename: photoFilename
         };
 
         // --- Save to Local Storage ---

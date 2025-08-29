@@ -200,10 +200,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (file) {
             const reader = new FileReader();
             reader.onload = (e) => {
+                // Show a preview, but do not store the large base64 string
                 photoPreview.innerHTML = `<img src="${e.target.result}" alt="Profile Photo Preview">`;
-                applicantData.photoUrl = e.target.result;
             };
             reader.readAsDataURL(file);
+            // Instead of the photo content, we could store just the filename for reference
+            applicantData.photoFilename = file.name;
         }
     });
 
