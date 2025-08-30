@@ -1,77 +1,153 @@
+// This script will be executed on every page to handle authentication and dynamic content.
+// It relies on `data.js` being loaded first.
+
+/**
+ * Attempts to log a user in by checking credentials.
+ * @param {string} username The username entered by the user.
+ * @param {string} password The password entered by the user.
+ * @returns {object | null} The user object if successful, otherwise null.
+ */
+function login(username, password) {
+    const users = getData('users');
+    if (!users) {
+        console.error("Users data not found. Make sure data.js is loaded and initialized.");
+        return null;
+    }
+    const user = users.find(u => u.username === username && u.password === password);
+
+    if (user) {
+        saveData('loggedInUser', user);
+        return user;
+    }
+
+    return null;
+}
+
+/**
+ * Logs the current user out.
+ */
+function logout() {
+    localStorage.removeItem('loggedInUser'); // Direct removal is fine for this simple operation
+    // Ensure redirection goes to the root.
+    window.location.href = '/index.html';
+}
+
+/**
+ * Retrieves the currently logged-in user from localStorage.
+ * @returns {object | null} The user object or null if not logged in.
+ */
+function getLoggedInUser() {
+    return getData('loggedInUser');
+}
+
+/**
+ * Loads the correct sidebar based on the logged-in user's role.
+ */
+async function loadSidebar() {
+    const user = getLoggedInUser();
+    if (!user) return;
+
+    const sidebarContainer = document.getElementById('sidebar-container');
+    if (!sidebarContainer) return;
+
+    // Construct the correct path relative to the root.
+    let sidebarPath = `/sidebars/${user.role}-sidebar.html`;
+
+    try {
+        const response = await fetch(sidebarPath);
+        if (!response.ok) throw new Error(`Sidebar not found at ${sidebarPath}`);
+        const sidebarHTML = await response.text();
+        sidebarContainer.innerHTML = sidebarHTML;
+    } catch (error) {
+        console.error(`Error loading sidebar: ${error.message}`);
+        sidebarContainer.innerHTML = '<p style="color: white;">Could not load navigation.</p>';
+    }
+}
+
+/**
+ * Updates the header with the user's name and profile picture.
+ */
+function populateHeader() {
+    const user = getLoggedInUser();
+    if (!user) return;
+
+    const usernameDisplay = document.getElementById('username-display');
+    const profilePicDisplay = document.getElementById('profile-pic-display');
+
+    if (usernameDisplay) {
+        usernameDisplay.textContent = user.name;
+    }
+    if (profilePicDisplay) {
+        // Use a default image if the user's profilePic is empty or missing.
+        profilePicDisplay.src = user.profilePic || 'https://via.placeholder.com/40';
+    }
+}
+
+/**
+ * Protects a page by checking for a logged-in user and their role.
+ * This should be called from the specific page's script.
+ * @param {string[]} allowedRoles An array of roles allowed to view the page.
+ */
+function protectPage(allowedRoles = []) {
+    const user = getLoggedInUser();
+
+    if (!user) {
+        window.location.href = '/index.html';
+        return;
+    }
+
+    if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
+        alert('You do not have permission to view this page.');
+        // Redirect to their own dashboard as a safe fallback.
+        window.location.href = `/${user.role}/dashboard.html`;
+    }
+}
+
+
+/**
+ * Checks for unread messages and displays a notification dot.
+ */
+function checkNotifications() {
+    const user = getLoggedInUser();
+    if (!user) return;
+
+    const notificationDot = document.getElementById('notification-dot');
+    if (!notificationDot) return;
+
+    const messages = getData('messages') || [];
+    const hasUnread = messages.some(msg => msg.toId === user.id && !msg.read);
+
+    if (hasUnread) {
+        notificationDot.style.display = 'block';
+    } else {
+        notificationDot.style.display = 'none';
+    }
+}
+
+
+// Main execution block that runs on every page load.
 document.addEventListener('DOMContentLoaded', () => {
-    const userRole = localStorage.getItem('userRole');
-    const userId = localStorage.getItem('userId');
-    const currentPage = window.location.pathname.split('/').pop();
+    // Check if the current page is the login page by looking for a unique element, e.g., the login form.
+    const isLoginPage = !!document.getElementById('login-form');
 
-    const publicPages = ['index.html', 'enroll.html', 'teacher-apply.html', 'forgot-password.html'];
+    if (!isLoginPage) {
+        const user = getLoggedInUser();
+        if (!user) {
+            // If not on the login page and not logged in, redirect.
+            window.location.href = '/index.html';
+        } else {
+            // If logged in, populate the common elements.
+            loadSidebar();
+            populateHeader();
+            checkNotifications(); // Check for notifications on every page load
 
-    if (!publicPages.includes(currentPage) && (!userRole || !userId)) {
-        window.location.href = 'index.html';
-        return;
-    }
-
-    // --- DOM elements that exist on all panel pages ---
-    const sidebarMenu = document.querySelector('.sidebar-menu');
-    const pageTitle = document.getElementById('page-title'); // Assuming the template has this
-
-    // If this is a public page, or a page without a sidebar, do nothing more.
-    if (publicPages.includes(currentPage) || !sidebarMenu) {
-        return;
-    }
-
-    // --- Define Navigation Links for Each Role ---
-    const navLinks = {
-        admin: [
-            { href: 'admin.html', icon: 'fa-tachometer-alt', text: 'Dashboard' },
-            { href: 'applicants.html', icon: 'fa-user-plus', text: 'Student Applicants' },
-            { href: 'teacher-applicants.html', icon: 'fa-user-tie', text: 'Teacher Applicants' },
-            { href: 'enrolled-students.html', icon: 'fa-user-graduate', text: 'Students' },
-            { href: 'approved-teachers.html', icon: 'fa-chalkboard-teacher', text: 'Teachers' },
-            { href: 'courses.html', icon: 'fa-book', text: 'Courses' },
-            { href: 'subjects.html', icon: 'fa-flask', text: 'Subjects' },
-            { href: 'schedules.html', icon: 'fa-calendar-alt', text: 'Schedules' },
-            { href: 'requirements.html', icon: 'fa-file-alt', text: 'Requirements' }
-        ],
-        teacher: [
-            { href: 'teacher.html', icon: 'fa-tachometer-alt', text: 'Dashboard' },
-            { href: 'my-classes.html', icon: 'fa-chalkboard-teacher', text: 'My Classes' },
-            { href: 'teacher-attendance.html', icon: 'fa-user-clock', text: 'My Attendance' },
-            { href: 'profile.html', icon: 'fa-user-cog', text: 'Profile' }
-        ],
-        student: [
-            { href: 'student.html', icon: 'fa-tachometer-alt', text: 'Dashboard' },
-            { href: 'plot-schedule.html', icon: 'fa-calendar-plus', text: 'Class Enrollment' },
-            { href: 'my-attendance.html', icon: 'fa-user-check', text: 'My Attendance' },
-            { href: 'my-grades.html', icon: 'fa-graduation-cap', text: 'My Grades' },
-            { href: 'profile.html', icon: 'fa-user-cog', text: 'Profile' }
-        ]
-    };
-
-    // --- Populate Sidebar ---
-    const links = navLinks[userRole] || [];
-    sidebarMenu.innerHTML = links.map(link => {
-        const isActive = currentPage === link.href;
-        // Also update the main page title based on the active link
-        if (isActive && pageTitle) {
-            pageTitle.textContent = link.text;
+            // Hamburger menu logic
+            const menuButton = document.getElementById('mobile-menu-button');
+            if(menuButton) {
+                menuButton.addEventListener('click', () => {
+                    document.body.classList.toggle('sidebar-open');
+                });
+            }
         }
-        return `
-            <li>
-                <a href="${link.href}" class="${isActive ? 'active' : ''}">
-                    <i class="fas ${link.icon}"></i> <span>${link.text}</span>
-                </a>
-            </li>
-        `;
-    }).join('');
-
-    // --- Centralized Logout ---
-    const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            localStorage.removeItem('userRole');
-            localStorage.removeItem('userId');
-            window.location.href = 'index.html';
-        });
     }
 });

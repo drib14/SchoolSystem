@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Student - School Management System</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <div id="sidebar-container"></div>
+
+        <div class="main-content">
+            <header>
+                <div class="header-content">
+                    <h1>Edit Student</h1>
+                    <div class="user-info">
+                        <span id="username-display"></span>
+                        <img id="profile-pic-display" src="" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%;">
+                    </div>
+                </div>
+            </header>
+
+            <main id="page-content">
+                <form id="edit-student-form">
+                    <input type="hidden" id="student-id">
+
+                    <label for="student-name">Full Name</label>
+                    <input type="text" id="student-name" required>
+
+                    <label for="student-email">Email Address</label>
+                    <input type="email" id="student-email" required>
+
+                    <p style="font-size: 0.9em; color: #666;">Username and password cannot be changed from this screen.</p>
+
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <button type="submit" class="btn btn-primary">Update Student</button>
+                        <a href="/admin/students.html" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </main>
+
+            <footer>
+                <p>&copy; 2024 School Management System. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="/js/data.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/admin/edit-student.js"></script>
+</body>
+</html>

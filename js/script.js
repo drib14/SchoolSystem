@@ -67,8 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (userIsValid) {
             localStorage.setItem('userRole', role);
-            // Admin username is 'admin', so we store that as the userId.
-            localStorage.setItem('userId', username);
+            // Store userId for both students and teachers
+            if (role === 'student' || role === 'teacher') {
+                localStorage.setItem('userId', username);
+            }
             window.location.href = `${role}.html`;
         } else {
             alert('Invalid username or password');

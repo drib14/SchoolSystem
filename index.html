@@ -3,47 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISCP - Welcome</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Login - School Management System</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Additional styles specific to the login page */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--background-color);
+        }
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            background-color: var(--surface-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+        .login-container h1 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+        }
+        .login-form {
+            text-align: left;
+        }
+        .login-form button {
+            width: 100%;
+            margin-top: 10px;
+        }
+        #error-message {
+            color: var(--error-color);
+            margin-top: 15px;
+            display: none; /* Hidden by default */
+        }
+    </style>
 </head>
 <body>
     <div class="login-container">
-        <div id="role-selection" class="login-box">
-            <div class="logo-container">
-                <h2>ISCP</h2>
-                <p>International State College of the Philippines</p>
-            </div>
-            <div class="role-buttons">
-                <button class="role-btn" data-role="admin"><i class="fas fa-user-shield"></i> Admin</button>
-                <button class="role-btn" data-role="teacher"><i class="fas fa-chalkboard-teacher"></i> Teacher</button>
-                <button class="role-btn" data-role="student"><i class="fas fa-user-graduate"></i> Student</button>
-            </div>
-            <div class="enroll-link">
-                <p>New Student? <a href="enroll.html">Enroll Now</a></p>
-                <p>Faculty? <a href="teacher-apply.html">Apply Here</a></p>
-            </div>
-        </div>
+        <h1>School Management System</h1>
+        <form id="login-form" class="login-form">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
 
-        <div id="login-form-container" class="login-box" style="display: none;">
-            <div class="logo-container">
-                <h2 id="login-title">Login</h2>
-            </div>
-            <form id="login-form">
-                <input type="hidden" id="login-role" value="">
-                <div class="input-group">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="username" placeholder="Username" required>
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="password" placeholder="Password" required>
-                </div>
-                <button type="submit" class="login-btn">Login</button>
-                <button type="button" id="back-btn" class="back-btn">Back</button>
-            </form>
-        </div>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+        <p id="error-message"></p>
+        <p style="margin-top: 20px; font-size: 0.9em; color: #666;">
+            Use 'admin', 'teacher', or 'student' with password 'password'.
+        </p>
     </div>
-    <script src="js/script.js"></script>
+
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // If a user is already logged in, redirect them away from the login page.
+            if (getLoggedInUser()) {
+                const user = getLoggedInUser();
+                window.location.href = `${user.role}/dashboard.html`;
+                return; // Stop script execution
+            }
+
+            const loginForm = document.getElementById('login-form');
+            const errorMessage = document.getElementById('error-message');
+
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                errorMessage.style.display = 'none'; // Hide error on new attempt
+
+                const username = loginForm.username.value;
+                const password = loginForm.password.value;
+
+                const user = login(username, password); // Use the refactored login function
+
+                if (user) {
+                    // Successful login, redirect to the user's dashboard
+                    window.location.href = `${user.role}/dashboard.html`;
+                } else {
+                    // Failed login, show an error message
+                    errorMessage.textContent = 'Invalid username or password.';
+                    errorMessage.style.display = 'block';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

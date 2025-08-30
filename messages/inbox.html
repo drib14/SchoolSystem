@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inbox - School Management System</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .conversation-list a {
+            display: block;
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+        .conversation-list a:hover {
+            background-color: #e8f4f4;
+        }
+        .conversation-list a.unread {
+            font-weight: bold;
+            background-color: #f0f8ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div id="sidebar-container"></div>
+
+        <div class="main-content">
+            <header>
+                <div class="header-content">
+                    <h1>Inbox</h1>
+                    <div class="user-info">
+                        <span id="username-display"></span>
+                        <img id="profile-pic-display" src="" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%;">
+                    </div>
+                </div>
+            </header>
+
+            <main id="page-content">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Conversations</h2>
+                    <a href="/messages/new.html" class="btn btn-primary">New Message</a>
+                </div>
+                <div id="conversation-list" class="conversation-list">
+                    <!-- Conversations will be listed here by JavaScript -->
+                </div>
+            </main>
+
+            <footer>
+                <p>&copy; 2024 School Management System. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="/js/data.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/messages/inbox.js"></script>
+</body>
+</html>
