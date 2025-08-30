@@ -15,14 +15,15 @@ document.addEventListener('DOMContentLoaded', () => {
         setItem: (key, val) => localStorage.setItem(key, JSON.stringify(val)),
     };
     let allMessages = DB.getItem("messages");
-    const students = DB.getItem("students") || [];
-    const teachers = DB.getItem("teachers") || [];
+    const students = JSON.parse(localStorage.getItem("students")) || [];
+    const teachers = JSON.parse(localStorage.getItem("teachers")) || [];
     const allUsers = [
         { id: 'admin', firstName: 'Admin', lastName: '' },
         ...students,
         ...teachers
     ];
     const otherUser = allUsers.find(u => u.id === otherUserId);
+    const currentUser = allUsers.find(u => u.id === currentUserId);
 
     const conversationWithName = document.getElementById("conversation-with-name");
     const messageBody = document.getElementById("message-body");
@@ -72,8 +73,8 @@ document.addEventListener('DOMContentLoaded', () => {
         messageInput.value = "";
         renderMessages();
 
-        // Create a notification for the other user
-        createNotification(otherUserId, `New message from ${localStorage.getItem('userName')}`, `messaging-conversation.html?conversationId=${conversationId}`);
+        const currentUserName = currentUser ? `${currentUser.firstName} ${currentUser.lastName}` : 'A user';
+        createNotification(otherUserId, `New message from ${currentUserName}`, `messaging-conversation.html?conversationId=${conversationId}`);
     });
 
     setHeader();

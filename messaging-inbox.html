@@ -9,11 +9,14 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/panel.css">
     <style>
-        .conversation-item { display: block; padding: 15px; border-bottom: 1px solid var(--border-color); text-decoration: none; color: var(--text-color); }
+        .conversation-item { display: block; padding: 15px; border-bottom: 1px solid var(--border-color); text-decoration: none; color: var(--text-color); transition: background-color 0.2s; }
         .conversation-item:hover { background-color: var(--bg-color); }
-        .conversation-item h5 { margin: 0 0 5px 0; }
+        .conversation-item h5 { margin: 0 0 5px 0; display: flex; align-items: center; gap: 8px;}
         .conversation-item p { margin: 0; font-size: 0.9em; color: #6c757d; }
         .conversation-item small { font-size: 0.8em; color: #6c757d; }
+        .status-indicator { height: 10px; width: 10px; border-radius: 50%; display: inline-block; }
+        .status-indicator.active { background-color: var(--accent-color); }
+        .status-indicator.inactive { background-color: #ccc; }
     </style>
 </head>
 <body>
@@ -37,9 +40,7 @@
                         <h2>Inbox</h2>
                         <a href="messaging-new.html" class="action-btn approve-btn">New Message</a>
                     </div>
-                    <div class="card-body" id="conversation-list-items" style="padding: 0;">
-                        <!-- Conversations will be loaded here -->
-                    </div>
+                    <div class="card-body" id="conversation-list-items" style="padding: 0;"></div>
                 </div>
             </div>
         </div>

@@ -14,7 +14,7 @@
         <div class="sidebar">
             <div class="sidebar-header">
                 <h2>ISCP</h2>
-                <p id="sidebar-panel-name">Panel</p>
+                <p>Admin Panel</p>
             </div>
             <ul class="sidebar-menu"></ul>
             <div class="sidebar-footer">
@@ -24,41 +24,22 @@
         <div class="main-content">
             <div class="header">
                 <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
-                <div class="header-left">
-                    <h1 id="page-title">Student Applicants</h1>
-                </div>
-                <div class="header-right">
-                    <div class="notification-area">
-                        <button class="notification-btn"><i class="fas fa-bell"></i><span class="notification-badge" style="display: none;">0</span></button>
-                        <div class="notification-panel">
-                            <div class="notification-panel-header"><h4>Notifications</h4></div>
-                            <ul class="notification-list"></ul>
-                        </div>
-                    </div>
-                    <div class="profile-info"></div>
-                </div>
+                <h1>Manage Student Applicants</h1>
             </div>
             <div class="content">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Pending Student Applications</h3>
-                    </div>
-                    <div class="card-body">
-                        <table class="applicants-table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Course</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="applicants-tbody"></tbody>
-                        </table>
-                    </div>
-                </div>
+                <table class="applicants-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Course</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="applicants-tbody"></tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -80,7 +61,6 @@
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="js/auth.js"></script>
     <script src="js/nav.js"></script>
-    <script src="js/notifications.js"></script>
     <script src="js/applicants.js"></script>
 </body>
 </html>

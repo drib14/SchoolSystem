@@ -1,10 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const currentUserId = localStorage.getItem("userId");
-    const DB = {
-        getItem: (key, def = []) => JSON.parse(localStorage.getItem(key) || JSON.stringify(def)),
-    };
-    const students = DB.getItem("students") || [];
-    const teachers = DB.getItem("teachers") || [];
+
+    const students = JSON.parse(localStorage.getItem("students")) || [];
+    const teachers = JSON.parse(localStorage.getItem("teachers")) || [];
     const allUsers = [
         { id: 'admin', firstName: 'Admin', lastName: '', role: 'admin' },
         ...students,

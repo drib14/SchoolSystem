@@ -3,14 +3,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.querySelector('.sidebar');
     const overlay = document.querySelector('.overlay');
 
-    if (hamburgerBtn && sidebar && overlay) {
-        hamburgerBtn.addEventListener('click', () => {
+    if (hamburgerBtn && sidebar) { // Overlay might not be on every page initially
+        hamburgerBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             sidebar.classList.toggle('open');
-            overlay.classList.toggle('open');
+            if (overlay) {
+                overlay.classList.toggle('open');
+            }
         });
+    }
 
+    if (overlay) {
         overlay.addEventListener('click', () => {
-            sidebar.classList.remove('open');
+            if (sidebar) {
+                sidebar.classList.remove('open');
+            }
             overlay.classList.remove('open');
         });
     }

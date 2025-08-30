@@ -1,25 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const userRole = localStorage.getItem('userRole');
     const userId = localStorage.getItem('userId');
+    if (!userId) return;
 
-    // --- DOM Elements ---
     const gpaSummaryEl = document.getElementById('gpa-summary');
     const attendanceSummaryEl = document.getElementById('attendance-summary');
     const scheduleTodayListEl = document.getElementById('schedule-today-list');
     const tuitionBalanceEl = document.getElementById('tuition-balance');
-    const uploadPaymentBtn = document.getElementById('upload-payment-btn');
-    const paymentModal = document.getElementById('payment-modal');
-    const closeModalBtn = paymentModal.querySelector('.close-btn');
-    const paymentForm = document.getElementById('payment-form');
 
-    // --- Data Loading ---
     const allStudents = JSON.parse(localStorage.getItem('students')) || [];
     const gradeRecords = JSON.parse(localStorage.getItem('gradeRecords')) || [];
     const attendanceRecords = JSON.parse(localStorage.getItem('attendanceRecords')) || [];
     const allSubjects = JSON.parse(localStorage.getItem('subjects')) || [];
-    const currentUser = allStudents.find(s => s.id === userId);
     const tuitionSettings = JSON.parse(localStorage.getItem('tuitionSettings')) || { pricePerUnit: 0, fees: [] };
-    const myPayments = JSON.parse(localStorage.getItem('payments')) || [];
+    const allPayments = JSON.parse(localStorage.getItem('payments')) || [];
+    const currentUser = allStudents.find(s => s.id === userId);
 
     if (!currentUser) {
         document.getElementById('dashboard-content').innerHTML = '<p>Could not load student data.</p>';
@@ -42,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function calculateAttendance() {
         const myAttendanceRecords = attendanceRecords.filter(rec => rec.studentId === userId);
-        if (myAttendanceRecords.length === 0) { attendanceSummaryEl.textContent = 'N/A'; return; }
+        if (myAttendanceRecords.length === 0) { attendanceSummaryEl.textContent = '100%'; return; }
         const presentCount = myAttendanceRecords.filter(rec => rec.status === 'Present').length;
         const percentage = (presentCount / myAttendanceRecords.length) * 100;
         attendanceSummaryEl.textContent = `${percentage.toFixed(1)}%`;
@@ -50,9 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderTodaysSchedule() {
         const myPlottedClasses = currentUser.plottedClasses || [];
-        const today = new Date();
-        const dayOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][today.getDay()];
-        const todaysClasses = myPlottedClasses.filter(schedule => schedule.time.toLowerCase().includes(dayOfWeek.toLowerCase()));
+        const today = new Date().toLocaleString('en-us', {  weekday: 'short' });
+        const todaysClasses = myPlottedClasses.filter(schedule => schedule.time.includes(today));
         scheduleTodayListEl.innerHTML = '';
         if (todaysClasses.length === 0) {
             scheduleTodayListEl.innerHTML = '<li style="padding: 10px; text-align: center;">No classes scheduled for today.</li>';
@@ -68,10 +61,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function calculateTuition() {
-        const myVerifiedPayments = myPayments.filter(p => p.studentId === userId && p.status === 'verified').reduce((sum, p) => sum + p.amount, 0);
+        const myVerifiedPayments = allPayments.filter(p => p.studentId === userId && p.status === 'verified').reduce((sum, p) => sum + p.amount, 0);
         let totalUnits = 0;
         if (currentUser.plottedClasses && currentUser.plottedClasses.length > 0) {
-            totalUnits = currentUser.plottedClasses.reduce((sum, pc) => sum + (allSubjects.find(s => s.code === pc.subjectCode)?.units || 0), 0);
+            totalUnits = currentUser.plottedClasses.reduce((sum, pc) => {
+                const subject = allSubjects.find(s => s.code === pc.subjectCode);
+                return sum + (subject ? parseFloat(subject.units) || 0 : 0);
+            }, 0);
         }
         const baseTuition = totalUnits * (tuitionSettings.pricePerUnit || 0);
         const miscFees = (tuitionSettings.fees || []).reduce((sum, fee) => sum + fee.amount, 0);
@@ -79,27 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const balance = totalTuition - myVerifiedPayments;
         tuitionBalanceEl.textContent = `₱ ${balance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
     }
-
-    uploadPaymentBtn.addEventListener('click', () => paymentModal.style.display = 'block');
-    closeModalBtn.addEventListener('click', () => paymentModal.style.display = 'none');
-    window.addEventListener('click', (e) => { if (e.target === paymentModal) paymentModal.style.display = 'none'; });
-
-    paymentForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const amount = parseFloat(document.getElementById('paymentAmount').value);
-        const receiptFile = document.getElementById('receiptUpload').files[0];
-        if (!receiptFile || isNaN(amount) || amount <= 0) {
-            Toastify({ text: "Please enter a valid amount and upload a receipt.", duration: 3000, className: "toast-error" }).showToast();
-            return;
-        }
-        const newPayment = { id: `pay_${Date.now()}`, studentId: userId, amount: amount, receiptFilename: receiptFile.name, date: new Date().toISOString(), status: 'pending' };
-        const allPayments = JSON.parse(localStorage.getItem('payments')) || [];
-        allPayments.push(newPayment);
-        localStorage.setItem('payments', JSON.stringify(allPayments));
-        Toastify({ text: "Payment submitted for verification!", duration: 3000, className: "toast-success" }).showToast();
-        paymentModal.style.display = 'none';
-        paymentForm.reset();
-    });
 
     calculateGpa();
     calculateAttendance();
