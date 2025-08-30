@@ -9,24 +9,20 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // --- DOM elements that exist on all panel pages ---
     const sidebarMenu = document.querySelector('.sidebar-menu');
     const profileInfo = document.querySelector('.profile-info');
     const logoutBtn = document.getElementById('logout-btn');
     const sidebarPanelName = document.getElementById('sidebar-panel-name');
     const pageTitle = document.getElementById('page-title');
 
-    // If this is a public page, do nothing more.
     if (publicPages.includes(currentPage)) {
         return;
     }
 
-    // --- Role-based titles ---
-    if (sidebarPanelName) {
+    if (sidebarPanelName && userRole) {
         sidebarPanelName.textContent = `${userRole.charAt(0).toUpperCase() + userRole.slice(1)} Panel`;
     }
 
-    // --- Define Navigation Links for Each Role ---
     const navLinks = {
         admin: [
             { href: 'admin.html', icon: 'fa-tachometer-alt', text: 'Dashboard' },
@@ -34,15 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
             { href: 'teacher-applicants.html', icon: 'fa-user-tie', text: 'Teacher Applicants' },
             { href: 'enrolled-students.html', icon: 'fa-user-graduate', text: 'Students' },
             { href: 'approved-teachers.html', icon: 'fa-chalkboard-teacher', text: 'Teachers' },
-            { href: 'courses.html', icon: 'fa-book', text: 'Courses' },
-            { href: 'subjects.html', icon: 'fa-flask', text: 'Subjects' },
-            { href: 'schedules.html', icon: 'fa-calendar-alt', text: 'Schedules' },
-            { href: 'library-admin.html', icon: 'fa-book-reader', text: 'Library Admin' },
+            { href: 'library-admin.html', icon: 'fa-book-reader', text: 'Library' },
             { href: 'events.html', icon: 'fa-calendar-star', text: 'Events' },
             { href: 'messaging-inbox.html', icon: 'fa-comments', text: 'Messaging' },
-            { href: 'requirements.html', icon: 'fa-file-alt', text: 'Requirements' },
-            { href: 'tuition-management.html', icon: 'fa-file-invoice-dollar', text: 'Tuition' },
-            { href: 'payroll.html', icon: 'fa-dollar-sign', text: 'Payroll' }
+            { href: 'payment-verification.html', icon: 'fa-check-circle', text: 'Verify Payments' },
+            { href: 'settings.html', icon: 'fa-cogs', text: 'Settings' }
         ],
         teacher: [
             { href: 'teacher.html', icon: 'fa-tachometer-alt', text: 'Dashboard' },
@@ -51,7 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
             { href: 'library.html', icon: 'fa-book-bookmark', text: 'Library' },
             { href: 'events.html', icon: 'fa-calendar-star', text: 'Events' },
             { href: 'messaging-inbox.html', icon: 'fa-comments', text: 'Messaging' },
-            { href: 'profile.html', icon: 'fa-user-cog', text: 'Profile' }
+            { href: 'profile.html', icon: 'fa-user-cog', text: 'Profile' },
+            { href: 'settings.html', icon: 'fa-cogs', text: 'Settings' }
         ],
         student: [
             { href: 'student.html', icon: 'fa-tachometer-alt', text: 'Dashboard' },
@@ -61,17 +54,16 @@ document.addEventListener('DOMContentLoaded', () => {
             { href: 'library.html', icon: 'fa-book-bookmark', text: 'Library' },
             { href: 'events.html', icon: 'fa-calendar-star', text: 'Events' },
             { href: 'messaging-inbox.html', icon: 'fa-comments', text: 'Messaging' },
-            { href: 'profile.html', icon: 'fa-user-cog', text: 'Profile' }
+            { href: 'profile.html', icon: 'fa-user-cog', text: 'Profile' },
+            { href: 'settings.html', icon: 'fa-cogs', text: 'Settings' }
         ]
     };
 
-    // --- Populate Sidebar ---
     const links = navLinks[userRole] || [];
     if (sidebarMenu) {
         sidebarMenu.innerHTML = links.map(link => {
             const isActive = currentPage === link.href;
             if (isActive && pageTitle) {
-                // Update the main page title based on the active link
                 pageTitle.textContent = link.text;
             }
             return `
@@ -84,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }).join('');
     }
 
-    // --- Populate User Info in Header ---
     if (profileInfo) {
         let currentUser = null;
         if (userRole === 'admin') {
@@ -106,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Logout Functionality ---
     if (logoutBtn) {
         logoutBtn.addEventListener('click', (e) => {
             e.preventDefault();

@@ -85,19 +85,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (studentIndex > -1) {
                 allStudents[studentIndex].status = 'enrolled';
                 localStorage.setItem('students', JSON.stringify(allStudents));
-                Toastify({ text: `Applicant ${applicantId} has been approved.`, duration: 3000, className: "toast-success" }).showToast();
-
-                createNotification(applicantId, "Congratulations! Your application has been approved.", "student.html");
+                alert(`Applicant ${applicantId} has been approved.`);
                 renderTable();
             }
         } else if (target.classList.contains('deny-btn')) {
-            const studentIndex = allStudents.findIndex(s => s.id === applicantId);
-            if (studentIndex > -1) {
-                allStudents[studentIndex].status = 'denied'; // Soft delete
-                localStorage.setItem('students', JSON.stringify(allStudents));
-                Toastify({ text: `Applicant ${applicantId} has been denied.`, duration: 3000, className: "toast-info" }).showToast();
-                renderTable();
-            }
+            allStudents = allStudents.filter(s => s.id !== applicantId);
+            localStorage.setItem('students', JSON.stringify(allStudents));
+            alert(`Applicant ${applicantId} has been denied and removed.`);
+            renderTable();
         }
     });
 

@@ -59,36 +59,23 @@ document.addEventListener('DOMContentLoaded', () => {
             code: document.getElementById('subjectCode').value,
             name: document.getElementById('subjectName').value,
             units: document.getElementById('subjectUnits').value,
-            courseCode: courseAssignmentSelect.value,
-            yearLevel: document.getElementById('yearLevel').value
+            courseCode: courseAssignmentSelect.value
         };
 
         subjects.push(newSubject);
         localStorage.setItem('subjects', JSON.stringify(subjects));
         renderSubjects();
         addSubjectForm.reset();
-        Toastify({ text: "Subject added successfully.", duration: 3000, className: "toast-success" }).showToast();
     });
 
     // --- Delete Subject ---
     subjectsTbody.addEventListener('click', (e) => {
         if (e.target.classList.contains('delete-btn')) {
             const subjectIndex = e.target.dataset.index;
-            const subjectToDelete = subjects[subjectIndex];
-
-            const schedules = JSON.parse(localStorage.getItem('schedules')) || [];
-            const isSubjectInUse = schedules.some(schedule => schedule.subjectCode === subjectToDelete.code);
-
-            if (isSubjectInUse) {
-                Toastify({ text: `Cannot delete "${subjectToDelete.name}" because it is part of an existing class schedule.`, duration: 3000, className: "toast-error" }).showToast();
-                return;
-            }
-
             if (confirm(`Are you sure you want to delete this subject?`)) {
                 subjects.splice(subjectIndex, 1);
                 localStorage.setItem('subjects', JSON.stringify(subjects));
                 renderSubjects();
-                Toastify({ text: "Subject deleted successfully.", duration: 3000, className: "toast-success" }).showToast();
             }
         }
     });

@@ -85,9 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (teacherIndex > -1) {
                 allTeachers[teacherIndex].status = 'approved';
                 localStorage.setItem('teachers', JSON.stringify(allTeachers));
-                Toastify({ text: `Teacher applicant ${applicantId} has been approved.`, duration: 3000, className: "toast-success" }).showToast();
-
-                createNotification(applicantId, "Congratulations! Your application to join our faculty has been approved.", "teacher.html");
+                alert(`Teacher applicant ${applicantId} has been approved.`);
                 renderTable();
             }
         } else if (target.classList.contains('deny-btn')) {
@@ -95,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (teacherIndex > -1) {
                 allTeachers[teacherIndex].status = 'denied';
                 localStorage.setItem('teachers', JSON.stringify(allTeachers));
-                Toastify({ text: `Teacher applicant ${applicantId} has been denied.`, duration: 3000, className: "toast-info" }).showToast();
+                alert(`Teacher applicant ${applicantId} has been denied.`);
                 renderTable();
             }
         }

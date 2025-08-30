@@ -16,9 +16,7 @@
                 <h2>ISCP</h2>
                 <p id="sidebar-panel-name">Panel</p>
             </div>
-            <ul class="sidebar-menu">
-                <!-- Links are dynamically inserted by js/auth.js -->
-            </ul>
+            <ul class="sidebar-menu"></ul>
             <div class="sidebar-footer">
                 <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
@@ -37,30 +35,21 @@
                             <ul class="notification-list"></ul>
                         </div>
                     </div>
-                    <div class="profile-info">
-                        <!-- Populated by js/auth.js -->
-                    </div>
+                    <div class="profile-info"></div>
                 </div>
             </div>
             <div class="content" id="dashboard-content">
                 <div class="analytics-grid">
-                    <!-- Grade Summary Card -->
                     <div class="card">
-                        <div class="card-header">
-                            <h3>Grade Summary</h3>
-                        </div>
+                        <div class="card-header"><h3>Grade Summary</h3></div>
                         <div class="card-body" style="text-align: center;">
                             <p>Overall GPA (out of 4.0)</p>
                             <h2 id="gpa-summary" style="font-size: 2.5rem; margin: 10px 0;">N/A</h2>
                             <a href="my-grades.html">View Detailed Grades</a>
                         </div>
                     </div>
-
-                    <!-- Attendance Summary Card -->
                     <div class="card">
-                        <div class="card-header">
-                            <h3>Attendance Summary</h3>
-                        </div>
+                        <div class="card-header"><h3>Attendance Summary</h3></div>
                         <div class="card-body" style="text-align: center;">
                             <p>Overall Presence Rate</p>
                             <h2 id="attendance-summary" style="font-size: 2.5rem; margin: 10px 0;">N/A</h2>
@@ -68,16 +57,21 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Schedule Card -->
+                <div class="card" style="margin-top: 20px;">
+                    <div class="card-header"><h3>Today's Schedule</h3></div>
+                    <div class="card-body">
+                        <ul id="schedule-today-list" style="list-style: none; padding: 0;"></ul>
+                    </div>
+                </div>
+                <!-- Tuition Card -->
                 <div class="card" style="margin-top: 20px;">
                     <div class="card-header">
-                        <h3>Today's Schedule</h3>
+                        <h3>Tuition & Payments</h3>
                     </div>
-                    <div class="card-body">
-                        <ul id="schedule-today-list" style="list-style: none; padding: 0;">
-                            <!-- Schedule items will be populated by JS -->
-                        </ul>
+                    <div class="card-body" style="text-align: center;">
+                        <p>Current Balance</p>
+                        <h2 id="tuition-balance" style="font-size: 2.5rem; margin: 10px 0;">₱0.00</h2>
+                        <button id="upload-payment-btn" class="action-btn approve-btn">Submit Payment</button>
                     </div>
                 </div>
             </div>
@@ -85,6 +79,24 @@
     </div>
     <div class="overlay"></div>
 
+    <!-- Payment Modal -->
+    <div id="payment-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>Submit Proof of Payment</h3>
+            <form id="payment-form">
+                <div class="form-group">
+                    <label for="paymentAmount">Amount Paid (₱)</label>
+                    <input type="number" id="paymentAmount" class="form-control" required min="0.01" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="receiptUpload">Upload Receipt</label>
+                    <input type="file" id="receiptUpload" class="form-control" required accept="image/*">
+                </div>
+                <button type="submit" class="action-btn approve-btn">Submit for Verification</button>
+            </form>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="js/auth.js"></script>
     <script src="js/nav.js"></script>

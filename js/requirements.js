@@ -61,37 +61,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (newRequirementName) {
             if (requirements.some(r => r.name.toLowerCase() === newRequirementName.toLowerCase())) {
-                Toastify({ text: 'This requirement already exists.', duration: 3000, className: "toast-warning" }).showToast();
+                alert('This requirement already exists.');
                 return;
             }
             requirements.push({ id: Date.now(), name: newRequirementName, type: newRequirementType });
             saveRequirements();
             renderRequirements();
             addRequirementForm.reset();
-            Toastify({ text: "Requirement added successfully.", duration: 3000, className: "toast-success" }).showToast();
         }
     });
 
     requirementsTbody.addEventListener('click', (e) => {
         if (e.target.classList.contains('delete-btn')) {
             const reqIndex = e.target.dataset.index;
-            const requirementToDelete = requirements[reqIndex];
-
-            const allStudents = JSON.parse(localStorage.getItem('students')) || [];
-            const allTeachers = JSON.parse(localStorage.getItem('teachers')) || [];
-            const isReqInUse = allStudents.some(s => s.requirements && s.requirements.some(r => r.id === requirementToDelete.id)) ||
-                               allTeachers.some(t => t.requirements && t.requirements.some(r => r.id === requirementToDelete.id));
-
-            if (isReqInUse) {
-                Toastify({ text: `Cannot delete "${requirementToDelete.name}" because it is in use by applicants.`, duration: 3000, className: "toast-error" }).showToast();
-                return;
-            }
-
             if (confirm(`Are you sure you want to delete this requirement?`)) {
                 requirements.splice(reqIndex, 1);
                 saveRequirements();
                 renderRequirements();
-                Toastify({ text: "Requirement deleted successfully.", duration: 3000, className: "toast-success" }).showToast();
             }
         }
     });

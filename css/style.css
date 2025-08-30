@@ -7,6 +7,7 @@
     --widget-color: #ffffff; /* White */
     --text-color: #333333;   /* Dark Grey */
     --border-color: #e0e0e0; /* Subtle Grey */
+    --danger-color: #e74c3c;  /* Red */
     --primary-color-dark: #121a29;
 }
 
@@ -20,9 +21,10 @@
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    line-height: 1.6;
+}
+
+.panel-container {
     height: 100vh;
 }
 
