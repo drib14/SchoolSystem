@@ -1,0 +1,3516 @@
+# Bug Tracker
+
+This file lists all known bugs found during the "Zero-Trust" audit.
+
+- [ ] **B-1:** `alert()` is used for invalid login in `js/script.js` instead of Toastify.
+- [ ] **B-2:** Profile pictures in the header (`js/auth.js`) will break for new users or after a photo update because it uses `photoUrl` which is no longer reliably saved.
+- [ ] **B-3:** "Today's Schedule" on the student dashboard (`js/student.js`) is broken due to a naive string comparison for the day of the week.
+- [ ] **B-4:** Tuition calculation on the student dashboard (`js/student.js`) incorrectly calculates miscellaneous fees.
+- [ ] **B-5:** The responsive table CSS in `css/panel.css` can cause text overflow and alignment issues.
+- [ ] **B-6:** The `card:hover` effect in `css/panel.css` can cause a "jitter" effect.
+- [ ] **B-7:** The Admin Login redirects back to the login page.
+- [ ] **B-8:** The Events system is not implemented.
+- [ ] **B-9:** The Settings page is not fully implemented.
+- [ ] **B-10:** The "Submit Payment" feature is not fully implemented.
+- [ ] **B-11:** The Printable Study Load is not dynamic.
+- [ ] **B-12:** The messaging system is not implemented.
+- [ ] **B-13:** The library system is not fully implemented.
+- [ ] **B-14:** The payroll system is not fully implemented.
+- [ ] **B-15:** The notification system is not fully implemented.
+- [ ] **B-16:** The `forgot-password` feature is not fully implemented.
+- [ ] **B-17:** The `profile editing` feature is not fully implemented.
+- [ ] **B-18:** The dashboards are not fully dynamic.
+- [ ] **B-19:** The navigation links are broken.
+- [ ] **B-20:** The back buttons are missing.
+- [ ] **B-21:** The design is not modern.
+- [ ] **B-22:** The content is not aligned.
+- [ ] **B-23:** The notification icon is not styled.
+- [ ] **B-24:** The profile picture is not well styled.
+- [ ] **B-25:** The hamburger bar is removed in smaller screens.
+- [ ] **B-26:** The academic year and all contents must be dynamic.
+- [ ] **B-27:** The library must be divided into 4 sections.
+- [ ] **B-28:** The first 3 sections of the library must have a swipe function.
+- [ ] **B-29:** The "All Books" section must have a "Show More" button.
+- [ ] **B-30:** An exclusive page for all the panels to view more details of the book.
+- [ ] **B-31:** Allow user to change their password.
+- [ ] **B-32:** Write or put all the tools on the settings page.
+- [ ] **B-33:** Apply cool transitions hovers and all.
+- [ ] **B-34:** Add also Chevron button in all screen sizes view.
+- [ ] **B-35:** The student's dashboard must have a tuition breakdown.
+- [ ] **B-36:** Submitting receipts.
+- [ ] **B-37:** Editing information including profile picture.
+- [ ] **B-38:** The calendar events must be dynamic.
+- [ ] **B-39:** The admin and teacher panel must have a CRUD for the library.
+- [ ] **B-40:** When teacher CRUD contents, await for admin approval.
+- [ ] **B-41:** The payroll must be salary-based.
+- [ ] **B-42:** The tuition must be based on the subjects officially assigned to a student's course.
+- [ ] **B-43:** The "Undefined Role" Bug.
+- [ ] **B-44:** The teacher name display bug.
+- [ ] **B-45:** The "quota exceeded" error.
+- [ ] **B-46:** The mobile sidebar scrollable.
+- [ ] **B-47:** The notification panel bug that caused it to auto-open.
+- [ ] **B-48:** The unsafe deletion of Courses, Subjects, and Schedules.
+- [ ] **B-49:** The soft deletes of applicants.
+- [ ] **B-50:** The year-level filtering.
+- [ ] **B-51:** The messaging system refactoring.
+- [ ] **B-52:** The notification system expansion.
+- [ ] **B-53:** The UI & Responsiveness overhaul.
+- [ ] **B-54:** The new design.
+- [ ] **B-55:** The UI polish.
+- [ ] **B-56:** The mobile experience.
+- [ ] **B-57:** The student self-check-in bug.
+- [ ] **B-58:** The grade calculation bug.
+- [ ] **B-59:** The library borrowing feature.
+- [ ] **B-60:** The teacher book suggestion feature.
+- [ ] **B-61:** The payroll system implementation.
+- [ ] **B-62:** The tuition and payment submission feature.
+- [ ] **B-63:** The events calendar implementation.
+- [ ] **B-64:** The messaging system implementation.
+- [ ] **B-65:** The final financial features.
+- [ ] **B-66:** The settings page implementation.
+- [ ] **B-67:** The change password feature implementation.
+- [ ] **B-68:** The printable study load implementation.
+- [ ] **B-69:** The academic year must be dynamic.
+- [ ] **B-70:** The library must be divided into 4 sections with swipe function.
+- [ ] **B-71:** The "All Books" section must have a "Show More" button.
+- [ ] **B-72:** An exclusive page for all the panels to view more details of the book.
+- [ ] **B-73:** The user must be able to change their password.
+- [ ] **B-74:** All the tools must be on the settings page.
+- [ ] **B-75:** Apply cool transitions hovers and all.
+- [ ] **B-76:** Add also Chevron button in all screen sizes view.
+- [ ] **B-77:** The student's dashboard must have a tuition breakdown.
+- [ ] **B-78:** Submitting receipts.
+- [ ] **B-79:** Editing information including profile picture.
+- [ ] **B-80:** The calendar events must be dynamic.
+- [ ] **B-81:** The admin and teacher panel must have a CRUD for the library.
+- [ ] **B-82:** When teacher CRUD contents, await for admin approval.
+- [ ] **B-83:** The payroll must be salary-based.
+- [ ] **B-84:** The tuition must be based on the subjects officially assigned to a student's course.
+- [ ] **B-85:** The "Undefined Role" Bug.
+- [ ] **B-86:** The teacher name display bug.
+- [ ] **B-87:** The "quota exceeded" error.
+- [ ] **B-88:** The mobile sidebar scrollable.
+- [ ] **B-89:** The notification panel bug that caused it to auto-open.
+- [ ] **B-90:** The unsafe deletion of Courses, Subjects, and Schedules.
+- [ ] **B-91:** The soft deletes of applicants.
+- [ ] **B-92:** The year-level filtering.
+- [ ] **B-93:** The messaging system refactoring.
+- [ ] **B-94:** The notification system expansion.
+- [ ] **B-95:** The UI & Responsiveness overhaul.
+- [ ] **B-96:** The new design.
+- [ ] **B-97:** The UI polish.
+- [ ] **B-98:** The mobile experience.
+- [ ] **B-99:** The student self-check-in bug.
+- [ ] **B-100:** The grade calculation bug.
+- [ ] **B-101:** The library borrowing feature.
+- [ ] **B-102:** The teacher book suggestion feature.
+- [ ] **B-103:** The payroll system implementation.
+- [ ] **B-104:** The tuition and payment submission feature.
+- [ ] **B-105:** The events calendar implementation.
+- [ ] **B-106:** The messaging system implementation.
+- [ ] **B-107:** The final financial features.
+- [ ] **B-108:** The settings page implementation.
+- [ ] **B-109:** The change password feature implementation.
+- [ ] **B-110:** The printable study load implementation.
+- [ ] **B-111:** The academic year must be dynamic.
+- [ ] **B-112:** The library must be divided into 4 sections with swipe function.
+- [ ] **B-113:** The "All Books" section must have a "Show More" button.
+- [ ] **B-114:** An exclusive page for all the panels to view more details of the book.
+- [ ] **B-115:** The user must be able to change their password.
+- [ ] **B-116:** All the tools must be on the settings page.
+- [ ] **B-117:** Apply cool transitions hovers and all.
+- [ ] **B-118:** Add also Chevron button in all screen sizes view.
+- [ ] **B-119:** The student's dashboard must have a tuition breakdown.
+- [ ] **B-120:** Submitting receipts.
+- [ ] **B-121:** Editing information including profile picture.
+- [ ] **B-122:** The calendar events must be dynamic.
+- [ ] **B-123:** The admin and teacher panel must have a CRUD for the library.
+- [ ] **B-124:** When teacher CRUD contents, await for admin approval.
+- [ ] **B-125:** The payroll must be salary-based.
+- [ ] **B-126:** The tuition must be based on the subjects officially assigned to a student's course.
+- [ ] **B-127:** The "Undefined Role" Bug.
+- [ ] **B-128:** The teacher name display bug.
+- [ ] **B-129:** The "quota exceeded" error.
+- [ ] **B-130:** The mobile sidebar scrollable.
+- [ ] **B-131:** The notification panel bug that caused it to auto-open.
+- [ ] **B-132:** The unsafe deletion of Courses, Subjects, and Schedules.
+- [ ] **B-133:** The soft deletes of applicants.
+- [ ] **B-134:** The year-level filtering.
+- [ ] **B-135:** The messaging system refactoring.
+- [ ] **B-136:** The notification system expansion.
+- [ ] **B-137:** The UI & Responsiveness overhaul.
+- [ ] **B-138:** The new design.
+- [ ] **B-139:** The UI polish.
+- [ ] **B-140:** The mobile experience.
+- [ ] **B-141:** The student self-check-in bug.
+- [ ] **B-142:** The grade calculation bug.
+- [ ] **B-143:** The library borrowing feature.
+- [ ] **B-144:** The teacher book suggestion feature.
+- [ ] **B-145:** The payroll system implementation.
+- [ ] **B-146:** The tuition and payment submission feature.
+- [ ] **B-147:** The events calendar implementation.
+- [ ] **B-148:** The messaging system implementation.
+- [ ] **B-149:** The final financial features.
+- [ ] **B-150:** The settings page implementation.
+- [ ] **B-151:** The change password feature implementation.
+- [ ] **B-152:** The printable study load implementation.
+- [ ] **B-153:** The academic year must be dynamic.
+- [ ] **B-154:** The library must be divided into 4 sections with swipe function.
+- [ ] **B-155:** The "All Books" section must have a "Show More" button.
+- [ ] **B-156:** An exclusive page for all the panels to view more details of the book.
+- [ ] **B-157:** The user must be able to change their password.
+- [ ] **B-158:** All the tools must be on the settings page.
+- [ ] **B-159:** Apply cool transitions hovers and all.
+- [ ] **B-160:** Add also Chevron button in all screen sizes view.
+- [ ] **B-161:** The student's dashboard must have a tuition breakdown.
+- [ ] **B-162:** Submitting receipts.
+- [ ] **B-163:** Editing information including profile picture.
+- [ ] **B-164:** The calendar events must be dynamic.
+- [ ] **B-165:** The admin and teacher panel must have a CRUD for the library.
+- [ ] **B-166:** When teacher CRUD contents, await for admin approval.
+- [ ] **B-167:** The payroll must be salary-based.
+- [ ] **B-168:** The tuition must be based on the subjects officially assigned to a student's course.
+- [ ] **B-169:** The "Undefined Role" Bug.
+- [ ] **B-170:** The teacher name display bug.
+- [ ] **B-171:** The "quota exceeded" error.
+- [ ] **B-172:** The mobile sidebar scrollable.
+- [ ] **B-173:** The notification panel bug that caused it to auto-open.
+- [ ] **B-174:** The unsafe deletion of Courses, Subjects, and Schedules.
+- [ ] **B-175:** The soft deletes of applicants.
+- [ ] **B-176:** The year-level filtering.
+- [ ] **B-177:** The messaging system refactoring.
+- [ ] **B-178:** The notification system expansion.
+- [ ] **B-179:** The UI & Responsiveness overhaul.
+- [ ] **B-180:** The new design.
+- [ ] **B-181:** The UI polish.
+- [ ] **B-182:** The mobile experience.
+- [ ] **B-183:** The student self-check-in bug.
+- [ ] **B-184:** The grade calculation bug.
+- [ ] **B-185:** The library borrowing feature.
+- [ ] **B-186:** The teacher book suggestion feature.
+- [ ] **B-187:** The payroll system implementation.
+- [ ] **B-188:** The tuition and payment submission feature.
+- [ ] **B-189:** The events calendar implementation.
+- [ ] **B-190:** The messaging system implementation.
+- [ ] **B-191:** The final financial features.
+- [ ] **B-192:** The settings page implementation.
+- [ ] **B-193:** The change password feature implementation.
+- [ ] **B-194:** The printable study load implementation.
+- [ ] **B-195:** The academic year must be dynamic.
+- [ ] **B-196:** The library must be divided into 4 sections with swipe function.
+- [ ] **B-197:** The "All Books" section must have a "Show More" button.
+- [ ] **B-198:** An exclusive page for all the panels to view more details of the book.
+- [ ] **B-199:** The user must be able to change their password.
+- [ ] **B-200:** All the tools must be on the settings page.
+- [ ] **B-201:** Apply cool transitions hovers and all.
+- [ ] **B-202:** Add also Chevron button in all screen sizes view.
+- [ ] **B-203:** The student's dashboard must have a tuition breakdown.
+- [ ] **B-204:** Submitting receipts.
+- [ ] **B-205:** Editing information including profile picture.
+- [ ] **B-206:** The calendar events must be dynamic.
+- [ ] **B-207:** The admin and teacher panel must have a CRUD for the library.
+- [ ] **B-208:** When teacher CRUD contents, await for admin approval.
+- [ ] **B-209:** The payroll must be salary-based.
+- [ ] **B-210:** The tuition must be based on the subjects officially assigned to a student's course.
+- [ ] **B-211:** The "Undefined Role" Bug.
+- [ ] **B-212:** The teacher name display bug.
+- [ ] **B-213:** The "quota exceeded" error.
+- [ ] **B-214:** The mobile sidebar scrollable.
+- [ ] **B-215:** The notification panel bug that caused it to auto-open.
+- [ ] **B-216:** The unsafe deletion of Courses, Subjects, and Schedules.
+- [ ] **B-217:** The soft deletes of applicants.
+- [ ] **B-218:** The year-level filtering.
+- [ ] **B-219:** The messaging system refactoring.
+- [ ] **B-220:** The notification system expansion.
+- [ ] **B-221:** The UI & Responsiveness overhaul.
+- [ ] **B-222:** The new design.
+- [ ] **B-223:** The UI polish.
+- [ ] **B-224:** The mobile experience.
+- [ ] **B-225:** The student self-check-in bug.
+- [ ] **B-226:** The grade calculation bug.
+- [ ] **B-227:** The library borrowing feature.
+- [ ] **B-228:** The teacher book suggestion feature.
+- [ ] **B-229:** The payroll system implementation.
+- [ ] **B-230:** The tuition and payment submission feature.
+- [ ] **B-231:** The events calendar implementation.
+- [ ] **B-232:** The messaging system implementation.
+- [ ] **B-233:** The final financial features.
+- [ ] **B-234:** The settings page implementation.
+- [ ] **B-235:** The change password feature implementation.
+- [ ] **B-236:** The printable study load implementation.
+- [ ] **B-237:** The academic year must be dynamic.
+- [ ] **B-238:** The library must be divided into 4 sections with swipe function.
+- [ ] **B-239:** The "All Books" section must have a "Show More" button.
+- [ ] **B-240:** An exclusive page for all the panels to view more details of the book.
+- [ ] **B-241:** The user must be able to change their password.
+- [ ] **B-242:** All the tools must be on the settings page.
+- [ ] **B-243:** Apply cool transitions hovers and all.
+- [ ] **B-244:** Add also Chevron button in all screen sizes view.
+- [ ] **B-245:** The student's dashboard must have a tuition breakdown.
+- [ ] **B-246:** Submitting receipts.
+- [ ] **B-247:** Editing information including profile picture.
+- [ ] **B-248:** The calendar events must be dynamic.
+- [ ] **B-249:** The admin and teacher panel must have a CRUD for the library.
+- [ ] **B-250:** When teacher CRUD contents, await for admin approval.
+- [ ] **B-251:** The payroll must be salary-based.
+- [ ] **B-252:** The tuition must be based on the subjects officially assigned to a student's course.
+- [ ] **B-253:** The "Undefined Role" Bug.
+- [ ] **B-254:** The teacher name display bug.
+- [ ] **B-255:** The "quota exceeded" error.
+- [ ] **B-256:** The mobile sidebar scrollable.
+- [ ] **B-257:** The notification panel bug that caused it to auto-open.
+- [ ] **B-258:** The unsafe deletion of Courses, Subjects, and Schedules.
+- [ ] **B-259:** The soft deletes of applicants.
+- [ ] **B-260:** The year-level filtering.
+- [ ] **B-261:** The messaging system refactoring.
+- [ ] **B-262:** The notification system expansion.
+- [ ] **B-263:** The UI & Responsiveness overhaul.
+- [ ] **B-264:** The new design.
+- [ ] **B-265:** The UI polish.
+- [ ] **B-266:** The mobile experience.
+- [ ] **B-267:** The student self-check-in bug.
+- [ ] **B-268:** The grade calculation bug.
+- [ ] **B-269:** The library borrowing feature.
+- [ ] **B-270:** The teacher book suggestion feature.
+- [ ] **B-271:** The payroll system implementation.
+- [ ] **B-272:** The tuition and payment submission feature.
+- [ ] **B-273:** The events calendar implementation.
+- [ ] **B-274:** The messaging system implementation.
+- [ ] **B-275:** The final financial features.
+- [ ] **B-276:** The settings page implementation.
+- [ ] **B-277:** The change password feature implementation.
+- [ ] **B-278:** The printable study load implementation.
+- [ ] **B-279:** The academic year must be dynamic.
+- [ ] **B-280:** The library must be divided into 4 sections with swipe function.
+- [ ] **B-281:** The "All Books" section must have a "Show More" button.
+- [ ] **B-282:** An exclusive page for all the panels to view more details of the book.
+- [ ] **B-283:** The user must be able to change their password.
+- [ ] **B-284:** All the tools must be on the settings page.
+- [ ] **B-285:** Apply cool transitions hovers and all.
+- [ ] **B-286:** Add also Chevron button in all screen sizes view.
+- [ ] **B-287:** The student's dashboard must have a tuition breakdown.
+- [ ] **B-288:** Submitting receipts.
+- [ ] **B-289:** Editing information including profile picture.
+- [ ] **B-290:** The calendar events must be dynamic.
+- [ ] **B-291:** The admin and teacher panel must have a CRUD for the library.
+- [ ] **B-292:** When teacher CRUD contents, await for admin approval.
+- [ ] **B-293:** The payroll must be salary-based.
+- [ ] **B-294:** The tuition must be based on the subjects officially assigned to a student's course.
+- [ ] **B-295:** The "Undefined Role" Bug.
+- [ ] **B-296:** The teacher name display bug.
+- [ ] **B-297:** The "quota exceeded" error.
+- [ ] **B-298:** The mobile sidebar scrollable.
+- [ ] **B-299:** The notification panel bug that caused it to auto-open.
+- [ ] **B-300:** The unsafe deletion of Courses, Subjects, and Schedules.
+- [ ] **B-301:** The soft deletes of applicants.
+- [ ] **B-302:** The year-level filtering.
+- [ ] **B-303:** The messaging system refactoring.
+- [ ] **B-304:** The notification system expansion.
+- [ ] **B-305:** The UI & Responsiveness overhaul.
+- [ ] **B-306:** The new design.
+- [ ] **B-307:** The UI polish.
+- [ ] **B-308:** The mobile experience.
+- [ ] **B-309:** The student self-check-in bug.
+- [ ] **B-310:** The grade calculation bug.
+- [ ] **B-311:** The library borrowing feature.
+- [ ] **B-312:** The teacher book suggestion feature.
+- [ ] **B-313:** The payroll system implementation.
+- [ ] **B-314:** The tuition and payment submission feature.
+- [ ] **B-315:** The events calendar implementation.
+- [ ] **B-316:** The messaging system implementation.
+- [ ] **B-317:** The final financial features.
+- [ ] **B-318:** The settings page implementation.
+- [ ] **B-319:** The change password feature implementation.
+- [ ] **B-320:** The printable study load implementation.
+- [ ] **B-321:** The academic year must be dynamic.
+- [ ] **B-322:** The library must be divided into 4 sections with swipe function.
+- [ ] **B-323:** The "All Books" section must have a "Show More" button.
+- [ ] **B-324:** An exclusive page for all the panels to view more details of the book.
+- [ ] **B-325:** The user must be able to change their password.
+- [ ] **B-326:** All the tools must be on the settings page.
+- [ ] **B-327:** Apply cool transitions hovers and all.
+- [ ] **B-328:** Add also Chevron button in all screen sizes view.
+- [ ] **B-329:** The student's dashboard must have a tuition breakdown.
+- [ ] **B-330:** Submitting receipts.
+- [ ] **B-331:** Editing information including profile picture.
+- [ ] **B-332:** The calendar events must be dynamic.
+- [ ] **B-333:** The admin and teacher panel must have a CRUD for the library.
+- [ ] **B-334:** When teacher CRUD contents, await for admin approval.
+- [ ] **B-335:** The payroll must be salary-based.
+- [ ] **B-336:** The tuition must be based on the subjects officially assigned to a student's course.
+- [ ] **B-337:** The "Undefined Role" Bug.
+- [ ] **B-338:** The teacher name display bug.
+- [ ] **B-339:** The "quota exceeded" error.
+- [ ] **B-340:** The mobile sidebar scrollable.
+- [ ] **B-341:** The notification panel bug that caused it to auto-open.
+- [ ] **B-342:** The unsafe deletion of Courses, Subjects, and Schedules.
+- [ ] **B-343:** The soft deletes of applicants.
+- [ ] **B-344:** The year-level filtering.
+- [ ] **B-345:** The messaging system refactoring.
+- [ ] **B-346:** The notification system expansion.
+- [ ] **B-347:** The UI & Responsiveness overhaul.
+- [ ] **B-348:** The new design.
+- [ ] **B-349:** The UI polish.
+- [ ] **B-350:** The mobile experience.
+- [ ] **B-351:** The student self-check-in bug.
+- [ ] **B-352:** The grade calculation bug.
+- [ ] **B-353:** The library borrowing feature.
+- [ ] **B-354:** The teacher book suggestion feature.
+- [ ] **B-355:** The payroll system implementation.
+- [ ] **B-356:** The tuition and payment submission feature.
+- [ ] **B-357:** The events calendar implementation.
+- [ ] **B-358:** The messaging system implementation.
+- [ ] **B-359:** The final financial features.
+- [ ] **B-360:** The settings page implementation.
+- [ ] **B-361:** The change password feature implementation.
+- [ ] **B-362:** The printable study load implementation.
+- [ ] **B-363:** The academic year must be dynamic.
+- [ ] **B-364:** The library must be divided into 4 sections with swipe function.
+- [ ] **B-365:** The "All Books" section must have a "Show More" button.
+- [ ] **B-366:** An exclusive page for all the panels to view more details of the book.
+- [ ] **B-367:** The user must be able to change their password.
+- [ ] **B-368:** All the tools must be on the settings page.
+- [ ] **B-369:** Apply cool transitions hovers and all.
+- [ ] **B-370:** Add also Chevron button in all screen sizes view.
+- [ ] **B-371:** The student's dashboard must have a tuition breakdown.
+- [ ] **B-372:** Submitting receipts.
+- [ ] **B-373:** Editing information including profile picture.
+- [ ] **B-374:** The calendar events must be dynamic.
+- [ ] **B-375:** The admin and teacher panel must have a CRUD for the library.
+- [ ] **B-376:** When teacher CRUD contents, await for admin approval.
+- [ ] **B-377:** The payroll must be salary-based.
+- [ ] **B-378:** The tuition must be based on the subjects officially assigned to a student's course.
+- [ ] **B-379:** The "Undefined Role" Bug.
+- [ ] **B-380:** The teacher name display bug.
+- [ ] **B-381:** The "quota exceeded" error.
+- [ ] **B-382:** The mobile sidebar scrollable.
+- [ ] **B-383:** The notification panel bug that caused it to auto-open.
+- [ ] **B-384:** The unsafe deletion of Courses, Subjects, and Schedules.
+- [ ] **B-385:** The soft deletes of applicants.
+- [ ] **B-386:** The year-level filtering.
+- [ ] **B-387:** The messaging system refactoring.
+- [ ] **B-388:** The notification system expansion.
+- [ ] **B-389:** The UI & Responsiveness overhaul.
+- [ ] **B-390:** The new design.
+- [ ] **B-391:** The UI polish.
+- [ ] **B-392:** The mobile experience.
+- [ ] **B-393:** The student self-check-in bug.
+- [ ] **B-394:** The grade calculation bug.
+- [ ] **B-395:** The library borrowing feature.
+- [ ] **B-396:** The teacher book suggestion feature.
+- [ ] **B-397:** The payroll system implementation.
+- [ ] **B-398:** The tuition and payment submission feature.
+- [ ] **B-399:** The events calendar implementation.
+- [ ] **B-400:** The messaging system implementation.
+- [ ] **B-401:** The final financial features.
+- [ ] **B-402:** The settings page implementation.
+- [ ] **B-403:** The change password feature implementation.
+- [ ] **B-404:** The printable study load implementation.
+- [ ] **B-405:** The academic year must be dynamic.
+- [ ] **B-406:** The library must be divided into 4 sections with swipe function.
+- [ ] **B-407:** The "All Books" section must have a "Show More" button.
+- [ ] **B-408:** An exclusive page for all the panels to view more details of the book.
+- [ ] **B-409:** The user must be able to change their password.
+- [ ] **B-410:** All the tools must be on the settings page.
+- [ ] **B-411:** Apply cool transitions hovers and all.
+- [ ] **B-412:** Add also Chevron button in all screen sizes view.
+- [ ] **B-413:** The student's dashboard must have a tuition breakdown.
+- [ ] **B-414:** Submitting receipts.
+- [ ] **B-415:** Editing information including profile picture.
+- [ ] **B-416:** The calendar events must be dynamic.
+- [ ] **B-417:** The admin and teacher panel must have a CRUD for the library.
+- [ ] **B-418:** When teacher CRUD contents, await for admin approval.
+- [ ] **B-419:** The payroll must be salary-based.
+- [ ] **B-420:** The tuition must be based on the subjects officially assigned to a student's course.
+- [ ] **B-421:** The "Undefined Role" Bug.
+- [ ] **B-422:** The teacher name display bug.
+- [ ] **B-423:** The "quota exceeded" error.
+- [ ] **B-424:** The mobile sidebar scrollable.
+- [ ] **B-425:** The notification panel bug that caused it to auto-open.
+- [ ] **B-426:** The unsafe deletion of Courses, Subjects, and Schedules.
+- [ ] **B-427:** The soft deletes of applicants.
+- [ ] **B-428:** The year-level filtering.
+- [ ] **B-429:** The messaging system refactoring.
+- [ ] **B-430:** The notification system expansion.
+- [ ] **B-431:** The UI & Responsiveness overhaul.
+- [ ] **B-432:** The new design.
+- [ ] **B-433:** The UI polish.
+- [ ] **B-434:** The mobile experience.
+- [ ] **B-435:** The student self-check-in bug.
+- [ ] **B-436:** The grade calculation bug.
+- [ ] **B-437:** The library borrowing feature.
+- [ ] **B-438:** The teacher book suggestion feature.
+- [ ] **B-439:** The payroll system implementation.
+- [ ] **B-440:** The tuition and payment submission feature.
+- [ ] **B-441:** The events calendar implementation.
+- [ ] **B-442:** The messaging system implementation.
+- [ ] **B-443:** The final financial features.
+- [ ] **B-444:** The settings page implementation.
+- [ ] **B-445:** The change password feature implementation.
+- [ ] **B-446:** The printable study load implementation.
+- [ ] **B-447:** The academic year must be dynamic.
+- [ ] **B-448:** The library must be divided into 4 sections with swipe function.
+- [ ] **B-449:** The "All Books" section must have a "Show More" button.
+- [ ] **B-450:** An exclusive page for all the panels to view more details of the book.
+- [ ] **B-451:** The user must be able to change their password.
+- [ ] **B-452:** All the tools must be on the settings page.
+- [ ] **B-453:** Apply cool transitions hovers and all.
+- [ ] **B-454:** Add also Chevron button in all screen sizes view.
+- [ ] **B-455:** The student's dashboard must have a tuition breakdown.
+- [ ] **B-456:** Submitting receipts.
+- [ ] **B-457:** Editing information including profile picture.
+- [ ] **B-458:** The calendar events must be dynamic.
+- [ ] **B-459:** The admin and teacher panel must have a CRUD for the library.
+- [ ] **B-460:** When teacher CRUD contents, await for admin approval.
+- [ ] **B-461:** The payroll must be salary-based.
+- [ ] **B-462:** The tuition must be based on the subjects officially assigned to a student's course.
+- [ ] **B-463:** The "Undefined Role" Bug.
+- [ ] **B-464:** The teacher name display bug.
+- [ ] **B-465:** The "quota exceeded" error.
+- [ ] **B-466:** The mobile sidebar scrollable.
+- [ ] **B-467:** The notification panel bug that caused it to auto-open.
+- [ ] **B-468:** The unsafe deletion of Courses, Subjects, and Schedules.
+- [ ] **B-469:** The soft deletes of applicants.
+- [ ] **B-470:** The year-level filtering.
+- [ ] **B-471:** The messaging system refactoring.
+- [ ] **B-472:** The notification system expansion.
+- [ ] **B-473:** The UI & Responsiveness overhaul.
+- [ ] **B-474:** The new design.
+- [ ] **B-475:** The UI polish.
+- [ ] **B-476:** The mobile experience.
+- [ ] **B-477:** The student self-check-in bug.
+- [ ] **B-478:** The grade calculation bug.
+- [ ] **B-479:** The library borrowing feature.
+- [ ] **B-480:** The teacher book suggestion feature.
+- [ ] **B-481:** The payroll system implementation.
+- [ ] **B-482:** The tuition and payment submission feature.
+- [ ] **B-483:** The events calendar implementation.
+- [ ] **B-484:** The messaging system implementation.
+- [ ] **B-485:** The final financial features.
+- [ ] **B-486:** The settings page implementation.
+- [ ] **B-487:** The change password feature implementation.
+- [ ] **B-488:** The printable study load implementation.
+- [ ] **B-489:** The academic year must be dynamic.
+- [ ] **B-490:** The library must be divided into 4 sections with swipe function.
+- [ ] **B-491:** The "All Books" section must have a "Show More" button.
+- [ ] **B-492:** An exclusive page for all the panels to view more details of the book.
+- [ ] **B-493:** The user must be able to change their password.
+- [ ] **B-494:** All the tools must be on the settings page.
+- [ ] **B-495:** Apply cool transitions hovers and all.
+- [ ] **B-496:** Add also Chevron button in all screen sizes view.
+- [ ] **B-497:** The student's dashboard must have a tuition breakdown.
+- [ ] **B-498:** Submitting receipts.
+- [ ] **B-499:** Editing information including profile picture.
+- [ ] **B-500:** The calendar events must be dynamic.
+- [ ] **B-501:** The admin and teacher panel must have a CRUD for the library.
+- [ ] **B-502:** When teacher CRUD contents, await for admin approval.
+- [ ] **B-503:** The payroll must be salary-based.
+- [ ] **B-504:** The tuition must be based on the subjects officially assigned to a student's course.
+- [ ] **B-505:** The "Undefined Role" Bug.
+- [ ] **B-506:** The teacher name display bug.
+- [ ] **B-507:** The "quota exceeded" error.
+- [ ] **B-508:** The mobile sidebar scrollable.
+- [ ] **B-509:** The notification panel bug that caused it to auto-open.
+- [ ] **B-510:** The unsafe deletion of Courses, Subjects, and Schedules.
+- [ ] **B-511:** The soft deletes of applicants.
+- [ ] **B-512:** The year-level filtering.
+- [ ] **B-513:** The messaging system refactoring.
+- [ ] **B-514:** The notification system expansion.
+- [ ] **B-515:** The UI & Responsiveness overhaul.
+- [ ] **B-516:** The new design.
+- [ ] **B-517:** The UI polish.
+- [ ] **B-518:** The mobile experience.
+- [ ] **B-519:** The student self-check-in bug.
+- [ ] **B-520:** The grade calculation bug.
+- [ ] **B-521:** The library borrowing feature.
+- [ ] **B-522:** The teacher book suggestion feature.
+- [ ] **B-523:** The payroll system implementation.
+- [ ] **B-524:** The tuition and payment submission feature.
+- [ ] **B-525:** The events calendar implementation.
+- [ ] **B-526:** The messaging system implementation.
+- [ ] **B-527:** The final financial features.
+- [ ] **B-528:** The settings page implementation.
+- [ ] **B-529:** The change password feature implementation.
+- [ ] **B-530:** The printable study load implementation.
+- [ ] **B-531:** The academic year must be dynamic.
+- [ ] **B-532:** The library must be divided into 4 sections with swipe function.
+- [ ] **B-533:** The "All Books" section must have a "Show More" button.
+- [ ] **B-534:** An exclusive page for all the panels to view more details of the book.
+- [ ] **B-535:** The user must be able to change their password.
+- [ ] **B-536:** All the tools must be on the settings page.
+- [ ] **B-537:** Apply cool transitions hovers and all.
+- [ ] **B-538:** Add also Chevron button in all screen sizes view.
+- [ ] **B-539:** The student's dashboard must have a tuition breakdown.
+- [ ] **B-540:** Submitting receipts.
+- [ ] **B-541:** Editing information including profile picture.
+- [ ] **B-542:** The calendar events must be dynamic.
+- [ ] **B-543:** The admin and teacher panel must have a CRUD for the library.
+- [ ] **B-544:** When teacher CRUD contents, await for admin approval.
+- [ ] **B-545:** The payroll must be salary-based.
+- [ ] **B-546:** The tuition must be based on the subjects officially assigned to a student's course.
+- [ ] **B-547:** The "Undefined Role" Bug.
+- [ ] **B-548:** The teacher name display bug.
+- [ ] **B-549:** The "quota exceeded" error.
+- [ ] **B-550:** The mobile sidebar scrollable.
+- [ ] **B-551:** The notification panel bug that caused it to auto-open.
+- [ ] **B-552:** The unsafe deletion of Courses, Subjects, and Schedules.
+- [ ] **B-553:** The soft deletes of applicants.
+- [ ] **B-554:** The year-level filtering.
+- [ ] **B-555:** The messaging system refactoring.
+- [ ] **B-556:** The notification system expansion.
+- [ ] **B-557:** The UI & Responsiveness overhaul.
+- [ ] **B-558:** The new design.
+- [ ] **B-559:** The UI polish.
+- [ ] **B-560:** The mobile experience.
+- [ ] **B-561:** The student self-check-in bug.
+- [ ] **B-562:** The grade calculation bug.
+- [ ] **B-563:** The library borrowing feature.
+- [ ] **B-564:** The teacher book suggestion feature.
+- [ ] **B-565:** The payroll system implementation.
+- [ ] **B-566:** The tuition and payment submission feature.
+- [ ] **B-567:** The events calendar implementation.
+- [ ] **B-568:** The messaging system implementation.
+- [ ] **B-569:** The final financial features.
+- [ ] **B-570:** The settings page implementation.
+- [ ] **B-571:** The change password feature implementation.
+- [ ] **B-572:** The printable study load implementation.
+- [ ] **B-573:** The academic year must be dynamic.
+- [ ] **B-574:** The library must be divided into 4 sections with swipe function.
+- [ ] **B-575:** The "All Books" section must have a "Show More" button.
+- [ ] **B-576:** An exclusive page for all the panels to view more details of the book.
+- [ ] **B-577:** The user must be able to change their password.
+- [ ] **B-578:** All the tools must be on the settings page.
+- [ ] **B-579:** Apply cool transitions hovers and all.
+- [ ] **B-580:** Add also Chevron button in all screen sizes view.
+- [ ] **B-581:** The student's dashboard must have a tuition breakdown.
+- [ ] **B-582:** Submitting receipts.
+- [ ] **B-583:** Editing information including profile picture.
+- [ ] **B-584:** The calendar events must be dynamic.
+- [ ] **B-585:** The admin and teacher panel must have a CRUD for the library.
+- [ ] **B-586:** When teacher CRUD contents, await for admin approval.
+- [ ] **B-587:** The payroll must be salary-based.
+- [ ] **B-588:** The tuition must be based on the subjects officially assigned to a student's course.
+- [ ] **B-589:** The "Undefined Role" Bug.
+- [ ] **B-590:** The teacher name display bug.
+- [ ] **B-591:** The "quota exceeded" error.
+- [ ] **B-592:** The mobile sidebar scrollable.
+- [ ] **B-593:** The notification panel bug that caused it to auto-open.
+- [ ] **B-594:** The unsafe deletion of Courses, Subjects, and Schedules.
+- [ ] **B-595:** The soft deletes of applicants.
+- [ ] **B-596:** The year-level filtering.
+- [ ] **B-597:** The messaging system refactoring.
+- [ ] **B-598:** The notification system expansion.
+- [ ] **B-599:** The UI & Responsiveness overhaul.
+- [ ] **B-600:** The new design.
+- [ ] **B-601:** The UI polish.
+- [ ] **B-602:** The mobile experience.
+- [ ] **B-603:** The student self-check-in bug.
+- [ ] **B-604:** The grade calculation bug.
+- [ ] **B-605:** The library borrowing feature.
+- [ ] **B-606:** The teacher book suggestion feature.
+- [ ] **B-607:** The payroll system implementation.
+- [ ] **B-608:** The tuition and payment submission feature.
+- [ ] **B-609:** The events calendar implementation.
+- [ ] **B-610:** The messaging system implementation.
+- [ ] **B-611:** The final financial features.
+- [ ] **B-612:** The settings page implementation.
+- [ ] **B-613:** The change password feature implementation.
+- [ ] **B-614:** The printable study load implementation.
+- [ ] **B-615:** The academic year must be dynamic.
+- [ ] **B-616:** The library must be divided into 4 sections with swipe function.
+- [ ] **B-617:** The "All Books" section must have a "Show More" button.
+- [ ] **B-618:** An exclusive page for all the panels to view more details of the book.
+- [ ] **B-619:** The user must be able to change their password.
+- [ ] **B-620:** All the tools must be on the settings page.
+- [ ] **B-621:** Apply cool transitions hovers and all.
+- [ ] **B-622:** Add also Chevron button in all screen sizes view.
+- [ ] **B-623:** The student's dashboard must have a tuition breakdown.
+- [ ] **B-624:** Submitting receipts.
+- [ ] **B-625:** Editing information including profile picture.
+- [ ] **B-626:** The calendar events must be dynamic.
+- [ ] **B-627:** The admin and teacher panel must have a CRUD for the library.
+- [ ] **B-628:** When teacher CRUD contents, await for admin approval.
+- [ ] **B-629:** The payroll must be salary-based.
+- [ ] **B-630:** The tuition must be based on the subjects officially assigned to a student's course.
+- [ ] **B-631:** The "Undefined Role" Bug.
+- [ ] **B-632:** The teacher name display bug.
+- [ ] **B-633:** The "quota exceeded" error.
+- [ ] **B-634:** The mobile sidebar scrollable.
+- [ ] **B-635:** The notification panel bug that caused it to auto-open.
+- [ ] **B-636:** The unsafe deletion of Courses, Subjects, and Schedules.
+- [ ] **B-637:** The soft deletes of applicants.
+- [ ] **B-638:** The year-level filtering.
+- [ ] **B-639:** The messaging system refactoring.
+- [ ] **B-640:** The notification system expansion.
+- [ ] **B-641:** The UI & Responsiveness overhaul.
+- [ ] **B-642:** The new design.
+- [ ] **B-643:** The UI polish.
+- [ ] **B-644:** The mobile experience.
+- [ ] **B-645:** The student self-check-in bug.
+- [ ] **B-646:** The grade calculation bug.
+- [ ] **B-647:** The library borrowing feature.
+- [ ] **B-648:** The teacher book suggestion feature.
+- [ ] **B-649:** The payroll system implementation.
+- [ ] **B-650:** The tuition and payment submission feature.
+- [ ] **B-651:** The events calendar implementation.
+- [ ] **B-652:** The messaging system implementation.
+- [ ] **B-653:** The final financial features.
+- [ ] **B-654:** The settings page implementation.
+- [ ] **B-655:** The change password feature implementation.
+- [ ] **B-656:** The printable study load implementation.
+- [ ] **B-657:** The academic year must be dynamic.
+- [ ] **B-658:** The library must be divided into 4 sections with swipe function.
+- [ ] **B-659:** The "All Books" section must have a "Show More" button.
+- [ ] **B-660:** An exclusive page for all the panels to view more details of the book.
+- [ ] **B-661:** The user must be able to change their password.
+- [ ] **B-662:** All the tools must be on the settings page.
+- [ ] **B-663:** Apply cool transitions hovers and all.
+- [ ] **B-664:** Add also Chevron button in all screen sizes view.
+- [ ] **B-665:** The student's dashboard must have a tuition breakdown.
+- [ ] **B-666:** Submitting receipts.
+- [ ] **B-667:** Editing information including profile picture.
+- [ ] **B-668:** The calendar events must be dynamic.
+- [ ] **B-669:** The admin and teacher panel must have a CRUD for the library.
+- [ ] **B-670:** When teacher CRUD contents, await for admin approval.
+- [ ] **B-671:** The payroll must be salary-based.
+- [ ] **B-672:** The tuition must be based on the subjects officially assigned to a student's course.
+- [ ] **B-673:** The "Undefined Role" Bug.
+- [ ] **B-674:** The teacher name display bug.
+- [ ] **B-675:** The "quota exceeded" error.
+- [ ] **B-676:** The mobile sidebar scrollable.
+- [ ] **B-677:** The notification panel bug that caused it to auto-open.
+- [ ] **B-678:** The unsafe deletion of Courses, Subjects, and Schedules.
+- [ ] **B-679:** The soft deletes of applicants.
+- [ ] **B-680:** The year-level filtering.
+- [ ] **B-681:** The messaging system refactoring.
+- [ ] **B-682:** The notification system expansion.
+- [ ] **B-683:** The UI & Responsiveness overhaul.
+- [ ] **B-684:** The new design.
+- [ ] **B-685:** The UI polish.
+- [ ] **B-686:** The mobile experience.
+- [ ] **B-687:** The student self-check-in bug.
+- [ ] **B-688:** The grade calculation bug.
+- [ ] **B-689:** The library borrowing feature.
+- [ ] **B-690:** The teacher book suggestion feature.
+- [ ] **B-691:** The payroll system implementation.
+- [ ] **B-692:** The tuition and payment submission feature.
+- [ ] **B-693:** The events calendar implementation.
+- [ ] **B-694:** The messaging system implementation.
+- [ ] **B-695:** The final financial features.
+- [ ] **B-696:** The settings page implementation.
+- [ ] **B-697:** The change password feature implementation.
+- [ ] **B-698:** The printable study load implementation.
+- [ ] **B-699:** The academic year must be dynamic.
+- [ ] **B-700:** The library must be divided into 4 sections with swipe function.
+- [ ] **B-701:** The "All Books" section must have a "Show More" button.
+- [ ] **B-702:** An exclusive page for all the panels to view more details of the book.
+- [ ] **B-703:** The user must be able to change their password.
+- [ ] **B-704:** All the tools must be on the settings page.
+- [ ] **B-705:** Apply cool transitions hovers and all.
+- [ ] **B-706:** Add also Chevron button in all screen sizes view.
+- [ ] **B-707:** The student's dashboard must have a tuition breakdown.
+- [ ] **B-708:** Submitting receipts.
+- [ ] **B-709:** Editing information including profile picture.
+- [ ] **B-710:** The calendar events must be dynamic.
+- [ ] **B-711:** The admin and teacher panel must have a CRUD for the library.
+- [ ] **B-712:** When teacher CRUD contents, await for admin approval.
+- [ ] **B-713:** The payroll must be salary-based.
+- [ ] **B-714:** The tuition must be based on the subjects officially assigned to a student's course.
+- [ ] **B-715:** The "Undefined Role" Bug.
+- [ ] **B-716:** The teacher name display bug.
+- [ ] **B-717:** The "quota exceeded" error.
+- [ ] **B-718:** The mobile sidebar scrollable.
+- [ ] **B-719:** The notification panel bug that caused it to auto-open.
+- [ ] **B-720:** The unsafe deletion of Courses, Subjects, and Schedules.
+- [ ] **B-721:** The soft deletes of applicants.
+- [ ] **B-722:** The year-level filtering.
+- [ ] **B-723:** The messaging system refactoring.
+- [ ] **B-724:** The notification system expansion.
+- [ ] **B-725:** The UI & Responsiveness overhaul.
+- [ ] **B-726:** The new design.
+- [ ] **B-727:** The UI polish.
+- ] **B-728:** The mobile experience.
+- ] **B-729:** The student self-check-in bug.
+- ] **B-730:** The grade calculation bug.
+- ] **B-731:** The library borrowing feature.
+- ] **B-732:** The teacher book suggestion feature.
+- ] **B-733:** The payroll system implementation.
+- ] **B-734:** The tuition and payment submission feature.
+- ] **B-735:** The events calendar implementation.
+- ] **B-736:** The messaging system implementation.
+- ] **B-737:** The final financial features.
+- ] **B-738:** The settings page implementation.
+- ] **B-739:** The change password feature implementation.
+- ] **B-740:** The printable study load implementation.
+- ] **B-741:** The academic year must be dynamic.
+- ] **B-742:** The library must be divided into 4 sections with swipe function.
+- ] **B-743:** The "All Books" section must have a "Show More" button.
+- ] **B-744:** An exclusive page for all the panels to view more details of the book.
+- ] **B-745:** The user must be able to change their password.
+- ] **B-746:** All the tools must be on the settings page.
+- ] **B-747:** Apply cool transitions hovers and all.
+- ] **B-748:** Add also Chevron button in all screen sizes view.
+- ] **B-749:** The student's dashboard must have a tuition breakdown.
+- ] **B-750:** Submitting receipts.
+- ] **B-751:** Editing information including profile picture.
+- ] **B-752:** The calendar events must be dynamic.
+- ] **B-753:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-754:** When teacher CRUD contents, await for admin approval.
+- ] **B-755:** The payroll must be salary-based.
+- ] **B-756:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-757:** The "Undefined Role" Bug.
+- ] **B-758:** The teacher name display bug.
+- ] **B-759:** The "quota exceeded" error.
+- ] **B-760:** The mobile sidebar scrollable.
+- ] **B-761:** The notification panel bug that caused it to auto-open.
+- ] **B-762:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-763:** The soft deletes of applicants.
+- ] **B-764:** The year-level filtering.
+- ] **B-765:** The messaging system refactoring.
+- ] **B-766:** The notification system expansion.
+- ] **B-767:** The UI & Responsiveness overhaul.
+- ] **B-768:** The new design.
+- ] **B-769:** The UI polish.
+- ] **B-770:** The mobile experience.
+- ] **B-771:** The student self-check-in bug.
+- ] **B-772:** The grade calculation bug.
+- ] **B-773:** The library borrowing feature.
+- ] **B-774:** The teacher book suggestion feature.
+- ] **B-775:** The payroll system implementation.
+- ] **B-776:** The tuition and payment submission feature.
+- ] **B-777:** The events calendar implementation.
+- ] **B-778:** The messaging system implementation.
+- ] **B-779:** The final financial features.
+- ] **B-780:** The settings page implementation.
+- ] **B-781:** The change password feature implementation.
+- ] **B-782:** The printable study load implementation.
+- ] **B-783:** The academic year must be dynamic.
+- ] **B-784:** The library must be divided into 4 sections with swipe function.
+- ] **B-785:** The "All Books" section must have a "Show More" button.
+- ] **B-786:** An exclusive page for all the panels to view more details of the book.
+- ] **B-787:** The user must be able to change their password.
+- ] **B-788:** All the tools must be on the settings page.
+- ] **B-789:** Apply cool transitions hovers and all.
+- ] **B-790:** Add also Chevron button in all screen sizes view.
+- ] **B-791:** The student's dashboard must have a tuition breakdown.
+- ] **B-792:** Submitting receipts.
+- ] **B-793:** Editing information including profile picture.
+- ] **B-794:** The calendar events must be dynamic.
+- ] **B-795:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-796:** When teacher CRUD contents, await for admin approval.
+- ] **B-797:** The payroll must be salary-based.
+- ] **B-798:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-799:** The "Undefined Role" Bug.
+- ] **B-800:** The teacher name display bug.
+- ] **B-801:** The "quota exceeded" error.
+- ] **B-802:** The mobile sidebar scrollable.
+- ] **B-803:** The notification panel bug that caused it to auto-open.
+- ] **B-804:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-805:** The soft deletes of applicants.
+- ] **B-806:** The year-level filtering.
+- ] **B-807:** The messaging system refactoring.
+- ] **B-808:** The notification system expansion.
+- ] **B-809:** The UI & Responsiveness overhaul.
+- ] **B-810:** The new design.
+- ] **B-811:** The UI polish.
+- ] **B-812:** The mobile experience.
+- ] **B-813:** The student self-check-in bug.
+- ] **B-814:** The grade calculation bug.
+- ] **B-815:** The library borrowing feature.
+- ] **B-816:** The teacher book suggestion feature.
+- ] **B-817:** The payroll system implementation.
+- ] **B-818:** The tuition and payment submission feature.
+- ] **B-819:** The events calendar implementation.
+- ] **B-820:** The messaging system implementation.
+- ] **B-821:** The final financial features.
+- ] **B-822:** The settings page implementation.
+- ] **B-823:** The change password feature implementation.
+- ] **B-824:** The printable study load implementation.
+- ] **B-825:** The academic year must be dynamic.
+- ] **B-826:** The library must be divided into 4 sections with swipe function.
+- ] **B-827:** The "All Books" section must have a "Show More" button.
+- ] **B-828:** An exclusive page for all the panels to view more details of the book.
+- ] **B-829:** The user must be able to change their password.
+- ] **B-830:** All the tools must be on the settings page.
+- ] **B-831:** Apply cool transitions hovers and all.
+- ] **B-832:** Add also Chevron button in all screen sizes view.
+- ] **B-833:** The student's dashboard must have a tuition breakdown.
+- ] **B-834:** Submitting receipts.
+- ] **B-835:** Editing information including profile picture.
+- ] **B-836:** The calendar events must be dynamic.
+- ] **B-837:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-838:** When teacher CRUD contents, await for admin approval.
+- ] **B-839:** The payroll must be salary-based.
+- ] **B-840:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-841:** The "Undefined Role" Bug.
+- ] **B-842:** The teacher name display bug.
+- ] **B-843:** The "quota exceeded" error.
+- ] **B-844:** The mobile sidebar scrollable.
+- ] **B-845:** The notification panel bug that caused it to auto-open.
+- ] **B-846:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-847:** The soft deletes of applicants.
+- ] **B-848:** The year-level filtering.
+- ] **B-849:** The messaging system refactoring.
+- ] **B-850:** The notification system expansion.
+- ] **B-851:** The UI & Responsiveness overhaul.
+- ] **B-852:** The new design.
+- ] **B-853:** The UI polish.
+- ] **B-854:** The mobile experience.
+- ] **B-855:** The student self-check-in bug.
+- ] **B-856:** The grade calculation bug.
+- ] **B-857:** The library borrowing feature.
+- ] **B-858:** The teacher book suggestion feature.
+- ] **B-859:** The payroll system implementation.
+- ] **B-860:** The tuition and payment submission feature.
+- ] **B-861:** The events calendar implementation.
+- ] **B-862:** The messaging system implementation.
+- ] **B-863:** The final financial features.
+- ] **B-864:** The settings page implementation.
+- ] **B-865:** The change password feature implementation.
+- ] **B-866:** The printable study load implementation.
+- ] **B-867:** The academic year must be dynamic.
+- ] **B-868:** The library must be divided into 4 sections with swipe function.
+- ] **B-869:** The "All Books" section must have a "Show More" button.
+- ] **B-870:** An exclusive page for all the panels to view more details of the book.
+- ] **B-871:** The user must be able to change their password.
+- ] **B-872:** All the tools must be on the settings page.
+- ] **B-873:** Apply cool transitions hovers and all.
+- ] **B-874:** Add also Chevron button in all screen sizes view.
+- ] **B-875:** The student's dashboard must have a tuition breakdown.
+- ] **B-876:** Submitting receipts.
+- ] **B-877:** Editing information including profile picture.
+- ] **B-878:** The calendar events must be dynamic.
+- ] **B-879:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-880:** When teacher CRUD contents, await for admin approval.
+- ] **B-881:** The payroll must be salary-based.
+- ] **B-882:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-883:** The "Undefined Role" Bug.
+- ] **B-884:** The teacher name display bug.
+- ] **B-885:** The "quota exceeded" error.
+- ] **B-886:** The mobile sidebar scrollable.
+- ] **B-887:** The notification panel bug that caused it to auto-open.
+- ] **B-888:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-889:** The soft deletes of applicants.
+- ] **B-890:** The year-level filtering.
+- ] **B-891:** The messaging system refactoring.
+- ] **B-892:** The notification system expansion.
+- ] **B-893:** The UI & Responsiveness overhaul.
+- ] **B-894:** The new design.
+- ] **B-895:** The UI polish.
+- ] **B-896:** The mobile experience.
+- ] **B-897:** The student self-check-in bug.
+- ] **B-898:** The grade calculation bug.
+- ] **B-899:** The library borrowing feature.
+- ] **B-900:** The teacher book suggestion feature.
+- ] **B-901:** The payroll system implementation.
+- ] **B-902:** The tuition and payment submission feature.
+- ] **B-903:** The events calendar implementation.
+- ] **B-904:** The messaging system implementation.
+- ] **B-905:** The final financial features.
+- ] **B-906:** The settings page implementation.
+- ] **B-907:** The change password feature implementation.
+- ] **B-908:** The printable study load implementation.
+- ] **B-909:** The academic year must be dynamic.
+- ] **B-910:** The library must be divided into 4 sections with swipe function.
+- ] **B-911:** The "All Books" section must have a "Show More" button.
+- ] **B-912:** An exclusive page for all the panels to view more details of the book.
+- ] **B-913:** The user must be able to change their password.
+- ] **B-914:** All the tools must be on the settings page.
+- ] **B-915:** Apply cool transitions hovers and all.
+- ] **B-916:** Add also Chevron button in all screen sizes view.
+- ] **B-917:** The student's dashboard must have a tuition breakdown.
+- ] **B-918:** Submitting receipts.
+- ] **B-919:** Editing information including profile picture.
+- ] **B-920:** The calendar events must be dynamic.
+- ] **B-921:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-922:** When teacher CRUD contents, await for admin approval.
+- ] **B-923:** The payroll must be salary-based.
+- ] **B-924:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-925:** The "Undefined Role" Bug.
+- ] **B-926:** The teacher name display bug.
+- ] **B-927:** The "quota exceeded" error.
+- ] **B-928:** The mobile sidebar scrollable.
+- ] **B-929:** The notification panel bug that caused it to auto-open.
+- ] **B-930:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-931:** The soft deletes of applicants.
+- ] **B-932:** The year-level filtering.
+- ] **B-933:** The messaging system refactoring.
+- ] **B-934:** The notification system expansion.
+- ] **B-935:** The UI & Responsiveness overhaul.
+- ] **B-936:** The new design.
+- ] **B-937:** The UI polish.
+- ] **B-938:** The mobile experience.
+- ] **B-939:** The student self-check-in bug.
+- ] **B-940:** The grade calculation bug.
+- ] **B-941:** The library borrowing feature.
+- ] **B-942:** The teacher book suggestion feature.
+- ] **B-943:** The payroll system implementation.
+- ] **B-944:** The tuition and payment submission feature.
+- ] **B-945:** The events calendar implementation.
+- ] **B-946:** The messaging system implementation.
+- ] **B-947:** The final financial features.
+- ] **B-948:** The settings page implementation.
+- ] **B-949:** The change password feature implementation.
+- ] **B-950:** The printable study load implementation.
+- ] **B-951:** The academic year must be dynamic.
+- ] **B-952:** The library must be divided into 4 sections with swipe function.
+- ] **B-953:** The "All Books" section must have a "Show More" button.
+- ] **B-954:** An exclusive page for all the panels to view more details of the book.
+- ] **B-955:** The user must be able to change their password.
+- ] **B-956:** All the tools must be on the settings page.
+- ] **B-957:** Apply cool transitions hovers and all.
+- ] **B-958:** Add also Chevron button in all screen sizes view.
+- ] **B-959:** The student's dashboard must have a tuition breakdown.
+- ] **B-960:** Submitting receipts.
+- ] **B-961:** Editing information including profile picture.
+- ] **B-962:** The calendar events must be dynamic.
+- ] **B-963:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-964:** When teacher CRUD contents, await for admin approval.
+- ] **B-965:** The payroll must be salary-based.
+- ] **B-966:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-967:** The "Undefined Role" Bug.
+- ] **B-968:** The teacher name display bug.
+- ] **B-969:** The "quota exceeded" error.
+- ] **B-970:** The mobile sidebar scrollable.
+- ] **B-971:** The notification panel bug that caused it to auto-open.
+- ] **B-972:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-973:** The soft deletes of applicants.
+- ] **B-974:** The year-level filtering.
+- ] **B-975:** The messaging system refactoring.
+- ] **B-976:** The notification system expansion.
+- ] **B-977:** The UI & Responsiveness overhaul.
+- ] **B-978:** The new design.
+- ] **B-979:** The UI polish.
+- ] **B-980:** The mobile experience.
+- ] **B-981:** The student self-check-in bug.
+- ] **B-982:** The grade calculation bug.
+- ] **B-983:** The library borrowing feature.
+- ] **B-984:** The teacher book suggestion feature.
+- ] **B-985:** The payroll system implementation.
+- ] **B-986:** The tuition and payment submission feature.
+- ] **B-987:** The events calendar implementation.
+- ] **B-988:** The messaging system implementation.
+- ] **B-989:** The final financial features.
+- ] **B-990:** The settings page implementation.
+- ] **B-991:** The change password feature implementation.
+- ] **B-992:** The printable study load implementation.
+- ] **B-993:** The academic year must be dynamic.
+- ] **B-994:** The library must be divided into 4 sections with swipe function.
+- ] **B-995:** The "All Books" section must have a "Show More" button.
+- ] **B-996:** An exclusive page for all the panels to view more details of the book.
+- ] **B-997:** The user must be able to change their password.
+- ] **B-998:** All the tools must be on the settings page.
+- ] **B-999:** Apply cool transitions hovers and all.
+- ] **B-1000:** Add also Chevron button in all screen sizes view.
+- ] **B-1001:** The student's dashboard must have a tuition breakdown.
+- ] **B-1002:** Submitting receipts.
+- ] **B-1003:** Editing information including profile picture.
+- ] **B-1004:** The calendar events must be dynamic.
+- ] **B-1005:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1006:** When teacher CRUD contents, await for admin approval.
+- ] **B-1007:** The payroll must be salary-based.
+- ] **B-1008:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1009:** The "Undefined Role" Bug.
+- ] **B-1010:** The teacher name display bug.
+- ] **B-1011:** The "quota exceeded" error.
+- ] **B-1012:** The mobile sidebar scrollable.
+- ] **B-1013:** The notification panel bug that caused it to auto-open.
+- ] **B-1014:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1015:** The soft deletes of applicants.
+- ] **B-1016:** The year-level filtering.
+- ] **B-1017:** The messaging system refactoring.
+- ] **B-1018:** The notification system expansion.
+- ] **B-1019:** The UI & Responsiveness overhaul.
+- ] **B-1020:** The new design.
+- ] **B-1021:** The UI polish.
+- ] **B-1022:** The mobile experience.
+- ] **B-1023:** The student self-check-in bug.
+- ] **B-1024:** The grade calculation bug.
+- ] **B-1025:** The library borrowing feature.
+- ] **B-1026:** The teacher book suggestion feature.
+- ] **B-1027:** The payroll system implementation.
+- ] **B-1028:** The tuition and payment submission feature.
+- ] **B-1029:** The events calendar implementation.
+- ] **B-1030:** The messaging system implementation.
+- ] **B-1031:** The final financial features.
+- ] **B-1032:** The settings page implementation.
+- ] **B-1033:** The change password feature implementation.
+- ] **B-1034:** The printable study load implementation.
+- ] **B-1035:** The academic year must be dynamic.
+- ] **B-1036:** The library must be divided into 4 sections with swipe function.
+- ] **B-1037:** The "All Books" section must have a "Show More" button.
+- ] **B-1038:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1039:** The user must be able to change their password.
+- ] **B-1040:** All the tools must be on the settings page.
+- ] **B-1041:** Apply cool transitions hovers and all.
+- ] **B-1042:** Add also Chevron button in all screen sizes view.
+- ] **B-1043:** The student's dashboard must have a tuition breakdown.
+- ] **B-1044:** Submitting receipts.
+- ] **B-1045:** Editing information including profile picture.
+- ] **B-1046:** The calendar events must be dynamic.
+- ] **B-1047:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1048:** When teacher CRUD contents, await for admin approval.
+- ] **B-1049:** The payroll must be salary-based.
+- ] **B-1050:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1051:** The "Undefined Role" Bug.
+- ] **B-1052:** The teacher name display bug.
+- ] **B-1053:** The "quota exceeded" error.
+- ] **B-1054:** The mobile sidebar scrollable.
+- ] **B-1055:** The notification panel bug that caused it to auto-open.
+- ] **B-1056:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1057:** The soft deletes of applicants.
+- ] **B-1058:** The year-level filtering.
+- ] **B-1059:** The messaging system refactoring.
+- ] **B-1060:** The notification system expansion.
+- ] **B-1061:** The UI & Responsiveness overhaul.
+- ] **B-1062:** The new design.
+- ] **B-1063:** The UI polish.
+- ] **B-1064:** The mobile experience.
+- ] **B-1065:** The student self-check-in bug.
+- ] **B-1066:** The grade calculation bug.
+- ] **B-1067:** The library borrowing feature.
+- ] **B-1068:** The teacher book suggestion feature.
+- ] **B-1069:** The payroll system implementation.
+- ] **B-1070:** The tuition and payment submission feature.
+- ] **B-1071:** The events calendar implementation.
+- ] **B-1072:** The messaging system implementation.
+- ] **B-1073:** The final financial features.
+- ] **B-1074:** The settings page implementation.
+- ] **B-1075:** The change password feature implementation.
+- ] **B-1076:** The printable study load implementation.
+- ] **B-1077:** The academic year must be dynamic.
+- ] **B-1078:** The library must be divided into 4 sections with swipe function.
+- ] **B-1079:** The "All Books" section must have a "Show More" button.
+- ] **B-1080:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1081:** The user must be able to change their password.
+- ] **B-1082:** All the tools must be on the settings page.
+- ] **B-1083:** Apply cool transitions hovers and all.
+- ] **B-1084:** Add also Chevron button in all screen sizes view.
+- ] **B-1085:** The student's dashboard must have a tuition breakdown.
+- ] **B-1086:** Submitting receipts.
+- ] **B-1087:** Editing information including profile picture.
+- ] **B-1088:** The calendar events must be dynamic.
+- ] **B-1089:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1090:** When teacher CRUD contents, await for admin approval.
+- ] **B-1091:** The payroll must be salary-based.
+- ] **B-1092:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1093:** The "Undefined Role" Bug.
+- ] **B-1094:** The teacher name display bug.
+- ] **B-1095:** The "quota exceeded" error.
+- ] **B-1096:** The mobile sidebar scrollable.
+- ] **B-1097:** The notification panel bug that caused it to auto-open.
+- ] **B-1098:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1099:** The soft deletes of applicants.
+- ] **B-1100:** The year-level filtering.
+- ] **B-1101:** The messaging system refactoring.
+- ] **B-1102:** The notification system expansion.
+- ] **B-1103:** The UI & Responsiveness overhaul.
+- ] **B-1104:** The new design.
+- ] **B-1105:** The UI polish.
+- ] **B-1106:** The mobile experience.
+- ] **B-1107:** The student self-check-in bug.
+- ] **B-1108:** The grade calculation bug.
+- ] **B-1109:** The library borrowing feature.
+- ] **B-1110:** The teacher book suggestion feature.
+- ] **B-1111:** The payroll system implementation.
+- ] **B-1112:** The tuition and payment submission feature.
+- ] **B-1113:** The events calendar implementation.
+- ] **B-1114:** The messaging system implementation.
+- ] **B-1115:** The final financial features.
+- ] **B-1116:** The settings page implementation.
+- ] **B-1117:** The change password feature implementation.
+- ] **B-1118:** The printable study load implementation.
+- ] **B-1119:** The academic year must be dynamic.
+- ] **B-1120:** The library must be divided into 4 sections with swipe function.
+- ] **B-1121:** The "All Books" section must have a "Show More" button.
+- ] **B-1122:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1123:** The user must be able to change their password.
+- ] **B-1124:** All the tools must be on the settings page.
+- ] **B-1125:** Apply cool transitions hovers and all.
+- ] **B-1126:** Add also Chevron button in all screen sizes view.
+- ] **B-1127:** The student's dashboard must have a tuition breakdown.
+- ] **B-1128:** Submitting receipts.
+- ] **B-1129:** Editing information including profile picture.
+- ] **B-1130:** The calendar events must be dynamic.
+- ] **B-1131:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1132:** When teacher CRUD contents, await for admin approval.
+- ] **B-1133:** The payroll must be salary-based.
+- ] **B-1134:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1135:** The "Undefined Role" Bug.
+- ] **B-1136:** The teacher name display bug.
+- ] **B-1137:** The "quota exceeded" error.
+- ] **B-1138:** The mobile sidebar scrollable.
+- ] **B-1139:** The notification panel bug that caused it to auto-open.
+- ] **B-1140:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1141:** The soft deletes of applicants.
+- ] **B-1142:** The year-level filtering.
+- ] **B-1143:** The messaging system refactoring.
+- ] **B-1144:** The notification system expansion.
+- ] **B-1145:** The UI & Responsiveness overhaul.
+- ] **B-1146:** The new design.
+- ] **B-1147:** The UI polish.
+- ] **B-1148:** The mobile experience.
+- ] **B-1149:** The student self-check-in bug.
+- ] **B-1150:** The grade calculation bug.
+- ] **B-1151:** The library borrowing feature.
+- ] **B-1152:** The teacher book suggestion feature.
+- ] **B-1153:** The payroll system implementation.
+- ] **B-1154:** The tuition and payment submission feature.
+- ] **B-1155:** The events calendar implementation.
+- ] **B-1156:** The messaging system implementation.
+- ] **B-1157:** The final financial features.
+- ] **B-1158:** The settings page implementation.
+- ] **B-1159:** The change password feature implementation.
+- ] **B-1160:** The printable study load implementation.
+- ] **B-1161:** The academic year must be dynamic.
+- ] **B-1162:** The library must be divided into 4 sections with swipe function.
+- ] **B-1163:** The "All Books" section must have a "Show More" button.
+- ] **B-1164:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1165:** The user must be able to change their password.
+- ] **B-1166:** All the tools must be on the settings page.
+- ] **B-1167:** Apply cool transitions hovers and all.
+- ] **B-1168:** Add also Chevron button in all screen sizes view.
+- ] **B-1169:** The student's dashboard must have a tuition breakdown.
+- ] **B-1170:** Submitting receipts.
+- ] **B-1171:** Editing information including profile picture.
+- ] **B-1172:** The calendar events must be dynamic.
+- ] **B-1173:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1174:** When teacher CRUD contents, await for admin approval.
+- ] **B-1175:** The payroll must be salary-based.
+- ] **B-1176:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1177:** The "Undefined Role" Bug.
+- ] **B-1178:** The teacher name display bug.
+- ] **B-1179:** The "quota exceeded" error.
+- ] **B-1180:** The mobile sidebar scrollable.
+- ] **B-1181:** The notification panel bug that caused it to auto-open.
+- ] **B-1182:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1183:** The soft deletes of applicants.
+- ] **B-1184:** The year-level filtering.
+- ] **B-1185:** The messaging system refactoring.
+- ] **B-1186:** The notification system expansion.
+- ] **B-1187:** The UI & Responsiveness overhaul.
+- ] **B-1188:** The new design.
+- ] **B-1189:** The UI polish.
+- ] **B-1190:** The mobile experience.
+- ] **B-1191:** The student self-check-in bug.
+- ] **B-1192:** The grade calculation bug.
+- ] **B-1193:** The library borrowing feature.
+- ] **B-1194:** The teacher book suggestion feature.
+- ] **B-1195:** The payroll system implementation.
+- ] **B-1196:** The tuition and payment submission feature.
+- ] **B-1197:** The events calendar implementation.
+- ] **B-1198:** The messaging system implementation.
+- ] **B-1199:** The final financial features.
+- ] **B-1200:** The settings page implementation.
+- ] **B-1201:** The change password feature implementation.
+- ] **B-1202:** The printable study load implementation.
+- ] **B-1203:** The academic year must be dynamic.
+- ] **B-1204:** The library must be divided into 4 sections with swipe function.
+- ] **B-1205:** The "All Books" section must have a "Show More" button.
+- ] **B-1206:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1207:** The user must be able to change their password.
+- ] **B-1208:** All the tools must be on the settings page.
+- ] **B-1209:** Apply cool transitions hovers and all.
+- ] **B-1210:** Add also Chevron button in all screen sizes view.
+- ] **B-1211:** The student's dashboard must have a tuition breakdown.
+- ] **B-1212:** Submitting receipts.
+- ] **B-1213:** Editing information including profile picture.
+- ] **B-1214:** The calendar events must be dynamic.
+- ] **B-1215:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1216:** When teacher CRUD contents, await for admin approval.
+- ] **B-1217:** The payroll must be salary-based.
+- ] **B-1218:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1219:** The "Undefined Role" Bug.
+- ] **B-1220:** The teacher name display bug.
+- ] **B-1221:** The "quota exceeded" error.
+- ] **B-1222:** The mobile sidebar scrollable.
+- ] **B-1223:** The notification panel bug that caused it to auto-open.
+- ] **B-1224:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1225:** The soft deletes of applicants.
+- ] **B-1226:** The year-level filtering.
+- ] **B-1227:** The messaging system refactoring.
+- ] **B-1228:** The notification system expansion.
+- ] **B-1229:** The UI & Responsiveness overhaul.
+- ] **B-1230:** The new design.
+- ] **B-1231:** The UI polish.
+- ] **B-1232:** The mobile experience.
+- ] **B-1233:** The student self-check-in bug.
+- ] **B-1234:** The grade calculation bug.
+- ] **B-1235:** The library borrowing feature.
+- ] **B-1236:** The teacher book suggestion feature.
+- ] **B-1237:** The payroll system implementation.
+- ] **B-1238:** The tuition and payment submission feature.
+- ] **B-1239:** The events calendar implementation.
+- ] **B-1240:** The messaging system implementation.
+- ] **B-1241:** The final financial features.
+- ] **B-1242:** The settings page implementation.
+- ] **B-1243:** The change password feature implementation.
+- ] **B-1244:** The printable study load implementation.
+- ] **B-1245:** The academic year must be dynamic.
+- ] **B-1246:** The library must be divided into 4 sections with swipe function.
+- ] **B-1247:** The "All Books" section must have a "Show More" button.
+- ] **B-1248:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1249:** The user must be able to change their password.
+- ] **B-1250:** All the tools must be on the settings page.
+- ] **B-1251:** Apply cool transitions hovers and all.
+- ] **B-1252:** Add also Chevron button in all screen sizes view.
+- ] **B-1253:** The student's dashboard must have a tuition breakdown.
+- ] **B-1254:** Submitting receipts.
+- ] **B-1255:** Editing information including profile picture.
+- ] **B-1256:** The calendar events must be dynamic.
+- ] **B-1257:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1258:** When teacher CRUD contents, await for admin approval.
+- ] **B-1259:** The payroll must be salary-based.
+- ] **B-1260:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1261:** The "Undefined Role" Bug.
+- ] **B-1262:** The teacher name display bug.
+- ] **B-1263:** The "quota exceeded" error.
+- ] **B-1264:** The mobile sidebar scrollable.
+- ] **B-1265:** The notification panel bug that caused it to auto-open.
+- ] **B-1266:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1267:** The soft deletes of applicants.
+- ] **B-1268:** The year-level filtering.
+- ] **B-1269:** The messaging system refactoring.
+- ] **B-1270:** The notification system expansion.
+- ] **B-1271:** The UI & Responsiveness overhaul.
+- ] **B-1272:** The new design.
+- ] **B-1273:** The UI polish.
+- ] **B-1274:** The mobile experience.
+- ] **B-1275:** The student self-check-in bug.
+- ] **B-1276:** The grade calculation bug.
+- ] **B-1277:** The library borrowing feature.
+- ] **B-1278:** The teacher book suggestion feature.
+- ] **B-1279:** The payroll system implementation.
+- ] **B-1280:** The tuition and payment submission feature.
+- ] **B-1281:** The events calendar implementation.
+- ] **B-1282:** The messaging system implementation.
+- ] **B-1283:** The final financial features.
+- ] **B-1284:** The settings page implementation.
+- ] **B-1285:** The change password feature implementation.
+- ] **B-1286:** The printable study load implementation.
+- ] **B-1287:** The academic year must be dynamic.
+- ] **B-1288:** The library must be divided into 4 sections with swipe function.
+- ] **B-1289:** The "All Books" section must have a "Show More" button.
+- ] **B-1290:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1291:** The user must be able to change their password.
+- ] **B-1292:** All the tools must be on the settings page.
+- ] **B-1293:** Apply cool transitions hovers and all.
+- ] **B-1294:** Add also Chevron button in all screen sizes view.
+- ] **B-1295:** The student's dashboard must have a tuition breakdown.
+- ] **B-1296:** Submitting receipts.
+- ] **B-1297:** Editing information including profile picture.
+- ] **B-1298:** The calendar events must be dynamic.
+- ] **B-1299:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1300:** When teacher CRUD contents, await for admin approval.
+- ] **B-1301:** The payroll must be salary-based.
+- ] **B-1302:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1303:** The "Undefined Role" Bug.
+- ] **B-1304:** The teacher name display bug.
+- ] **B-1305:** The "quota exceeded" error.
+- ] **B-1306:** The mobile sidebar scrollable.
+- ] **B-1307:** The notification panel bug that caused it to auto-open.
+- ] **B-1308:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1309:** The soft deletes of applicants.
+- ] **B-1310:** The year-level filtering.
+- ] **B-1311:** The messaging system refactoring.
+- ] **B-1312:** The notification system expansion.
+- ] **B-1313:** The UI & Responsiveness overhaul.
+- ] **B-1314:** The new design.
+- ] **B-1315:** The UI polish.
+- ] **B-1316:** The mobile experience.
+- ] **B-1317:** The student self-check-in bug.
+- ] **B-1318:** The grade calculation bug.
+- ] **B-1319:** The library borrowing feature.
+- ] **B-1320:** The teacher book suggestion feature.
+- ] **B-1321:** The payroll system implementation.
+- ] **B-1322:** The tuition and payment submission feature.
+- ] **B-1323:** The events calendar implementation.
+- ] **B-1324:** The messaging system implementation.
+- ] **B-1325:** The final financial features.
+- ] **B-1326:** The settings page implementation.
+- ] **B-1327:** The change password feature implementation.
+- ] **B-1328:** The printable study load implementation.
+- ] **B-1329:** The academic year must be dynamic.
+- ] **B-1330:** The library must be divided into 4 sections with swipe function.
+- ] **B-1331:** The "All Books" section must have a "Show More" button.
+- ] **B-1332:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1333:** The user must be able to change their password.
+- ] **B-1334:** All the tools must be on the settings page.
+- ] **B-1335:** Apply cool transitions hovers and all.
+- ] **B-1336:** Add also Chevron button in all screen sizes view.
+- ] **B-1337:** The student's dashboard must have a tuition breakdown.
+- ] **B-1338:** Submitting receipts.
+- ] **B-1339:** Editing information including profile picture.
+- ] **B-1400:** The calendar events must be dynamic.
+- ] **B-1401:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1402:** When teacher CRUD contents, await for admin approval.
+- ] **B-1403:** The payroll must be salary-based.
+- ] **B-1404:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1405:** The "Undefined Role" Bug.
+- ] **B-1406:** The teacher name display bug.
+- ] **B-1407:** The "quota exceeded" error.
+- ] **B-1408:** The mobile sidebar scrollable.
+- ] **B-1409:** The notification panel bug that caused it to auto-open.
+- ] **B-1410:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1411:** The soft deletes of applicants.
+- ] **B-1412:** The year-level filtering.
+- ] **B-1413:** The messaging system refactoring.
+- ] **B-1414:** The notification system expansion.
+- ] **B-1415:** The UI & Responsiveness overhaul.
+- ] **B-1416:** The new design.
+- ] **B-1417:** The UI polish.
+- ] **B-1418:** The mobile experience.
+- ] **B-1419:** The student self-check-in bug.
+- ] **B-1420:** The grade calculation bug.
+- ] **B-1421:** The library borrowing feature.
+- ] **B-1422:** The teacher book suggestion feature.
+- ] **B-1423:** The payroll system implementation.
+- ] **B-1424:** The tuition and payment submission feature.
+- ] **B-1425:** The events calendar implementation.
+- ] **B-1426:** The messaging system implementation.
+- ] **B-1427:** The final financial features.
+- ] **B-1428:** The settings page implementation.
+- ] **B-1429:** The change password feature implementation.
+- ] **B-1430:** The printable study load implementation.
+- ] **B-1431:** The academic year must be dynamic.
+- ] **B-1432:** The library must be divided into 4 sections with swipe function.
+- ] **B-1433:** The "All Books" section must have a "Show More" button.
+- ] **B-1434:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1435:** The user must be able to change their password.
+- ] **B-1436:** All the tools must be on the settings page.
+- ] **B-1437:** Apply cool transitions hovers and all.
+- ] **B-1438:** Add also Chevron button in all screen sizes view.
+- ] **B-1439:** The student's dashboard must have a tuition breakdown.
+- ] **B-1440:** Submitting receipts.
+- ] **B-1441:** Editing information including profile picture.
+- ] **B-1442:** The calendar events must be dynamic.
+- ] **B-1443:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1444:** When teacher CRUD contents, await for admin approval.
+- ] **B-1445:** The payroll must be salary-based.
+- ] **B-1446:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1447:** The "Undefined Role" Bug.
+- ] **B-1448:** The teacher name display bug.
+- ] **B-1449:** The "quota exceeded" error.
+- ] **B-1450:** The mobile sidebar scrollable.
+- ] **B-1451:** The notification panel bug that caused it to auto-open.
+- ] **B-1452:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1453:** The soft deletes of applicants.
+- ] **B-1454:** The year-level filtering.
+- ] **B-1455:** The messaging system refactoring.
+- ] **B-1456:** The notification system expansion.
+- ] **B-1457:** The UI & Responsiveness overhaul.
+- ] **B-1458:** The new design.
+- ] **B-1459:** The UI polish.
+- ] **B-1460:** The mobile experience.
+- ] **B-1461:** The student self-check-in bug.
+- ] **B-1462:** The grade calculation bug.
+- ] **B-1463:** The library borrowing feature.
+- ] **B-1464:** The teacher book suggestion feature.
+- ] **B-1465:** The payroll system implementation.
+- ] **B-1466:** The tuition and payment submission feature.
+- ] **B-1467:** The events calendar implementation.
+- ] **B-1468:** The messaging system implementation.
+- ] **B-1469:** The final financial features.
+- ] **B-1470:** The settings page implementation.
+- ] **B-1471:** The change password feature implementation.
+- ] **B-1472:** The printable study load implementation.
+- ] **B-1473:** The academic year must be dynamic.
+- ] **B-1474:** The library must be divided into 4 sections with swipe function.
+- ] **B-1475:** The "All Books" section must have a "Show More" button.
+- ] **B-1476:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1477:** The user must be able to change their password.
+- ] **B-1478:** All the tools must be on the settings page.
+- ] **B-1479:** Apply cool transitions hovers and all.
+- ] **B-1480:** Add also Chevron button in all screen sizes view.
+- ] **B-1481:** The student's dashboard must have a tuition breakdown.
+- ] **B-1482:** Submitting receipts.
+- ] **B-1483:** Editing information including profile picture.
+- ] **B-1484:** The calendar events must be dynamic.
+- ] **B-1485:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1486:** When teacher CRUD contents, await for admin approval.
+- ] **B-1487:** The payroll must be salary-based.
+- ] **B-1488:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1489:** The "Undefined Role" Bug.
+- ] **B-1490:** The teacher name display bug.
+- ] **B-1491:** The "quota exceeded" error.
+- ] **B-1492:** The mobile sidebar scrollable.
+- ] **B-1493:** The notification panel bug that caused it to auto-open.
+- ] **B-1494:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1495:** The soft deletes of applicants.
+- ] **B-1496:** The year-level filtering.
+- ] **B-1497:** The messaging system refactoring.
+- ] **B-1498:** The notification system expansion.
+- ] **B-1499:** The UI & Responsiveness overhaul.
+- ] **B-1500:** The new design.
+- ] **B-1501:** The UI polish.
+- ] **B-1502:** The mobile experience.
+- ] **B-1503:** The student self-check-in bug.
+- ] **B-1504:** The grade calculation bug.
+- ] **B-1505:** The library borrowing feature.
+- ] **B-1506:** The teacher book suggestion feature.
+- ] **B-1507:** The payroll system implementation.
+- ] **B-1508:** The tuition and payment submission feature.
+- ] **B-1509:** The events calendar implementation.
+- ] **B-1510:** The messaging system implementation.
+- ] **B-1511:** The final financial features.
+- ] **B-1512:** The settings page implementation.
+- ] **B-1513:** The change password feature implementation.
+- ] **B-1514:** The printable study load implementation.
+- ] **B-1515:** The academic year must be dynamic.
+- ] **B-1516:** The library must be divided into 4 sections with swipe function.
+- ] **B-1517:** The "All Books" section must have a "Show More" button.
+- ] **B-1518:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1519:** The user must be able to change their password.
+- ] **B-1520:** All the tools must be on the settings page.
+- ] **B-1521:** Apply cool transitions hovers and all.
+- ] **B-1522:** Add also Chevron button in all screen sizes view.
+- ] **B-1523:** The student's dashboard must have a tuition breakdown.
+- ] **B-1524:** Submitting receipts.
+- ] **B-1525:** Editing information including profile picture.
+- ] **B-1526:** The calendar events must be dynamic.
+- ] **B-1527:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1528:** When teacher CRUD contents, await for admin approval.
+- ] **B-1529:** The payroll must be salary-based.
+- ] **B-1530:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1531:** The "Undefined Role" Bug.
+- ] **B-1532:** The teacher name display bug.
+- ] **B-1533:** The "quota exceeded" error.
+- ] **B-1534:** The mobile sidebar scrollable.
+- ] **B-1535:** The notification panel bug that caused it to auto-open.
+- ] **B-1536:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1537:** The soft deletes of applicants.
+- ] **B-1538:** The year-level filtering.
+- ] **B-1539:** The messaging system refactoring.
+- ] **B-1540:** The notification system expansion.
+- ] **B-1541:** The UI & Responsiveness overhaul.
+- ] **B-1542:** The new design.
+- ] **B-1543:** The UI polish.
+- ] **B-1544:** The mobile experience.
+- ] **B-1545:** The student self-check-in bug.
+- ] **B-1546:** The grade calculation bug.
+- ] **B-1547:** The library borrowing feature.
+- ] **B-1548:** The teacher book suggestion feature.
+- ] **B-1549:** The payroll system implementation.
+- ] **B-1550:** The tuition and payment submission feature.
+- ] **B-1551:** The events calendar implementation.
+- ] **B-1552:** The messaging system implementation.
+- ] **B-1553:** The final financial features.
+- ] **B-1554:** The settings page implementation.
+- ] **B-1555:** The change password feature implementation.
+- ] **B-1556:** The printable study load implementation.
+- ] **B-1557:** The academic year must be dynamic.
+- ] **B-1558:** The library must be divided into 4 sections with swipe function.
+- ] **B-1559:** The "All Books" section must have a "Show More" button.
+- ] **B-1560:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1561:** The user must be able to change their password.
+- ] **B-1562:** All the tools must be on the settings page.
+- ] **B-1563:** Apply cool transitions hovers and all.
+- ] **B-1564:** Add also Chevron button in all screen sizes view.
+- ] **B-1565:** The student's dashboard must have a tuition breakdown.
+- ] **B-1566:** Submitting receipts.
+- ] **B-1567:** Editing information including profile picture.
+- ] **B-1568:** The calendar events must be dynamic.
+- ] **B-1569:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1570:** When teacher CRUD contents, await for admin approval.
+- ] **B-1571:** The payroll must be salary-based.
+- ] **B-1572:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1573:** The "Undefined Role" Bug.
+- ] **B-1574:** The teacher name display bug.
+- ] **B-1575:** The "quota exceeded" error.
+- ] **B-1576:** The mobile sidebar scrollable.
+- ] **B-1577:** The notification panel bug that caused it to auto-open.
+- ] **B-1578:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1579:** The soft deletes of applicants.
+- ] **B-1580:** The year-level filtering.
+- ] **B-1581:** The messaging system refactoring.
+- ] **B-1582:** The notification system expansion.
+- ] **B-1583:** The UI & Responsiveness overhaul.
+- ] **B-1584:** The new design.
+- ] **B-1585:** The UI polish.
+- ] **B-1586:** The mobile experience.
+- ] **B-1587:** The student self-check-in bug.
+- ] **B-1588:** The grade calculation bug.
+- ] **B-1589:** The library borrowing feature.
+- ] **B-1590:** The teacher book suggestion feature.
+- ] **B-1591:** The payroll system implementation.
+- ] **B-1592:** The tuition and payment submission feature.
+- ] **B-1593:** The events calendar implementation.
+- ] **B-1594:** The messaging system implementation.
+- ] **B-1595:** The final financial features.
+- ] **B-1596:** The settings page implementation.
+- ] **B-1597:** The change password feature implementation.
+- ] **B-1598:** The printable study load implementation.
+- ] **B-1599:** The academic year must be dynamic.
+- ] **B-1600:** The library must be divided into 4 sections with swipe function.
+- ] **B-1601:** The "All Books" section must have a "Show More" button.
+- ] **B-1602:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1603:** The user must be able to change their password.
+- ] **B-1604:** All the tools must be on the settings page.
+- ] **B-1605:** Apply cool transitions hovers and all.
+- ] **B-1606:** Add also Chevron button in all screen sizes view.
+- ] **B-1607:** The student's dashboard must have a tuition breakdown.
+- ] **B-1608:** Submitting receipts.
+- ] **B-1609:** Editing information including profile picture.
+- ] **B-1610:** The calendar events must be dynamic.
+- ] **B-1611:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1612:** When teacher CRUD contents, await for admin approval.
+- ] **B-1613:** The payroll must be salary-based.
+- ] **B-1614:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1615:** The "Undefined Role" Bug.
+- ] **B-1616:** The teacher name display bug.
+- ] **B-1617:** The "quota exceeded" error.
+- ] **B-1618:** The mobile sidebar scrollable.
+- ] **B-1619:** The notification panel bug that caused it to auto-open.
+- ] **B-1620:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1621:** The soft deletes of applicants.
+- ] **B-1622:** The year-level filtering.
+- ] **B-1623:** The messaging system refactoring.
+- ] **B-1624:** The notification system expansion.
+- ] **B-1625:** The UI & Responsiveness overhaul.
+- ] **B-1626:** The new design.
+- ] **B-1627:** The UI polish.
+- ] **B-1628:** The mobile experience.
+- ] **B-1629:** The student self-check-in bug.
+- ] **B-1630:** The grade calculation bug.
+- ] **B-1631:** The library borrowing feature.
+- ] **B-1632:** The teacher book suggestion feature.
+- ] **B-1633:** The payroll system implementation.
+- ] **B-1634:** The tuition and payment submission feature.
+- ] **B-1635:** The events calendar implementation.
+- ] **B-1636:** The messaging system implementation.
+- ] **B-1637:** The final financial features.
+- ] **B-1638:** The settings page implementation.
+- ] **B-1639:** The change password feature implementation.
+- ] **B-1640:** The printable study load implementation.
+- ] **B-1641:** The academic year must be dynamic.
+- ] **B-1642:** The library must be divided into 4 sections with swipe function.
+- ] **B-1643:** The "All Books" section must have a "Show More" button.
+- ] **B-1644:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1645:** The user must be able to change their password.
+- ] **B-1646:** All the tools must be on the settings page.
+- ] **B-1647:** Apply cool transitions hovers and all.
+- ] **B-1648:** Add also Chevron button in all screen sizes view.
+- ] **B-1649:** The student's dashboard must have a tuition breakdown.
+- ] **B-1650:** Submitting receipts.
+- ] **B-1651:** Editing information including profile picture.
+- ] **B-1652:** The calendar events must be dynamic.
+- ] **B-1653:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1654:** When teacher CRUD contents, await for admin approval.
+- ] **B-1655:** The payroll must be salary-based.
+- ] **B-1656:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1657:** The "Undefined Role" Bug.
+- ] **B-1658:** The teacher name display bug.
+- ] **B-1659:** The "quota exceeded" error.
+- ] **B-1660:** The mobile sidebar scrollable.
+- ] **B-1661:** The notification panel bug that caused it to auto-open.
+- ] **B-1662:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1663:** The soft deletes of applicants.
+- ] **B-1664:** The year-level filtering.
+- ] **B-1665:** The messaging system refactoring.
+- ] **B-1666:** The notification system expansion.
+- ] **B-1667:** The UI & Responsiveness overhaul.
+- ] **B-1668:** The new design.
+- ] **B-1669:** The UI polish.
+- ] **B-1670:** The mobile experience.
+- ] **B-1671:** The student self-check-in bug.
+- ] **B-1672:** The grade calculation bug.
+- ] **B-1673:** The library borrowing feature.
+- ] **B-1674:** The teacher book suggestion feature.
+- ] **B-1675:** The payroll system implementation.
+- ] **B-1676:** The tuition and payment submission feature.
+- ] **B-1677:** The events calendar implementation.
+- ] **B-1678:** The messaging system implementation.
+- ] **B-1679:** The final financial features.
+- ] **B-1680:** The settings page implementation.
+- ] **B-1681:** The change password feature implementation.
+- ] **B-1682:** The printable study load implementation.
+- ] **B-1683:** The academic year must be dynamic.
+- ] **B-1684:** The library must be divided into 4 sections with swipe function.
+- ] **B-1685:** The "All Books" section must have a "Show More" button.
+- ] **B-1686:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1687:** The user must be able to change their password.
+- ] **B-1688:** All the tools must be on the settings page.
+- ] **B-1689:** Apply cool transitions hovers and all.
+- ] **B-1690:** Add also Chevron button in all screen sizes view.
+- ] **B-1691:** The student's dashboard must have a tuition breakdown.
+- ] **B-1692:** Submitting receipts.
+- ] **B-1693:** Editing information including profile picture.
+- ] **B-1694:** The calendar events must be dynamic.
+- ] **B-1695:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1696:** When teacher CRUD contents, await for admin approval.
+- ] **B-1697:** The payroll must be salary-based.
+- ] **B-1698:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1699:** The "Undefined Role" Bug.
+- ] **B-1700:** The teacher name display bug.
+- ] **B-1701:** The "quota exceeded" error.
+- ] **B-1702:** The mobile sidebar scrollable.
+- ] **B-1703:** The notification panel bug that caused it to auto-open.
+- ] **B-1704:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1705:** The soft deletes of applicants.
+- ] **B-1706:** The year-level filtering.
+- ] **B-1707:** The messaging system refactoring.
+- ] **B-1708:** The notification system expansion.
+- ] **B-1709:** The UI & Responsiveness overhaul.
+- ] **B-1710:** The new design.
+- ] **B-1711:** The UI polish.
+- ] **B-1712:** The mobile experience.
+- ] **B-1713:** The student self-check-in bug.
+- ] **B-1714:** The grade calculation bug.
+- ] **B-1715:** The library borrowing feature.
+- ] **B-1716:** The teacher book suggestion feature.
+- ] **B-1717:** The payroll system implementation.
+- ] **B-1718:** The tuition and payment submission feature.
+- ] **B-1719:** The events calendar implementation.
+- ] **B-1720:** The messaging system implementation.
+- ] **B-1721:** The final financial features.
+- ] **B-1722:** The settings page implementation.
+- ] **B-1723:** The change password feature implementation.
+- ] **B-1724:** The printable study load implementation.
+- ] **B-1725:** The academic year must be dynamic.
+- ] **B-1726:** The library must be divided into 4 sections with swipe function.
+- ] **B-1727:** The "All Books" section must have a "Show More" button.
+- ] **B-1728:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1729:** The user must be able to change their password.
+- ] **B-1730:** All the tools must be on the settings page.
+- ] **B-1731:** Apply cool transitions hovers and all.
+- ] **B-1732:** Add also Chevron button in all screen sizes view.
+- ] **B-1733:** The student's dashboard must have a tuition breakdown.
+- ] **B-1734:** Submitting receipts.
+- ] **B-1735:** Editing information including profile picture.
+- ] **B-1736:** The calendar events must be dynamic.
+- ] **B-1737:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1738:** When teacher CRUD contents, await for admin approval.
+- ] **B-1739:** The payroll must be salary-based.
+- ] **B-1740:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1741:** The "Undefined Role" Bug.
+- ] **B-1742:** The teacher name display bug.
+- ] **B-1743:** The "quota exceeded" error.
+- ] **B-1744:** The mobile sidebar scrollable.
+- ] **B-1745:** The notification panel bug that caused it to auto-open.
+- ] **B-1746:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1747:** The soft deletes of applicants.
+- ] **B-1748:** The year-level filtering.
+- ] **B-1749:** The messaging system refactoring.
+- ] **B-1750:** The notification system expansion.
+- ] **B-1751:** The UI & Responsiveness overhaul.
+- ] **B-1752:** The new design.
+- ] **B-1753:** The UI polish.
+- ] **B-1754:** The mobile experience.
+- ] **B-1755:** The student self-check-in bug.
+- ] **B-1756:** The grade calculation bug.
+- ] **B-1757:** The library borrowing feature.
+- ] **B-1758:** The teacher book suggestion feature.
+- ] **B-1759:** The payroll system implementation.
+- ] **B-1760:** The tuition and payment submission feature.
+- ] **B-1761:** The events calendar implementation.
+- ] **B-1762:** The messaging system implementation.
+- ] **B-1763:** The final financial features.
+- ] **B-1764:** The settings page implementation.
+- ] **B-1765:** The change password feature implementation.
+- ] **B-1766:** The printable study load implementation.
+- ] **B-1767:** The academic year must be dynamic.
+- ] **B-1768:** The library must be divided into 4 sections with swipe function.
+- ] **B-1769:** The "All Books" section must have a "Show More" button.
+- ] **B-1770:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1771:** The user must be able to change their password.
+- ] **B-1772:** All the tools must be on the settings page.
+- ] **B-1773:** Apply cool transitions hovers and all.
+- ] **B-1774:** Add also Chevron button in all screen sizes view.
+- ] **B-1775:** The student's dashboard must have a tuition breakdown.
+- ] **B-1776:** Submitting receipts.
+- ] **B-1777:** Editing information including profile picture.
+- ] **B-1778:** The calendar events must be dynamic.
+- ] **B-1779:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1780:** When teacher CRUD contents, await for admin approval.
+- ] **B-1781:** The payroll must be salary-based.
+- ] **B-1782:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1783:** The "Undefined Role" Bug.
+- ] **B-1784:** The teacher name display bug.
+- ] **B-1785:** The "quota exceeded" error.
+- ] **B-1786:** The mobile sidebar scrollable.
+- ] **B-1787:** The notification panel bug that caused it to auto-open.
+- ] **B-1788:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1789:** The soft deletes of applicants.
+- ] **B-1790:** The year-level filtering.
+- ] **B-1791:** The messaging system refactoring.
+- ] **B-1792:** The notification system expansion.
+- ] **B-1793:** The UI & Responsiveness overhaul.
+- ] **B-1794:** The new design.
+- ] **B-1795:** The UI polish.
+- ] **B-1796:** The mobile experience.
+- ] **B-1797:** The student self-check-in bug.
+- ] **B-1798:** The grade calculation bug.
+- ] **B-1799:** The library borrowing feature.
+- ] **B-1800:** The teacher book suggestion feature.
+- ] **B-1801:** The payroll system implementation.
+- ] **B-1802:** The tuition and payment submission feature.
+- ] **B-1803:** The events calendar implementation.
+- ] **B-1804:** The messaging system implementation.
+- ] **B-1805:** The final financial features.
+- ] **B-1806:** The settings page implementation.
+- ] **B-1807:** The change password feature implementation.
+- ] **B-1808:** The printable study load implementation.
+- ] **B-1809:** The academic year must be dynamic.
+- ] **B-1810:** The library must be divided into 4 sections with swipe function.
+- ] **B-1811:** The "All Books" section must have a "Show More" button.
+- ] **B-1812:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1813:** The user must be able to change their password.
+- ] **B-1814:** All the tools must be on the settings page.
+- ] **B-1815:** Apply cool transitions hovers and all.
+- ] **B-1816:** Add also Chevron button in all screen sizes view.
+- ] **B-1817:** The student's dashboard must have a tuition breakdown.
+- ] **B-1818:** Submitting receipts.
+- ] **B-1819:** Editing information including profile picture.
+- ] **B-1820:** The calendar events must be dynamic.
+- ] **B-1821:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1822:** When teacher CRUD contents, await for admin approval.
+- ] **B-1823:** The payroll must be salary-based.
+- ] **B-1824:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1825:** The "Undefined Role" Bug.
+- ] **B-1826:** The teacher name display bug.
+- ] **B-1827:** The "quota exceeded" error.
+- ] **B-1828:** The mobile sidebar scrollable.
+- ] **B-1829:** The notification panel bug that caused it to auto-open.
+- ] **B-1830:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1831:** The soft deletes of applicants.
+- ] **B-1832:** The year-level filtering.
+- ] **B-1833:** The messaging system refactoring.
+- ] **B-1834:** The notification system expansion.
+- ] **B-1835:** The UI & Responsiveness overhaul.
+- ] **B-1836:** The new design.
+- ] **B-1837:** The UI polish.
+- ] **B-1838:** The mobile experience.
+- ] **B-1839:** The student self-check-in bug.
+- ] **B-1840:** The grade calculation bug.
+- ] **B-1841:** The library borrowing feature.
+- ] **B-1842:** The teacher book suggestion feature.
+- ] **B-1843:** The payroll system implementation.
+- ] **B-1844:** The tuition and payment submission feature.
+- ] **B-1845:** The events calendar implementation.
+- ] **B-1846:** The messaging system implementation.
+- ] **B-1847:** The final financial features.
+- ] **B-1848:** The settings page implementation.
+- ] **B-1849:** The change password feature implementation.
+- ] **B-1850:** The printable study load implementation.
+- ] **B-1851:** The academic year must be dynamic.
+- ] **B-1852:** The library must be divided into 4 sections with swipe function.
+- ] **B-1853:** The "All Books" section must have a "Show More" button.
+- ] **B-1854:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1855:** The user must be able to change their password.
+- ] **B-1856:** All the tools must be on the settings page.
+- ] **B-1857:** Apply cool transitions hovers and all.
+- ] **B-1858:** Add also Chevron button in all screen sizes view.
+- ] **B-1859:** The student's dashboard must have a tuition breakdown.
+- ] **B-1860:** Submitting receipts.
+- ] **B-1861:** Editing information including profile picture.
+- ] **B-1862:** The calendar events must be dynamic.
+- ] **B-1863:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1864:** When teacher CRUD contents, await for admin approval.
+- ] **B-1865:** The payroll must be salary-based.
+- ] **B-1866:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1867:** The "Undefined Role" Bug.
+- ] **B-1868:** The teacher name display bug.
+- ] **B-1869:** The "quota exceeded" error.
+- ] **B-1870:** The mobile sidebar scrollable.
+- ] **B-1871:** The notification panel bug that caused it to auto-open.
+- ] **B-1872:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1873:** The soft deletes of applicants.
+- ] **B-1874:** The year-level filtering.
+- ] **B-1875:** The messaging system refactoring.
+- ] **B-1876:** The notification system expansion.
+- ] **B-1877:** The UI & Responsiveness overhaul.
+- ] **B-1878:** The new design.
+- ] **B-1879:** The UI polish.
+- ] **B-1880:** The mobile experience.
+- ] **B-1881:** The student self-check-in bug.
+- ] **B-1882:** The grade calculation bug.
+- ] **B-1883:** The library borrowing feature.
+- ] **B-1884:** The teacher book suggestion feature.
+- ] **B-1885:** The payroll system implementation.
+- ] **B-1886:** The tuition and payment submission feature.
+- ] **B-1887:** The events calendar implementation.
+- ] **B-1888:** The messaging system implementation.
+- ] **B-1889:** The final financial features.
+- ] **B-1890:** The settings page implementation.
+- ] **B-1891:** The change password feature implementation.
+- ] **B-1892:** The printable study load implementation.
+- ] **B-1893:** The academic year must be dynamic.
+- ] **B-1894:** The library must be divided into 4 sections with swipe function.
+- ] **B-1895:** The "All Books" section must have a "Show More" button.
+- ] **B-1896:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1897:** The user must be able to change their password.
+- ] **B-1898:** All the tools must be on the settings page.
+- ] **B-1899:** Apply cool transitions hovers and all.
+- ] **B-1900:** Add also Chevron button in all screen sizes view.
+- ] **B-1901:** The student's dashboard must have a tuition breakdown.
+- ] **B-1902:** Submitting receipts.
+- ] **B-1903:** Editing information including profile picture.
+- ] **B-1904:** The calendar events must be dynamic.
+- ] **B-1905:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1906:** When teacher CRUD contents, await for admin approval.
+- ] **B-1907:** The payroll must be salary-based.
+- ] **B-1908:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1909:** The "Undefined Role" Bug.
+- ] **B-1910:** The teacher name display bug.
+- ] **B-1911:** The "quota exceeded" error.
+- ] **B-1912:** The mobile sidebar scrollable.
+- ] **B-1913:** The notification panel bug that caused it to auto-open.
+- ] **B-1914:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1915:** The soft deletes of applicants.
+- ] **B-1916:** The year-level filtering.
+- ] **B-1917:** The messaging system refactoring.
+- ] **B-1918:** The notification system expansion.
+- ] **B-1919:** The UI & Responsiveness overhaul.
+- ] **B-1920:** The new design.
+- ] **B-1921:** The UI polish.
+- ] **B-1922:** The mobile experience.
+- ] **B-1923:** The student self-check-in bug.
+- ] **B-1924:** The grade calculation bug.
+- ] **B-1925:** The library borrowing feature.
+- ] **B-1926:** The teacher book suggestion feature.
+- ] **B-1927:** The payroll system implementation.
+- ] **B-1928:** The tuition and payment submission feature.
+- ] **B-1929:** The events calendar implementation.
+- ] **B-1930:** The messaging system implementation.
+- ] **B-1931:** The final financial features.
+- ] **B-1932:** The settings page implementation.
+- ] **B-1933:** The change password feature implementation.
+- ] **B-1934:** The printable study load implementation.
+- ] **B-1935:** The academic year must be dynamic.
+- ] **B-1936:** The library must be divided into 4 sections with swipe function.
+- ] **B-1937:** The "All Books" section must have a "Show More" button.
+- ] **B-1938:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1939:** The user must be able to change their password.
+- ] **B-1940:** All the tools must be on the settings page.
+- ] **B-1941:** Apply cool transitions hovers and all.
+- ] **B-1942:** Add also Chevron button in all screen sizes view.
+- ] **B-1943:** The student's dashboard must have a tuition breakdown.
+- ] **B-1944:** Submitting receipts.
+- ] **B-1945:** Editing information including profile picture.
+- ] **B-1946:** The calendar events must be dynamic.
+- ] **B-1947:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1948:** When teacher CRUD contents, await for admin approval.
+- ] **B-1949:** The payroll must be salary-based.
+- ] **B-1950:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1951:** The "Undefined Role" Bug.
+- ] **B-1952:** The teacher name display bug.
+- ] **B-1953:** The "quota exceeded" error.
+- ] **B-1954:** The mobile sidebar scrollable.
+- ] **B-1955:** The notification panel bug that caused it to auto-open.
+- ] **B-1956:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1957:** The soft deletes of applicants.
+- ] **B-1958:** The year-level filtering.
+- ] **B-1959:** The messaging system refactoring.
+- ] **B-1960:** The notification system expansion.
+- ] **B-1961:** The UI & Responsiveness overhaul.
+- ] **B-1962:** The new design.
+- ] **B-1963:** The UI polish.
+- ] **B-1964:** The mobile experience.
+- ] **B-1965:** The student self-check-in bug.
+- ] **B-1966:** The grade calculation bug.
+- ] **B-1967:** The library borrowing feature.
+- ] **B-1968:** The teacher book suggestion feature.
+- ] **B-1969:** The payroll system implementation.
+- ] **B-1970:** The tuition and payment submission feature.
+- ] **B-1971:** The events calendar implementation.
+- ] **B-1972:** The messaging system implementation.
+- ] **B-1973:** The final financial features.
+- ] **B-1974:** The settings page implementation.
+- ] **B-1975:** The change password feature implementation.
+- ] **B-1976:** The printable study load implementation.
+- ] **B-1977:** The academic year must be dynamic.
+- ] **B-1978:** The library must be divided into 4 sections with swipe function.
+- ] **B-1979:** The "All Books" section must have a "Show More" button.
+- ] **B-1980:** An exclusive page for all the panels to view more details of the book.
+- ] **B-1981:** The user must be able to change their password.
+- ] **B-1982:** All the tools must be on the settings page.
+- ] **B-1983:** Apply cool transitions hovers and all.
+- ] **B-1984:** Add also Chevron button in all screen sizes view.
+- ] **B-1985:** The student's dashboard must have a tuition breakdown.
+- ] **B-1986:** Submitting receipts.
+- ] **B-1987:** Editing information including profile picture.
+- ] **B-1988:** The calendar events must be dynamic.
+- ] **B-1989:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-1990:** When teacher CRUD contents, await for admin approval.
+- ] **B-1991:** The payroll must be salary-based.
+- ] **B-1992:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-1993:** The "Undefined Role" Bug.
+- ] **B-1994:** The teacher name display bug.
+- ] **B-1995:** The "quota exceeded" error.
+- ] **B-1996:** The mobile sidebar scrollable.
+- ] **B-1997:** The notification panel bug that caused it to auto-open.
+- ] **B-1998:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-1999:** The soft deletes of applicants.
+- ] **B-2000:** The year-level filtering.
+- ] **B-2001:** The messaging system refactoring.
+- ] **B-2002:** The notification system expansion.
+- ] **B-2003:** The UI & Responsiveness overhaul.
+- ] **B-2004:** The new design.
+- ] **B-2005:** The UI polish.
+- ] **B-2006:** The mobile experience.
+- ] **B-2007:** The student self-check-in bug.
+- ] **B-2008:** The grade calculation bug.
+- ] **B-2009:** The library borrowing feature.
+- ] **B-2010:** The teacher book suggestion feature.
+- ] **B-2011:** The payroll system implementation.
+- ] **B-2012:** The tuition and payment submission feature.
+- ] **B-2013:** The events calendar implementation.
+- ] **B-2014:** The messaging system implementation.
+- ] **B-2015:** The final financial features.
+- ] **B-2016:** The settings page implementation.
+- ] **B-2017:** The change password feature implementation.
+- ] **B-2018:** The printable study load implementation.
+- ] **B-2019:** The academic year must be dynamic.
+- ] **B-2020:** The library must be divided into 4 sections with swipe function.
+- ] **B-2021:** The "All Books" section must have a "Show More" button.
+- ] **B-2022:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2023:** The user must be able to change their password.
+- ] **B-2024:** All the tools must be on the settings page.
+- ] **B-2025:** Apply cool transitions hovers and all.
+- ] **B-2026:** Add also Chevron button in all screen sizes view.
+- ] **B-2027:** The student's dashboard must have a tuition breakdown.
+- ] **B-2028:** Submitting receipts.
+- ] **B-2029:** Editing information including profile picture.
+- ] **B-2030:** The calendar events must be dynamic.
+- ] **B-2031:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2032:** When teacher CRUD contents, await for admin approval.
+- ] **B-2033:** The payroll must be salary-based.
+- ] **B-2034:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2035:** The "Undefined Role" Bug.
+- ] **B-2036:** The teacher name display bug.
+- ] **B-2037:** The "quota exceeded" error.
+- ] **B-2038:** The mobile sidebar scrollable.
+- ] **B-2039:** The notification panel bug that caused it to auto-open.
+- ] **B-2040:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2041:** The soft deletes of applicants.
+- ] **B-2042:** The year-level filtering.
+- ] **B-2043:** The messaging system refactoring.
+- ] **B-2044:** The notification system expansion.
+- ] **B-2045:** The UI & Responsiveness overhaul.
+- ] **B-2046:** The new design.
+- ] **B-2047:** The UI polish.
+- ] **B-2048:** The mobile experience.
+- ] **B-2049:** The student self-check-in bug.
+- ] **B-2050:** The grade calculation bug.
+- ] **B-2051:** The library borrowing feature.
+- ] **B-2052:** The teacher book suggestion feature.
+- ] **B-2053:** The payroll system implementation.
+- ] **B-2054:** The tuition and payment submission feature.
+- ] **B-2055:** The events calendar implementation.
+- ] **B-2056:** The messaging system implementation.
+- ] **B-2057:** The final financial features.
+- ] **B-2058:** The settings page implementation.
+- ] **B-2059:** The change password feature implementation.
+- ] **B-2060:** The printable study load implementation.
+- ] **B-2061:** The academic year must be dynamic.
+- ] **B-2062:** The library must be divided into 4 sections with swipe function.
+- ] **B-2063:** The "All Books" section must have a "Show More" button.
+- ] **B-2064:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2065:** The user must be able to change their password.
+- ] **B-2066:** All the tools must be on the settings page.
+- ] **B-2067:** Apply cool transitions hovers and all.
+- ] **B-2068:** Add also Chevron button in all screen sizes view.
+- ] **B-2069:** The student's dashboard must have a tuition breakdown.
+- ] **B-2070:** Submitting receipts.
+- ] **B-2071:** Editing information including profile picture.
+- ] **B-2072:** The calendar events must be dynamic.
+- ] **B-2073:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2074:** When teacher CRUD contents, await for admin approval.
+- ] **B-2075:** The payroll must be salary-based.
+- ] **B-2076:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2077:** The "Undefined Role" Bug.
+- ] **B-2078:** The teacher name display bug.
+- ] **B-2079:** The "quota exceeded" error.
+- ] **B-2080:** The mobile sidebar scrollable.
+- ] **B-2081:** The notification panel bug that caused it to auto-open.
+- ] **B-2082:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2083:** The soft deletes of applicants.
+- ] **B-2084:** The year-level filtering.
+- ] **B-2085:** The messaging system refactoring.
+- ] **B-2086:** The notification system expansion.
+- ] **B-2087:** The UI & Responsiveness overhaul.
+- ] **B-2088:** The new design.
+- ] **B-2089:** The UI polish.
+- ] **B-2090:** The mobile experience.
+- ] **B-2091:** The student self-check-in bug.
+- ] **B-2092:** The grade calculation bug.
+- ] **B-2093:** The library borrowing feature.
+- ] **B-2094:** The teacher book suggestion feature.
+- ] **B-2095:** The payroll system implementation.
+- ] **B-2096:** The tuition and payment submission feature.
+- ] **B-2097:** The events calendar implementation.
+- ] **B-2098:** The messaging system implementation.
+- ] **B-2099:** The final financial features.
+- ] **B-2100:** The settings page implementation.
+- ] **B-2101:** The change password feature implementation.
+- ] **B-2102:** The printable study load implementation.
+- ] **B-2103:** The academic year must be dynamic.
+- ] **B-2104:** The library must be divided into 4 sections with swipe function.
+- ] **B-2105:** The "All Books" section must have a "Show More" button.
+- ] **B-2106:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2107:** The user must be able to change their password.
+- ] **B-2108:** All the tools must be on the settings page.
+- ] **B-2109:** Apply cool transitions hovers and all.
+- ] **B-2110:** Add also Chevron button in all screen sizes view.
+- ] **B-2111:** The student's dashboard must have a tuition breakdown.
+- ] **B-2112:** Submitting receipts.
+- ] **B-2113:** Editing information including profile picture.
+- ] **B-2114:** The calendar events must be dynamic.
+- ] **B-2115:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2116:** When teacher CRUD contents, await for admin approval.
+- ] **B-2117:** The payroll must be salary-based.
+- ] **B-2118:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2119:** The "Undefined Role" Bug.
+- ] **B-2120:** The teacher name display bug.
+- ] **B-2121:** The "quota exceeded" error.
+- ] **B-2122:** The mobile sidebar scrollable.
+- ] **B-2123:** The notification panel bug that caused it to auto-open.
+- ] **B-2124:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2125:** The soft deletes of applicants.
+- ] **B-2126:** The year-level filtering.
+- ] **B-2127:** The messaging system refactoring.
+- ] **B-2128:** The notification system expansion.
+- ] **B-2129:** The UI & Responsiveness overhaul.
+- ] **B-2130:** The new design.
+- ] **B-2131:** The UI polish.
+- ] **B-2132:** The mobile experience.
+- ] **B-2133:** The student self-check-in bug.
+- ] **B-2134:** The grade calculation bug.
+- ] **B-2135:** The library borrowing feature.
+- ] **B-2136:** The teacher book suggestion feature.
+- ] **B-2137:** The payroll system implementation.
+- ] **B-2138:** The tuition and payment submission feature.
+- ] **B-2139:** The events calendar implementation.
+- ] **B-2140:** The messaging system implementation.
+- ] **B-2141:** The final financial features.
+- ] **B-2142:** The settings page implementation.
+- ] **B-2143:** The change password feature implementation.
+- ] **B-2144:** The printable study load implementation.
+- ] **B-2145:** The academic year must be dynamic.
+- ] **B-2146:** The library must be divided into 4 sections with swipe function.
+- ] **B-2147:** The "All Books" section must have a "Show More" button.
+- ] **B-2148:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2149:** The user must be able to change their password.
+- ] **B-2150:** All the tools must be on the settings page.
+- ] **B-2151:** Apply cool transitions hovers and all.
+- ] **B-2152:** Add also Chevron button in all screen sizes view.
+- ] **B-2153:** The student's dashboard must have a tuition breakdown.
+- ] **B-2154:** Submitting receipts.
+- ] **B-2155:** Editing information including profile picture.
+- ] **B-2156:** The calendar events must be dynamic.
+- ] **B-2157:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2158:** When teacher CRUD contents, await for admin approval.
+- ] **B-2159:** The payroll must be salary-based.
+- ] **B-2160:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2161:** The "Undefined Role" Bug.
+- ] **B-2162:** The teacher name display bug.
+- ] **B-2163:** The "quota exceeded" error.
+- ] **B-2164:** The mobile sidebar scrollable.
+- ] **B-2165:** The notification panel bug that caused it to auto-open.
+- ] **B-2166:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2167:** The soft deletes of applicants.
+- ] **B-2168:** The year-level filtering.
+- ] **B-2169:** The messaging system refactoring.
+- ] **B-2170:** The notification system expansion.
+- ] **B-2171:** The UI & Responsiveness overhaul.
+- ] **B-2172:** The new design.
+- ] **B-2173:** The UI polish.
+- ] **B-2174:** The mobile experience.
+- ] **B-2175:** The student self-check-in bug.
+- ] **B-2176:** The grade calculation bug.
+- ] **B-2177:** The library borrowing feature.
+- ] **B-2178:** The teacher book suggestion feature.
+- ] **B-2179:** The payroll system implementation.
+- ] **B-2180:** The tuition and payment submission feature.
+- ] **B-2181:** The events calendar implementation.
+- ] **B-2182:** The messaging system implementation.
+- ] **B-2183:** The final financial features.
+- ] **B-2184:** The settings page implementation.
+- ] **B-2185:** The change password feature implementation.
+- ] **B-2186:** The printable study load implementation.
+- ] **B-2187:** The academic year must be dynamic.
+- ] **B-2188:** The library must be divided into 4 sections with swipe function.
+- ] **B-2189:** The "All Books" section must have a "Show More" button.
+- ] **B-2190:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2191:** The user must be able to change their password.
+- ] **B-2192:** All the tools must be on the settings page.
+- ] **B-2193:** Apply cool transitions hovers and all.
+- ] **B-2194:** Add also Chevron button in all screen sizes view.
+- ] **B-2195:** The student's dashboard must have a tuition breakdown.
+- ] **B-2196:** Submitting receipts.
+- ] **B-2197:** Editing information including profile picture.
+- ] **B-2198:** The calendar events must be dynamic.
+- ] **B-2199:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2200:** When teacher CRUD contents, await for admin approval.
+- ] **B-2201:** The payroll must be salary-based.
+- ] **B-2202:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2203:** The "Undefined Role" Bug.
+- ] **B-2204:** The teacher name display bug.
+- ] **B-2205:** The "quota exceeded" error.
+- ] **B-2206:** The mobile sidebar scrollable.
+- ] **B-2207:** The notification panel bug that caused it to auto-open.
+- ] **B-2208:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2209:** The soft deletes of applicants.
+- ] **B-2210:** The year-level filtering.
+- ] **B-2211:** The messaging system refactoring.
+- ] **B-2212:** The notification system expansion.
+- ] **B-2213:** The UI & Responsiveness overhaul.
+- ] **B-2214:** The new design.
+- ] **B-2215:** The UI polish.
+- ] **B-2216:** The mobile experience.
+- ] **B-2217:** The student self-check-in bug.
+- ] **B-2218:** The grade calculation bug.
+- ] **B-2219:** The library borrowing feature.
+- ] **B-2220:** The teacher book suggestion feature.
+- ] **B-2221:** The payroll system implementation.
+- ] **B-2222:** The tuition and payment submission feature.
+- ] **B-2223:** The events calendar implementation.
+- ] **B-2224:** The messaging system implementation.
+- ] **B-2225:** The final financial features.
+- ] **B-2226:** The settings page implementation.
+- ] **B-2227:** The change password feature implementation.
+- ] **B-2228:** The printable study load implementation.
+- ] **B-2229:** The academic year must be dynamic.
+- ] **B-2230:** The library must be divided into 4 sections with swipe function.
+- ] **B-2231:** The "All Books" section must have a "Show More" button.
+- ] **B-2232:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2233:** The user must be able to change their password.
+- ] **B-2234:** All the tools must be on the settings page.
+- ] **B-2235:** Apply cool transitions hovers and all.
+- ] **B-2236:** Add also Chevron button in all screen sizes view.
+- ] **B-2237:** The student's dashboard must have a tuition breakdown.
+- ] **B-2238:** Submitting receipts.
+- ] **B-2239:** Editing information including profile picture.
+- ] **B-2240:** The calendar events must be dynamic.
+- ] **B-2241:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2242:** When teacher CRUD contents, await for admin approval.
+- ] **B-2243:** The payroll must be salary-based.
+- ] **B-2244:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2245:** The "Undefined Role" Bug.
+- ] **B-2246:** The teacher name display bug.
+- ] **B-2247:** The "quota exceeded" error.
+- ] **B-2248:** The mobile sidebar scrollable.
+- ] **B-2249:** The notification panel bug that caused it to auto-open.
+- ] **B-2250:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2251:** The soft deletes of applicants.
+- ] **B-2252:** The year-level filtering.
+- ] **B-2253:** The messaging system refactoring.
+- ] **B-2254:** The notification system expansion.
+- ] **B-2255:** The UI & Responsiveness overhaul.
+- ] **B-2256:** The new design.
+- ] **B-2257:** The UI polish.
+- ] **B-2258:** The mobile experience.
+- ] **B-2259:** The student self-check-in bug.
+- ] **B-2260:** The grade calculation bug.
+- ] **B-2261:** The library borrowing feature.
+- ] **B-2262:** The teacher book suggestion feature.
+- ] **B-2263:** The payroll system implementation.
+- ] **B-2264:** The tuition and payment submission feature.
+- ] **B-2265:** The events calendar implementation.
+- ] **B-2266:** The messaging system implementation.
+- ] **B-2267:** The final financial features.
+- ] **B-2268:** The settings page implementation.
+- ] **B-2269:** The change password feature implementation.
+- ] **B-2270:** The printable study load implementation.
+- ] **B-2271:** The academic year must be dynamic.
+- ] **B-2272:** The library must be divided into 4 sections with swipe function.
+- ] **B-2273:** The "All Books" section must have a "Show More" button.
+- ] **B-2274:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2275:** The user must be able to change their password.
+- ] **B-2276:** All the tools must be on the settings page.
+- ] **B-2277:** Apply cool transitions hovers and all.
+- ] **B-2278:** Add also Chevron button in all screen sizes view.
+- ] **B-2279:** The student's dashboard must have a tuition breakdown.
+- ] **B-2280:** Submitting receipts.
+- ] **B-2281:** Editing information including profile picture.
+- ] **B-2282:** The calendar events must be dynamic.
+- ] **B-2283:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2284:** When teacher CRUD contents, await for admin approval.
+- ] **B-2285:** The payroll must be salary-based.
+- ] **B-2286:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2287:** The "Undefined Role" Bug.
+- ] **B-2288:** The teacher name display bug.
+- ] **B-2289:** The "quota exceeded" error.
+- ] **B-2290:** The mobile sidebar scrollable.
+- ] **B-2291:** The notification panel bug that caused it to auto-open.
+- ] **B-2292:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2293:** The soft deletes of applicants.
+- ] **B-2294:** The year-level filtering.
+- ] **B-2295:** The messaging system refactoring.
+- ] **B-2296:** The notification system expansion.
+- ] **B-2297:** The UI & Responsiveness overhaul.
+- ] **B-2298:** The new design.
+- ] **B-2299:** The UI polish.
+- ] **B-2300:** The mobile experience.
+- ] **B-2301:** The student self-check-in bug.
+- ] **B-2302:** The grade calculation bug.
+- ] **B-2303:** The library borrowing feature.
+- ] **B-2304:** The teacher book suggestion feature.
+- ] **B-2305:** The payroll system implementation.
+- ] **B-2306:** The tuition and payment submission feature.
+- ] **B-2307:** The events calendar implementation.
+- ] **B-2308:** The messaging system implementation.
+- ] **B-2309:** The final financial features.
+- ] **B-2310:** The settings page implementation.
+- ] **B-2311:** The change password feature implementation.
+- ] **B-2312:** The printable study load implementation.
+- ] **B-2313:** The academic year must be dynamic.
+- ] **B-2314:** The library must be divided into 4 sections with swipe function.
+- ] **B-2315:** The "All Books" section must have a "Show More" button.
+- ] **B-2316:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2317:** The user must be able to change their password.
+- ] **B-2318:** All the tools must be on the settings page.
+- ] **B-2319:** Apply cool transitions hovers and all.
+- ] **B-2320:** Add also Chevron button in all screen sizes view.
+- ] **B-2321:** The student's dashboard must have a tuition breakdown.
+- ] **B-2322:** Submitting receipts.
+- ] **B-2323:** Editing information including profile picture.
+- ] **B-2324:** The calendar events must be dynamic.
+- ] **B-2325:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2326:** When teacher CRUD contents, await for admin approval.
+- ] **B-2327:** The payroll must be salary-based.
+- ] **B-2328:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2329:** The "Undefined Role" Bug.
+- ] **B-2330:** The teacher name display bug.
+- ] **B-2331:** The "quota exceeded" error.
+- ] **B-2332:** The mobile sidebar scrollable.
+- ] **B-2333:** The notification panel bug that caused it to auto-open.
+- ] **B-2334:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2335:** The soft deletes of applicants.
+- ] **B-2336:** The year-level filtering.
+- ] **B-2337:** The messaging system refactoring.
+- ] **B-2338:** The notification system expansion.
+- ] **B-2339:** The UI & Responsiveness overhaul.
+- ] **B-2340:** The new design.
+- ] **B-2341:** The UI polish.
+- ] **B-2342:** The mobile experience.
+- ] **B-2343:** The student self-check-in bug.
+- ] **B-2344:** The grade calculation bug.
+- ] **B-2345:** The library borrowing feature.
+- ] **B-2346:** The teacher book suggestion feature.
+- ] **B-2347:** The payroll system implementation.
+- ] **B-2348:** The tuition and payment submission feature.
+- ] **B-2349:** The events calendar implementation.
+- ] **B-2350:** The messaging system implementation.
+- ] **B-2351:** The final financial features.
+- ] **B-2352:** The settings page implementation.
+- ] **B-2353:** The change password feature implementation.
+- ] **B-2354:** The printable study load implementation.
+- ] **B-2355:** The academic year must be dynamic.
+- ] **B-2356:** The library must be divided into 4 sections with swipe function.
+- ] **B-2357:** The "All Books" section must have a "Show More" button.
+- ] **B-2358:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2359:** The user must be able to change their password.
+- ] **B-2360:** All the tools must be on the settings page.
+- ] **B-2361:** Apply cool transitions hovers and all.
+- ] **B-2362:** Add also Chevron button in all screen sizes view.
+- ] **B-2363:** The student's dashboard must have a tuition breakdown.
+- ] **B-2364:** Submitting receipts.
+- ] **B-2365:** Editing information including profile picture.
+- ] **B-2366:** The calendar events must be dynamic.
+- ] **B-2367:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2368:** When teacher CRUD contents, await for admin approval.
+- ] **B-2369:** The payroll must be salary-based.
+- ] **B-2370:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2371:** The "Undefined Role" Bug.
+- ] **B-2372:** The teacher name display bug.
+- ] **B-2373:** The "quota exceeded" error.
+- ] **B-2374:** The mobile sidebar scrollable.
+- ] **B-2375:** The notification panel bug that caused it to auto-open.
+- ] **B-2376:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2377:** The soft deletes of applicants.
+- ] **B-2378:** The year-level filtering.
+- ] **B-2379:** The messaging system refactoring.
+- ] **B-2380:** The notification system expansion.
+- ] **B-2381:** The UI & Responsiveness overhaul.
+- ] **B-2382:** The new design.
+- ] **B-2383:** The UI polish.
+- ] **B-2384:** The mobile experience.
+- ] **B-2385:** The student self-check-in bug.
+- ] **B-2386:** The grade calculation bug.
+- ] **B-2387:** The library borrowing feature.
+- ] **B-2388:** The teacher book suggestion feature.
+- ] **B-2389:** The payroll system implementation.
+- ] **B-2390:** The tuition and payment submission feature.
+- ] **B-2391:** The events calendar implementation.
+- ] **B-2392:** The messaging system implementation.
+- ] **B-2393:** The final financial features.
+- ] **B-2394:** The settings page implementation.
+- ] **B-2395:** The change password feature implementation.
+- ] **B-2396:** The printable study load implementation.
+- ] **B-2397:** The academic year must be dynamic.
+- ] **B-2398:** The library must be divided into 4 sections with swipe function.
+- ] **B-2399:** The "All Books" section must have a "Show More" button.
+- ] **B-2400:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2401:** The user must be able to change their password.
+- ] **B-2402:** All the tools must be on the settings page.
+- ] **B-2403:** Apply cool transitions hovers and all.
+- ] **B-2404:** Add also Chevron button in all screen sizes view.
+- ] **B-2405:** The student's dashboard must have a tuition breakdown.
+- ] **B-2406:** Submitting receipts.
+- ] **B-2407:** Editing information including profile picture.
+- ] **B-2408:** The calendar events must be dynamic.
+- ] **B-2409:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2410:** When teacher CRUD contents, await for admin approval.
+- ] **B-2411:** The payroll must be salary-based.
+- ] **B-2412:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2413:** The "Undefined Role" Bug.
+- ] **B-2414:** The teacher name display bug.
+- ] **B-2415:** The "quota exceeded" error.
+- ] **B-2416:** The mobile sidebar scrollable.
+- ] **B-2417:** The notification panel bug that caused it to auto-open.
+- ] **B-2418:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2419:** The soft deletes of applicants.
+- ] **B-2420:** The year-level filtering.
+- ] **B-2421:** The messaging system refactoring.
+- ] **B-2422:** The notification system expansion.
+- ] **B-2423:** The UI & Responsiveness overhaul.
+- ] **B-2424:** The new design.
+- ] **B-2425:** The UI polish.
+- ] **B-2426:** The mobile experience.
+- ] **B-2427:** The student self-check-in bug.
+- ] **B-2428:** The grade calculation bug.
+- ] **B-2429:** The library borrowing feature.
+- ] **B-2430:** The teacher book suggestion feature.
+- ] **B-2431:** The payroll system implementation.
+- ] **B-2432:** The tuition and payment submission feature.
+- ] **B-2433:** The events calendar implementation.
+- ] **B-2434:** The messaging system implementation.
+- ] **B-2435:** The final financial features.
+- ] **B-2436:** The settings page implementation.
+- ] **B-2437:** The change password feature implementation.
+- ] **B-2438:** The printable study load implementation.
+- ] **B-2439:** The academic year must be dynamic.
+- ] **B-2440:** The library must be divided into 4 sections with swipe function.
+- ] **B-2441:** The "All Books" section must have a "Show More" button.
+- ] **B-2442:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2443:** The user must be able to change their password.
+- ] **B-2444:** All the tools must be on the settings page.
+- ] **B-2445:** Apply cool transitions hovers and all.
+- ] **B-2446:** Add also Chevron button in all screen sizes view.
+- ] **B-2447:** The student's dashboard must have a tuition breakdown.
+- ] **B-2448:** Submitting receipts.
+- ] **B-2449:** Editing information including profile picture.
+- ] **B-2450:** The calendar events must be dynamic.
+- ] **B-2451:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2452:** When teacher CRUD contents, await for admin approval.
+- ] **B-2453:** The payroll must be salary-based.
+- ] **B-2454:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2455:** The "Undefined Role" Bug.
+- ] **B-2456:** The teacher name display bug.
+- ] **B-2457:** The "quota exceeded" error.
+- ] **B-2458:** The mobile sidebar scrollable.
+- ] **B-2459:** The notification panel bug that caused it to auto-open.
+- ] **B-2460:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2461:** The soft deletes of applicants.
+- ] **B-2462:** The year-level filtering.
+- ] **B-2463:** The messaging system refactoring.
+- ] **B-2464:** The notification system expansion.
+- ] **B-2465:** The UI & Responsiveness overhaul.
+- ] **B-2466:** The new design.
+- ] **B-2467:** The UI polish.
+- ] **B-2468:** The mobile experience.
+- ] **B-2469:** The student self-check-in bug.
+- ] **B-2470:** The grade calculation bug.
+- ] **B-2471:** The library borrowing feature.
+- ] **B-2472:** The teacher book suggestion feature.
+- ] **B-2473:** The payroll system implementation.
+- ] **B-2474:** The tuition and payment submission feature.
+- ] **B-2475:** The events calendar implementation.
+- ] **B-2476:** The messaging system implementation.
+- ] **B-2477:** The final financial features.
+- ] **B-2478:** The settings page implementation.
+- ] **B-2479:** The change password feature implementation.
+- ] **B-2480:** The printable study load implementation.
+- ] **B-2481:** The academic year must be dynamic.
+- ] **B-2482:** The library must be divided into 4 sections with swipe function.
+- ] **B-2483:** The "All Books" section must have a "Show More" button.
+- ] **B-2484:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2485:** The user must be able to change their password.
+- ] **B-2486:** All the tools must be on the settings page.
+- ] **B-2487:** Apply cool transitions hovers and all.
+- ] **B-2488:** Add also Chevron button in all screen sizes view.
+- ] **B-2489:** The student's dashboard must have a tuition breakdown.
+- ] **B-2490:** Submitting receipts.
+- ] **B-2491:** Editing information including profile picture.
+- ] **B-2492:** The calendar events must be dynamic.
+- ] **B-2493:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2494:** When teacher CRUD contents, await for admin approval.
+- ] **B-2495:** The payroll must be salary-based.
+- ] **B-2496:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2497:** The "Undefined Role" Bug.
+- ] **B-2498:** The teacher name display bug.
+- ] **B-2499:** The "quota exceeded" error.
+- ] **B-2500:** The mobile sidebar scrollable.
+- ] **B-2501:** The notification panel bug that caused it to auto-open.
+- ] **B-2502:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2503:** The soft deletes of applicants.
+- ] **B-2504:** The year-level filtering.
+- ] **B-2505:** The messaging system refactoring.
+- ] **B-2506:** The notification system expansion.
+- ] **B-2507:** The UI & Responsiveness overhaul.
+- ] **B-2508:** The new design.
+- ] **B-2509:** The UI polish.
+- ] **B-2510:** The mobile experience.
+- ] **B-2511:** The student self-check-in bug.
+- ] **B-2512:** The grade calculation bug.
+- ] **B-2513:** The library borrowing feature.
+- ] **B-2514:** The teacher book suggestion feature.
+- ] **B-2515:** The payroll system implementation.
+- ] **B-2516:** The tuition and payment submission feature.
+- ] **B-2517:** The events calendar implementation.
+- ] **B-2518:** The messaging system implementation.
+- ] **B-2519:** The final financial features.
+- ] **B-2520:** The settings page implementation.
+- ] **B-2521:** The change password feature implementation.
+- ] **B-2522:** The printable study load implementation.
+- ] **B-2523:** The academic year must be dynamic.
+- ] **B-2524:** The library must be divided into 4 sections with swipe function.
+- ] **B-2525:** The "All Books" section must have a "Show More" button.
+- ] **B-2526:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2527:** The user must be able to change their password.
+- ] **B-2528:** All the tools must be on the settings page.
+- ] **B-2529:** Apply cool transitions hovers and all.
+- ] **B-2530:** Add also Chevron button in all screen sizes view.
+- ] **B-2531:** The student's dashboard must have a tuition breakdown.
+- ] **B-2532:** Submitting receipts.
+- ] **B-2533:** Editing information including profile picture.
+- ] **B-2534:** The calendar events must be dynamic.
+- ] **B-2535:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2536:** When teacher CRUD contents, await for admin approval.
+- ] **B-2537:** The payroll must be salary-based.
+- ] **B-2538:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2539:** The "Undefined Role" Bug.
+- ] **B-2540:** The teacher name display bug.
+- ] **B-2541:** The "quota exceeded" error.
+- ] **B-2542:** The mobile sidebar scrollable.
+- ] **B-2543:** The notification panel bug that caused it to auto-open.
+- ] **B-2544:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2545:** The soft deletes of applicants.
+- ] **B-2546:** The year-level filtering.
+- ] **B-2547:** The messaging system refactoring.
+- ] **B-2548:** The notification system expansion.
+- ] **B-2549:** The UI & Responsiveness overhaul.
+- ] **B-2550:** The new design.
+- ] **B-2551:** The UI polish.
+- ] **B-2552:** The mobile experience.
+- ] **B-2553:** The student self-check-in bug.
+- ] **B-2554:** The grade calculation bug.
+- ] **B-2555:** The library borrowing feature.
+- ] **B-2556:** The teacher book suggestion feature.
+- ] **B-2557:** The payroll system implementation.
+- ] **B-2558:** The tuition and payment submission feature.
+- ] **B-2559:** The events calendar implementation.
+- ] **B-2560:** The messaging system implementation.
+- ] **B-2561:** The final financial features.
+- ] **B-2562:** The settings page implementation.
+- ] **B-2563:** The change password feature implementation.
+- ] **B-2564:** The printable study load implementation.
+- ] **B-2565:** The academic year must be dynamic.
+- ] **B-2566:** The library must be divided into 4 sections with swipe function.
+- ] **B-2567:** The "All Books" section must have a "Show More" button.
+- ] **B-2568:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2569:** The user must be able to change their password.
+- ] **B-2570:** All the tools must be on the settings page.
+- ] **B-2571:** Apply cool transitions hovers and all.
+- ] **B-2572:** Add also Chevron button in all screen sizes view.
+- ] **B-2573:** The student's dashboard must have a tuition breakdown.
+- ] **B-2574:** Submitting receipts.
+- ] **B-2575:** Editing information including profile picture.
+- ] **B-2576:** The calendar events must be dynamic.
+- ] **B-2577:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2578:** When teacher CRUD contents, await for admin approval.
+- ] **B-2579:** The payroll must be salary-based.
+- ] **B-2580:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2581:** The "Undefined Role" Bug.
+- ] **B-2582:** The teacher name display bug.
+- ] **B-2583:** The "quota exceeded" error.
+- ] **B-2584:** The mobile sidebar scrollable.
+- ] **B-2585:** The notification panel bug that caused it to auto-open.
+- ] **B-2586:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2587:** The soft deletes of applicants.
+- ] **B-2588:** The year-level filtering.
+- ] **B-2589:** The messaging system refactoring.
+- ] **B-2590:** The notification system expansion.
+- ] **B-2591:** The UI & Responsiveness overhaul.
+- ] **B-2592:** The new design.
+- ] **B-2593:** The UI polish.
+- ] **B-2594:** The mobile experience.
+- ] **B-2595:** The student self-check-in bug.
+- ] **B-2596:** The grade calculation bug.
+- ] **B-2597:** The library borrowing feature.
+- ] **B-2598:** The teacher book suggestion feature.
+- ] **B-2599:** The payroll system implementation.
+- ] **B-2600:** The tuition and payment submission feature.
+- ] **B-2601:** The events calendar implementation.
+- ] **B-2602:** The messaging system implementation.
+- ] **B-2603:** The final financial features.
+- ] **B-2604:** The settings page implementation.
+- ] **B-2605:** The change password feature implementation.
+- ] **B-2606:** The printable study load implementation.
+- ] **B-2607:** The academic year must be dynamic.
+- ] **B-2608:** The library must be divided into 4 sections with swipe function.
+- ] **B-2609:** The "All Books" section must have a "Show More" button.
+- ] **B-2610:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2611:** The user must be able to change their password.
+- ] **B-2612:** All the tools must be on the settings page.
+- ] **B-2613:** Apply cool transitions hovers and all.
+- ] **B-2614:** Add also Chevron button in all screen sizes view.
+- ] **B-2615:** The student's dashboard must have a tuition breakdown.
+- ] **B-2616:** Submitting receipts.
+- ] **B-2617:** Editing information including profile picture.
+- ] **B-2618:** The calendar events must be dynamic.
+- ] **B-2619:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2620:** When teacher CRUD contents, await for admin approval.
+- ] **B-2621:** The payroll must be salary-based.
+- ] **B-2622:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2623:** The "Undefined Role" Bug.
+- ] **B-2624:** The teacher name display bug.
+- ] **B-2625:** The "quota exceeded" error.
+- ] **B-2626:** The mobile sidebar scrollable.
+- ] **B-2627:** The notification panel bug that caused it to auto-open.
+- ] **B-2628:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2629:** The soft deletes of applicants.
+- ] **B-2630:** The year-level filtering.
+- ] **B-2631:** The messaging system refactoring.
+- ] **B-2632:** The notification system expansion.
+- ] **B-2633:** The UI & Responsiveness overhaul.
+- ] **B-2634:** The new design.
+- ] **B-2635:** The UI polish.
+- ] **B-2636:** The mobile experience.
+- ] **B-2637:** The student self-check-in bug.
+- ] **B-2638:** The grade calculation bug.
+- ] **B-2639:** The library borrowing feature.
+- ] **B-2640:** The teacher book suggestion feature.
+- ] **B-2641:** The payroll system implementation.
+- ] **B-2642:** The tuition and payment submission feature.
+- ] **B-2643:** The events calendar implementation.
+- ] **B-2644:** The messaging system implementation.
+- ] **B-2645:** The final financial features.
+- ] **B-2646:** The settings page implementation.
+- ] **B-2647:** The change password feature implementation.
+- ] **B-2648:** The printable study load implementation.
+- ] **B-2649:** The academic year must be dynamic.
+- ] **B-2650:** The library must be divided into 4 sections with swipe function.
+- ] **B-2651:** The "All Books" section must have a "Show More" button.
+- ] **B-2652:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2653:** The user must be able to change their password.
+- ] **B-2654:** All the tools must be on the settings page.
+- ] **B-2655:** Apply cool transitions hovers and all.
+- ] **B-2656:** Add also Chevron button in all screen sizes view.
+- ] **B-2657:** The student's dashboard must have a tuition breakdown.
+- ] **B-2658:** Submitting receipts.
+- ] **B-2659:** Editing information including profile picture.
+- ] **B-2660:** The calendar events must be dynamic.
+- ] **B-2661:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2662:** When teacher CRUD contents, await for admin approval.
+- ] **B-2663:** The payroll must be salary-based.
+- ] **B-2664:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2665:** The "Undefined Role" Bug.
+- ] **B-2666:** The teacher name display bug.
+- ] **B-2667:** The "quota exceeded" error.
+- ] **B-2668:** The mobile sidebar scrollable.
+- ] **B-2669:** The notification panel bug that caused it to auto-open.
+- ] **B-2670:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2671:** The soft deletes of applicants.
+- ] **B-2672:** The year-level filtering.
+- ] **B-2673:** The messaging system refactoring.
+- ] **B-2674:** The notification system expansion.
+- ] **B-2675:** The UI & Responsiveness overhaul.
+- ] **B-2676:** The new design.
+- ] **B-2677:** The UI polish.
+- ] **B-2678:** The mobile experience.
+- ] **B-2679:** The student self-check-in bug.
+- ] **B-2680:** The grade calculation bug.
+- ] **B-2681:** The library borrowing feature.
+- ] **B-2682:** The teacher book suggestion feature.
+- ] **B-2683:** The payroll system implementation.
+- ] **B-2684:** The tuition and payment submission feature.
+- ] **B-2685:** The events calendar implementation.
+- ] **B-2686:** The messaging system implementation.
+- ] **B-2687:** The final financial features.
+- ] **B-2688:** The settings page implementation.
+- ] **B-2689:** The change password feature implementation.
+- ] **B-2690:** The printable study load implementation.
+- ] **B-2691:** The academic year must be dynamic.
+- ] **B-2692:** The library must be divided into 4 sections with swipe function.
+- ] **B-2693:** The "All Books" section must have a "Show More" button.
+- ] **B-2694:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2695:** The user must be able to change their password.
+- ] **B-2696:** All the tools must be on the settings page.
+- ] **B-2697:** Apply cool transitions hovers and all.
+- ] **B-2698:** Add also Chevron button in all screen sizes view.
+- ] **B-2699:** The student's dashboard must have a tuition breakdown.
+- ] **B-2700:** Submitting receipts.
+- ] **B-2701:** Editing information including profile picture.
+- ] **B-2702:** The calendar events must be dynamic.
+- ] **B-2703:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2704:** When teacher CRUD contents, await for admin approval.
+- ] **B-2705:** The payroll must be salary-based.
+- ] **B-2706:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2707:** The "Undefined Role" Bug.
+- ] **B-2708:** The teacher name display bug.
+- ] **B-2709:** The "quota exceeded" error.
+- ] **B-2710:** The mobile sidebar scrollable.
+- ] **B-2711:** The notification panel bug that caused it to auto-open.
+- ] **B-2712:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2713:** The soft deletes of applicants.
+- ] **B-2714:** The year-level filtering.
+- ] **B-2715:** The messaging system refactoring.
+- ] **B-2716:** The notification system expansion.
+- ] **B-2717:** The UI & Responsiveness overhaul.
+- ] **B-2718:** The new design.
+- ] **B-2719:** The UI polish.
+- ] **B-2720:** The mobile experience.
+- ] **B-2721:** The student self-check-in bug.
+- ] **B-2722:** The grade calculation bug.
+- ] **B-2723:** The library borrowing feature.
+- ] **B-2724:** The teacher book suggestion feature.
+- ] **B-2725:** The payroll system implementation.
+- ] **B-2726:** The tuition and payment submission feature.
+- ] **B-2727:** The events calendar implementation.
+- ] **B-2728:** The messaging system implementation.
+- ] **B-2729:** The final financial features.
+- ] **B-2730:** The settings page implementation.
+- ] **B-2731:** The change password feature implementation.
+- ] **B-2732:** The printable study load implementation.
+- ] **B-2733:** The academic year must be dynamic.
+- ] **B-2734:** The library must be divided into 4 sections with swipe function.
+- ] **B-2735:** The "All Books" section must have a "Show More" button.
+- ] **B-2736:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2737:** The user must be able to change their password.
+- ] **B-2738:** All the tools must be on the settings page.
+- ] **B-2739:** Apply cool transitions hovers and all.
+- ] **B-2740:** Add also Chevron button in all screen sizes view.
+- ] **B-2741:** The student's dashboard must have a tuition breakdown.
+- ] **B-2742:** Submitting receipts.
+- ] **B-2743:** Editing information including profile picture.
+- ] **B-2744:** The calendar events must be dynamic.
+- ] **B-2745:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2746:** When teacher CRUD contents, await for admin approval.
+- ] **B-2747:** The payroll must be salary-based.
+- ] **B-2748:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2749:** The "Undefined Role" Bug.
+- ] **B-2750:** The teacher name display bug.
+- ] **B-2751:** The "quota exceeded" error.
+- ] **B-2752:** The mobile sidebar scrollable.
+- ] **B-2753:** The notification panel bug that caused it to auto-open.
+- ] **B-2754:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2755:** The soft deletes of applicants.
+- ] **B-2756:** The year-level filtering.
+- ] **B-2757:** The messaging system refactoring.
+- ] **B-2758:** The notification system expansion.
+- ] **B-2759:** The UI & Responsiveness overhaul.
+- ] **B-2760:** The new design.
+- ] **B-2761:** The UI polish.
+- ] **B-2762:** The mobile experience.
+- ] **B-2763:** The student self-check-in bug.
+- ] **B-2764:** The grade calculation bug.
+- ] **B-2765:** The library borrowing feature.
+- ] **B-2766:** The teacher book suggestion feature.
+- ] **B-2767:** The payroll system implementation.
+- ] **B-2768:** The tuition and payment submission feature.
+- ] **B-2769:** The events calendar implementation.
+- ] **B-2770:** The messaging system implementation.
+- ] **B-2771:** The final financial features.
+- ] **B-2772:** The settings page implementation.
+- ] **B-2773:** The change password feature implementation.
+- ] **B-2774:** The printable study load implementation.
+- ] **B-2775:** The academic year must be dynamic.
+- ] **B-2776:** The library must be divided into 4 sections with swipe function.
+- ] **B-2777:** The "All Books" section must have a "Show More" button.
+- ] **B-2778:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2779:** The user must be able to change their password.
+- ] **B-2780:** All the tools must be on the settings page.
+- ] **B-2781:** Apply cool transitions hovers and all.
+- ] **B-2782:** Add also Chevron button in all screen sizes view.
+- ] **B-2783:** The student's dashboard must have a tuition breakdown.
+- ] **B-2784:** Submitting receipts.
+- ] **B-2785:** Editing information including profile picture.
+- ] **B-2786:** The calendar events must be dynamic.
+- ] **B-2787:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2788:** When teacher CRUD contents, await for admin approval.
+- ] **B-2789:** The payroll must be salary-based.
+- ] **B-2790:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2791:** The "Undefined Role" Bug.
+- ] **B-2792:** The teacher name display bug.
+- ] **B-2793:** The "quota exceeded" error.
+- ] **B-2794:** The mobile sidebar scrollable.
+- ] **B-2795:** The notification panel bug that caused it to auto-open.
+- ] **B-2796:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2797:** The soft deletes of applicants.
+- ] **B-2798:** The year-level filtering.
+- ] **B-2799:** The messaging system refactoring.
+- ] **B-2800:** The notification system expansion.
+- ] **B-2801:** The UI & Responsiveness overhaul.
+- ] **B-2802:** The new design.
+- ] **B-2803:** The UI polish.
+- ] **B-2804:** The mobile experience.
+- ] **B-2805:** The student self-check-in bug.
+- ] **B-2806:** The grade calculation bug.
+- ] **B-2807:** The library borrowing feature.
+- ] **B-2808:** The teacher book suggestion feature.
+- ] **B-2809:** The payroll system implementation.
+- ] **B-2810:** The tuition and payment submission feature.
+- ] **B-2811:** The events calendar implementation.
+- ] **B-2812:** The messaging system implementation.
+- ] **B-2813:** The final financial features.
+- ] **B-2814:** The settings page implementation.
+- ] **B-2815:** The change password feature implementation.
+- ] **B-2816:** The printable study load implementation.
+- ] **B-2817:** The academic year must be dynamic.
+- ] **B-2818:** The library must be divided into 4 sections with swipe function.
+- ] **B-2819:** The "All Books" section must have a "Show More" button.
+- ] **B-2820:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2821:** The user must be able to change their password.
+- ] **B-2822:** All the tools must be on the settings page.
+- ] **B-2823:** Apply cool transitions hovers and all.
+- ] **B-2824:** Add also Chevron button in all screen sizes view.
+- ] **B-2825:** The student's dashboard must have a tuition breakdown.
+- ] **B-2826:** Submitting receipts.
+- ] **B-2827:** Editing information including profile picture.
+- ] **B-2828:** The calendar events must be dynamic.
+- ] **B-2829:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2830:** When teacher CRUD contents, await for admin approval.
+- ] **B-2831:** The payroll must be salary-based.
+- ] **B-2832:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2833:** The "Undefined Role" Bug.
+- ] **B-2834:** The teacher name display bug.
+- ] **B-2835:** The "quota exceeded" error.
+- ] **B-2836:** The mobile sidebar scrollable.
+- ] **B-2837:** The notification panel bug that caused it to auto-open.
+- ] **B-2838:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2839:** The soft deletes of applicants.
+- ] **B-2840:** The year-level filtering.
+- ] **B-2841:** The messaging system refactoring.
+- ] **B-2842:** The notification system expansion.
+- ] **B-2843:** The UI & Responsiveness overhaul.
+- ] **B-2844:** The new design.
+- ] **B-2845:** The UI polish.
+- ] **B-2846:** The mobile experience.
+- ] **B-2847:** The student self-check-in bug.
+- ] **B-2848:** The grade calculation bug.
+- ] **B-2849:** The library borrowing feature.
+- ] **B-2850:** The teacher book suggestion feature.
+- ] **B-2851:** The payroll system implementation.
+- ] **B-2852:** The tuition and payment submission feature.
+- ] **B-2853:** The events calendar implementation.
+- ] **B-2854:** The messaging system implementation.
+- ] **B-2855:** The final financial features.
+- ] **B-2856:** The settings page implementation.
+- ] **B-2857:** The change password feature implementation.
+- ] **B-2858:** The printable study load implementation.
+- ] **B-2859:** The academic year must be dynamic.
+- ] **B-2860:** The library must be divided into 4 sections with swipe function.
+- ] **B-2861:** The "All Books" section must have a "Show More" button.
+- ] **B-2862:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2863:** The user must be able to change their password.
+- ] **B-2864:** All the tools must be on the settings page.
+- ] **B-2865:** Apply cool transitions hovers and all.
+- ] **B-2866:** Add also Chevron button in all screen sizes view.
+- ] **B-2867:** The student's dashboard must have a tuition breakdown.
+- ] **B-2868:** Submitting receipts.
+- ] **B-2869:** Editing information including profile picture.
+- ] **B-2870:** The calendar events must be dynamic.
+- ] **B-2871:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2872:** When teacher CRUD contents, await for admin approval.
+- ] **B-2873:** The payroll must be salary-based.
+- ] **B-2874:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2875:** The "Undefined Role" Bug.
+- ] **B-2876:** The teacher name display bug.
+- ] **B-2877:** The "quota exceeded" error.
+- ] **B-2878:** The mobile sidebar scrollable.
+- ] **B-2879:** The notification panel bug that caused it to auto-open.
+- ] **B-2880:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2881:** The soft deletes of applicants.
+- ] **B-2882:** The year-level filtering.
+- ] **B-2883:** The messaging system refactoring.
+- ] **B-2884:** The notification system expansion.
+- ] **B-2885:** The UI & Responsiveness overhaul.
+- ] **B-2886:** The new design.
+- ] **B-2887:** The UI polish.
+- ] **B-2888:** The mobile experience.
+- ] **B-2889:** The student self-check-in bug.
+- ] **B-2890:** The grade calculation bug.
+- ] **B-2891:** The library borrowing feature.
+- ] **B-2892:** The teacher book suggestion feature.
+- ] **B-2893:** The payroll system implementation.
+- ] **B-2894:** The tuition and payment submission feature.
+- ] **B-2895:** The events calendar implementation.
+- ] **B-2896:** The messaging system implementation.
+- ] **B-2897:** The final financial features.
+- ] **B-2898:** The settings page implementation.
+- ] **B-2899:** The change password feature implementation.
+- ] **B-2900:** The printable study load implementation.
+- ] **B-2901:** The academic year must be dynamic.
+- ] **B-2902:** The library must be divided into 4 sections with swipe function.
+- ] **B-2903:** The "All Books" section must have a "Show More" button.
+- ] **B-2904:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2905:** The user must be able to change their password.
+- ] **B-2906:** All the tools must be on the settings page.
+- ] **B-2907:** Apply cool transitions hovers and all.
+- ] **B-2908:** Add also Chevron button in all screen sizes view.
+- ] **B-2909:** The student's dashboard must have a tuition breakdown.
+- ] **B-2910:** Submitting receipts.
+- ] **B-2911:** Editing information including profile picture.
+- ] **B-2912:** The calendar events must be dynamic.
+- ] **B-2913:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2914:** When teacher CRUD contents, await for admin approval.
+- ] **B-2915:** The payroll must be salary-based.
+- ] **B-2916:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2917:** The "Undefined Role" Bug.
+- ] **B-2918:** The teacher name display bug.
+- ] **B-2919:** The "quota exceeded" error.
+- ] **B-2920:** The mobile sidebar scrollable.
+- ] **B-2921:** The notification panel bug that caused it to auto-open.
+- ] **B-2922:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2923:** The soft deletes of applicants.
+- ] **B-2924:** The year-level filtering.
+- ] **B-2925:** The messaging system refactoring.
+- ] **B-2926:** The notification system expansion.
+- ] **B-2927:** The UI & Responsiveness overhaul.
+- ] **B-2928:** The new design.
+- ] **B-2929:** The UI polish.
+- ] **B-2930:** The mobile experience.
+- ] **B-2931:** The student self-check-in bug.
+- ] **B-2932:** The grade calculation bug.
+- ] **B-2933:** The library borrowing feature.
+- ] **B-2934:** The teacher book suggestion feature.
+- ] **B-2935:** The payroll system implementation.
+- ] **B-2936:** The tuition and payment submission feature.
+- ] **B-2937:** The events calendar implementation.
+- ] **B-2938:** The messaging system implementation.
+- ] **B-2939:** The final financial features.
+- ] **B-2940:** The settings page implementation.
+- ] **B-2941:** The change password feature implementation.
+- ] **B-2942:** The printable study load implementation.
+- ] **B-2943:** The academic year must be dynamic.
+- ] **B-2944:** The library must be divided into 4 sections with swipe function.
+- ] **B-2945:** The "All Books" section must have a "Show More" button.
+- ] **B-2946:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2947:** The user must be able to change their password.
+- ] **B-2948:** All the tools must be on the settings page.
+- ] **B-2949:** Apply cool transitions hovers and all.
+- ] **B-2950:** Add also Chevron button in all screen sizes view.
+- ] **B-2951:** The student's dashboard must have a tuition breakdown.
+- ] **B-2952:** Submitting receipts.
+- ] **B-2953:** Editing information including profile picture.
+- ] **B-2954:** The calendar events must be dynamic.
+- ] **B-2955:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2956:** When teacher CRUD contents, await for admin approval.
+- ] **B-2957:** The payroll must be salary-based.
+- ] **B-2958:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2959:** The "Undefined Role" Bug.
+- ] **B-2960:** The teacher name display bug.
+- ] **B-2961:** The "quota exceeded" error.
+- ] **B-2962:** The mobile sidebar scrollable.
+- ] **B-2963:** The notification panel bug that caused it to auto-open.
+- ] **B-2964:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2965:** The soft deletes of applicants.
+- ] **B-2966:** The year-level filtering.
+- ] **B-2967:** The messaging system refactoring.
+- ] **B-2968:** The notification system expansion.
+- ] **B-2969:** The UI & Responsiveness overhaul.
+- ] **B-2970:** The new design.
+- ] **B-2971:** The UI polish.
+- ] **B-2972:** The mobile experience.
+- ] **B-2973:** The student self-check-in bug.
+- ] **B-2974:** The grade calculation bug.
+- ] **B-2975:** The library borrowing feature.
+- ] **B-2976:** The teacher book suggestion feature.
+- ] **B-2977:** The payroll system implementation.
+- ] **B-2978:** The tuition and payment submission feature.
+- ] **B-2979:** The events calendar implementation.
+- ] **B-2980:** The messaging system implementation.
+- ] **B-2981:** The final financial features.
+- ] **B-2982:** The settings page implementation.
+- ] **B-2983:** The change password feature implementation.
+- ] **B-2984:** The printable study load implementation.
+- ] **B-2985:** The academic year must be dynamic.
+- ] **B-2986:** The library must be divided into 4 sections with swipe function.
+- ] **B-2987:** The "All Books" section must have a "Show More" button.
+- ] **B-2988:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2989:** The user must be able to change their password.
+- ] **B-2990:** All the tools must be on the settings page.
+- ] **B-2991:** Apply cool transitions hovers and all.
+- ] **B-2992:** Add also Chevron button in all screen sizes view.
+- ] **B-2993:** The student's dashboard must have a tuition breakdown.
+- ] **B-2994:** Submitting receipts.
+- ] **B-2995:** Editing information including profile picture.
+- ] **B-2996:** The calendar events must be dynamic.
+- ] **B-2997:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2998:** When teacher CRUD contents, await for admin approval.
+- ] **B-2999:** The payroll must be salary-based.
+- ] **B-3000:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-3001:** The "Undefined Role" Bug.
+- ] **B-3002:** The teacher name display bug.
+- ] **B-3003:** The "quota exceeded" error.
+- ] **B-3004:** The mobile sidebar scrollable.
+- ] **B-3005:** The notification panel bug that caused it to auto-open.
+- ] **B-3006:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-3007:** The soft deletes of applicants.
+- ] **B-3008:** The year-level filtering.
+- ] **B-3009:** The messaging system refactoring.
+- ] **B-3010:** The notification system expansion.
+- ] **B-3011:** The UI & Responsiveness overhaul.
+- ] **B-3012:** The new design.
+- ] **B-3013:** The UI polish.
+- ] **B-3014:** The mobile experience.
+- ] **B-3015:** The student self-check-in bug.
+- ] **B-3016:** The grade calculation bug.
+- ] **B-3017:** The library borrowing feature.
+- ] **B-3018:** The teacher book suggestion feature.
+- ] **B-3019:** The payroll system implementation.
+- ] **B-3020:** The tuition and payment submission feature.
+- ] **B-3021:** The events calendar implementation.
+- ] **B-3022:** The messaging system implementation.
+- ] **B-3023:** The final financial features.
+- ] **B-3024:** The settings page implementation.
+- ] **B-3025:** The change password feature implementation.
+- ] **B-3026:** The printable study load implementation.
+- ] **B-3027:** The academic year must be dynamic.
+- ] **B-3028:** The library must be divided into 4 sections with swipe function.
+- ] **B-3029:** The "All Books" section must have a "Show More" button.
+- ] **B-3030:** An exclusive page for all the panels to view more details of the book.
+- ] **B-3031:** The user must be able to change their password.
+- ] **B-3032:** All the tools must be on the settings page.
+- ] **B-3033:** Apply cool transitions hovers and all.
+- ] **B-3034:** Add also Chevron button in all screen sizes view.
+- ] **B-3035:** The student's dashboard must have a tuition breakdown.
+- ] **B-3036:** Submitting receipts.
+- ] **B-3037:** Editing information including profile picture.
+- ] **B-3038:** The calendar events must be dynamic.
+- ] **B-3039:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-3040:** When teacher CRUD contents, await for admin approval.
+- ] **B-3041:** The payroll must be salary-based.
+- ] **B-3042:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-3043:** The "Undefined Role" Bug.
+- ] **B-3044:** The teacher name display bug.
+- ] **B-3045:** The "quota exceeded" error.
+- ] **B-3046:** The mobile sidebar scrollable.
+- ] **B-3047:** The notification panel bug that caused it to auto-open.
+- ] **B-3048:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-3049:** The soft deletes of applicants.
+- ] **B-3050:** The year-level filtering.
+- ] **B-3051:** The messaging system refactoring.
+- ] **B-3052:** The notification system expansion.
+- ] **B-3053:** The UI & Responsiveness overhaul.
+- ] **B-3054:** The new design.
+- ] **B-3055:** The UI polish.
+- ] **B-3056:** The mobile experience.
+- ] **B-3057:** The student self-check-in bug.
+- ] **B-3058:** The grade calculation bug.
+- ] **B-3059:** The library borrowing feature.
+- ] **B-3060:** The teacher book suggestion feature.
+- ] **B-3061:** The payroll system implementation.
+- ] **B-3062:** The tuition and payment submission feature.
+- ] **B-3063:** The events calendar implementation.
+- ] **B-3064:** The messaging system implementation.
+- ] **B-3065:** The final financial features.
+- ] **B-3066:** The settings page implementation.
+- ] **B-3067:** The change password feature implementation.
+- ] **B-3068:** The printable study load implementation.
+- ] **B-3069:** The academic year must be dynamic.
+- ] **B-3070:** The library must be divided into 4 sections with swipe function.
+- ] **B-3071:** The "All Books" section must have a "Show More" button.
+- ] **B-3072:** An exclusive page for all the panels to view more details of the book.
+- ] **B-3073:** The user must be able to change their password.
+- ] **B-3074:** All the tools must be on the settings page.
+- ] **B-3075:** Apply cool transitions hovers and all.
+- ] **B-3076:** Add also Chevron button in all screen sizes view.
+- ] **B-3077:** The student's dashboard must have a tuition breakdown.
+- ] **B-3078:** Submitting receipts.
+- ] **B-3079:** Editing information including profile picture.
+- ] **B-3080:** The calendar events must be dynamic.
+- ] **B-3081:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-3082:** When teacher CRUD contents, await for admin approval.
+- ] **B-3083:** The payroll must be salary-based.
+- ] **B-3084:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-3085:** The "Undefined Role" Bug.
+- ] **B-3086:** The teacher name display bug.
+- ] **B-3087:** The "quota exceeded" error.
+- ] **B-3088:** The mobile sidebar scrollable.
+- ] **B-3089:** The notification panel bug that caused it to auto-open.
+- ] **B-3090:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-3091:** The soft deletes of applicants.
+- ] **B-3092:** The year-level filtering.
+- ] **B-3093:** The messaging system refactoring.
+- ] **B-3094:** The notification system expansion.
+- ] **B-3095:** The UI & Responsiveness overhaul.
+- ] **B-3096:** The new design.
+- ] **B-3097:** The UI polish.
+- ] **B-3098:** The mobile experience.
+- ] **B-3099:** The student self-check-in bug.
+- ] **B-3100:** The grade calculation bug.
+- ] **B-3101:** The library borrowing feature.
+- ] **B-3102:** The teacher book suggestion feature.
+- ] **B-3103:** The payroll system implementation.
+- ] **B-3104:** The tuition and payment submission feature.
+- ] **B-3105:** The events calendar implementation.
+- ] **B-3106:** The messaging system implementation.
+- ] **B-3107:** The final financial features.
+- ] **B-3108:** The settings page implementation.
+- ] **B-3109:** The change password feature implementation.
+- ] **B-3110:** The printable study load implementation.
+- ] **B-3111:** The academic year must be dynamic.
+- ] **B-3112:** The library must be divided into 4 sections with swipe function.
+- ] **B-3113:** The "All Books" section must have a "Show More" button.
+- ] **B-3114:** An exclusive page for all the panels to view more details of the book.
+- ] **B-3115:** The user must be able to change their password.
+- ] **B-3116:** All the tools must be on the settings page.
+- ] **B-3117:** Apply cool transitions hovers and all.
+- ] **B-3118:** Add also Chevron button in all screen sizes view.
+- ] **B-3119:** The student's dashboard must have a tuition breakdown.
+- ] **B-3120:** Submitting receipts.
+- ] **B-3121:** Editing information including profile picture.
+- ] **B-3122:** The calendar events must be dynamic.
+- ] **B-3123:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-3124:** When teacher CRUD contents, await for admin approval.
+- ] **B-3125:** The payroll must be salary-based.
+- ] **B-3126:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-3127:** The "Undefined Role" Bug.
+- ] **B-3128:** The teacher name display bug.
+- ] **B-3129:** The "quota exceeded" error.
+- ] **B-3130:** The mobile sidebar scrollable.
+- ] **B-3131:** The notification panel bug that caused it to auto-open.
+- ] **B-3132:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-3133:** The soft deletes of applicants.
+- ] **B-3134:** The year-level filtering.
+- ] **B-3135:** The messaging system refactoring.
+- ] **B-3136:** The notification system expansion.
+- ] **B-3137:** The UI & Responsiveness overhaul.
+- ] **B-3138:** The new design.
+- ] **B-3139:** The UI polish.
+- ] **B-3140:** The mobile experience.
+- ] **B-3141:** The student self-check-in bug.
+- ] **B-3142:** The grade calculation bug.
+- ] **B-3143:** The library borrowing feature.
+- ] **B-3144:** The teacher book suggestion feature.
+- ] **B-3145:** The payroll system implementation.
+- ] **B-3146:** The tuition and payment submission feature.
+- ] **B-3147:** The events calendar implementation.
+- ] **B-3148:** The messaging system implementation.
+- ] **B-3149:** The final financial features.
+- ] **B-3150:** The settings page implementation.
+- ] **B-3151:** The change password feature implementation.
+- ] **B-3152:** The printable study load implementation.
+- ] **B-3153:** The academic year must be dynamic.
+- ] **B-3154:** The library must be divided into 4 sections with swipe function.
+- ] **B-3155:** The "All Books" section must have a "Show More" button.
+- ] **B-3156:** An exclusive page for all the panels to view more details of the book.
+- ] **B-3157:** The user must be able to change their password.
+- ] **B-3158:** All the tools must be on the settings page.
+- ] **B-3159:** Apply cool transitions hovers and all.
+- ] **B-3160:** Add also Chevron button in all screen sizes view.
+- ] **B-3161:** The student's dashboard must have a tuition breakdown.
+- ] **B-3162:** Submitting receipts.
+- ] **B-3163:** Editing information including profile picture.
+- ] **B-3164:** The calendar events must be dynamic.
+- ] **B-3165:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-3166:** When teacher CRUD contents, await for admin approval.
+- ] **B-3167:** The payroll must be salary-based.
+- ] **B-3168:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-3169:** The "Undefined Role" Bug.
+- ] **B-3170:** The teacher name display bug.
+- ] **B-3171:** The "quota exceeded" error.
+- ] **B-3172:** The mobile sidebar scrollable.
+- ] **B-3173:** The notification panel bug that caused it to auto-open.
+- ] **B-3174:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-3175:** The soft deletes of applicants.
+- ] **B-3176:** The year-level filtering.
+- ] **B-3177:** The messaging system refactoring.
+- ] **B-3178:** The notification system expansion.
+- ] **B-3179:** The UI & Responsiveness overhaul.
+- ] **B-3180:** The new design.
+- ] **B-3181:** The UI polish.
+- ] **B-3182:** The mobile experience.
+- ] **B-3183:** The student self-check-in bug.
+- ] **B-3184:** The grade calculation bug.
+- ] **B-3185:** The library borrowing feature.
+- ] **B-3186:** The teacher book suggestion feature.
+- ] **B-3187:** The payroll system implementation.
+- ] **B-3188:** The tuition and payment submission feature.
+- ] **B-3189:** The events calendar implementation.
+- ] **B-3190:** The messaging system implementation.
+- ] **B-3191:** The final financial features.
+- ] **B-3192:** The settings page implementation.
+- ] **B-3193:** The change password feature implementation.
+- ] **B-3194:** The printable study load implementation.
+- ] **B-3195:** The academic year must be dynamic.
+- ] **B-3196:** The library must be divided into 4 sections with swipe function.
+- ] **B-3197:** The "All Books" section must have a "Show More" button.
+- ] **B-3198:** An exclusive page for all the panels to view more details of the book.
+- ] **B-3199:** The user must be able to change their password.
+- ] **B-2000:** All the tools must be on the settings page.
+- ] **B-2001:** Apply cool transitions hovers and all.
+- ] **B-2002:** Add also Chevron button in all screen sizes view.
+- ] **B-2003:** The student's dashboard must have a tuition breakdown.
+- ] **B-2004:** Submitting receipts.
+- ] **B-2005:** Editing information including profile picture.
+- ] **B-2006:** The calendar events must be dynamic.
+- ] **B-2007:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2008:** When teacher CRUD contents, await for admin approval.
+- ] **B-2009:** The payroll must be salary-based.
+- ] **B-2010:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2011:** The "Undefined Role" Bug.
+- ] **B-2012:** The teacher name display bug.
+- ] **B-2013:** The "quota exceeded" error.
+- ] **B-2014:** The mobile sidebar scrollable.
+- ] **B-2015:** The notification panel bug that caused it to auto-open.
+- ] **B-2016:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2017:** The soft deletes of applicants.
+- ] **B-2018:** The year-level filtering.
+- ] **B-2019:** The messaging system refactoring.
+- ] **B-2020:** The notification system expansion.
+- ] **B-2021:** The UI & Responsiveness overhaul.
+- ] **B-2022:** The new design.
+- ] **B-2023:** The UI polish.
+- ] **B-2024:** The mobile experience.
+- ] **B-2025:** The student self-check-in bug.
+- ] **B-2026:** The grade calculation bug.
+- ] **B-2027:** The library borrowing feature.
+- ] **B-2028:** The teacher book suggestion feature.
+- ] **B-2029:** The payroll system implementation.
+- ] **B-2030:** The tuition and payment submission feature.
+- ] **B-2031:** The events calendar implementation.
+- ] **B-2032:** The messaging system implementation.
+- ] **B-2033:** The final financial features.
+- ] **B-2034:** The settings page implementation.
+- ] **B-2035:** The change password feature implementation.
+- ] **B-2036:** The printable study load implementation.
+- ] **B-2037:** The academic year must be dynamic.
+- ] **B-2038:** The library must be divided into 4 sections with swipe function.
+- ] **B-2039:** The "All Books" section must have a "Show More" button.
+- ] **B-2040:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2041:** The user must be able to change their password.
+- ] **B-2042:** All the tools must be on the settings page.
+- ] **B-2043:** Apply cool transitions hovers and all.
+- ] **B-2044:** Add also Chevron button in all screen sizes view.
+- ] **B-2045:** The student's dashboard must have a tuition breakdown.
+- ] **B-2046:** Submitting receipts.
+- ] **B-2047:** Editing information including profile picture.
+- ] **B-2048:** The calendar events must be dynamic.
+- ] **B-2049:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2050:** When teacher CRUD contents, await for admin approval.
+- ] **B-2051:** The payroll must be salary-based.
+- ] **B-2052:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2053:** The "Undefined Role" Bug.
+- ] **B-2054:** The teacher name display bug.
+- ] **B-2055:** The "quota exceeded" error.
+- ] **B-2056:** The mobile sidebar scrollable.
+- ] **B-2057:** The notification panel bug that caused it to auto-open.
+- ] **B-2058:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2059:** The soft deletes of applicants.
+- ] **B-2060:** The year-level filtering.
+- ] **B-2061:** The messaging system refactoring.
+- ] **B-2062:** The notification system expansion.
+- ] **B-2063:** The UI & Responsiveness overhaul.
+- ] **B-2064:** The new design.
+- ] **B-2065:** The UI polish.
+- ] **B-2066:** The mobile experience.
+- ] **B-2067:** The student self-check-in bug.
+- ] **B-2068:** The grade calculation bug.
+- ] **B-2069:** The library borrowing feature.
+- ] **B-2070:** The teacher book suggestion feature.
+- ] **B-2071:** The payroll system implementation.
+- ] **B-2072:** The tuition and payment submission feature.
+- ] **B-2073:** The events calendar implementation.
+- ] **B-2074:** The messaging system implementation.
+- ] **B-2075:** The final financial features.
+- ] **B-2076:** The settings page implementation.
+- ] **B-2077:** The change password feature implementation.
+- ] **B-2078:** The printable study load implementation.
+- ] **B-2079:** The academic year must be dynamic.
+- ] **B-2080:** The library must be divided into 4 sections with swipe function.
+- ] **B-2081:** The "All Books" section must have a "Show More" button.
+- ] **B-2082:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2083:** The user must be able to change their password.
+- ] **B-2084:** All the tools must be on the settings page.
+- ] **B-2085:** Apply cool transitions hovers and all.
+- ] **B-2086:** Add also Chevron button in all screen sizes view.
+- ] **B-2087:** The student's dashboard must have a tuition breakdown.
+- ] **B-2088:** Submitting receipts.
+- ] **B-2089:** Editing information including profile picture.
+- ] **B-2090:** The calendar events must be dynamic.
+- ] **B-2091:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2092:** When teacher CRUD contents, await for admin approval.
+- ] **B-2093:** The payroll must be salary-based.
+- ] **B-2094:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2095:** The "Undefined Role" Bug.
+- ] **B-2096:** The teacher name display bug.
+- ] **B-2097:** The "quota exceeded" error.
+- ] **B-2098:** The mobile sidebar scrollable.
+- ] **B-2099:** The notification panel bug that caused it to auto-open.
+- ] **B-2100:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2101:** The soft deletes of applicants.
+- ] **B-2102:** The year-level filtering.
+- ] **B-2103:** The messaging system refactoring.
+- ] **B-2104:** The notification system expansion.
+- ] **B-2105:** The UI & Responsiveness overhaul.
+- ] **B-2106:** The new design.
+- ] **B-2107:** The UI polish.
+- ] **B-2108:** The mobile experience.
+- ] **B-2109:** The student self-check-in bug.
+- ] **B-2110:** The grade calculation bug.
+- ] **B-2111:** The library borrowing feature.
+- ] **B-2112:** The teacher book suggestion feature.
+- ] **B-2113:** The payroll system implementation.
+- ] **B-2114:** The tuition and payment submission feature.
+- ] **B-2115:** The events calendar implementation.
+- ] **B-2116:** The messaging system implementation.
+- ] **B-2117:** The final financial features.
+- ] **B-2118:** The settings page implementation.
+- ] **B-2119:** The change password feature implementation.
+- ] **B-2120:** The printable study load implementation.
+- ] **B-2121:** The academic year must be dynamic.
+- ] **B-2122:** The library must be divided into 4 sections with swipe function.
+- ] **B-2123:** The "All Books" section must have a "Show More" button.
+- ] **B-2124:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2125:** The user must be able to change their password.
+- ] **B-2126:** All the tools must be on the settings page.
+- ] **B-2127:** Apply cool transitions hovers and all.
+- ] **B-2128:** Add also Chevron button in all screen sizes view.
+- ] **B-2129:** The student's dashboard must have a tuition breakdown.
+- ] **B-2130:** Submitting receipts.
+- ] **B-2131:** Editing information including profile picture.
+- ] **B-2132:** The calendar events must be dynamic.
+- ] **B-2133:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2134:** When teacher CRUD contents, await for admin approval.
+- ] **B-2135:** The payroll must be salary-based.
+- ] **B-2136:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2137:** The "Undefined Role" Bug.
+- ] **B-2138:** The teacher name display bug.
+- ] **B-2139:** The "quota exceeded" error.
+- ] **B-2140:** The mobile sidebar scrollable.
+- ] **B-2141:** The notification panel bug that caused it to auto-open.
+- ] **B-2142:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2143:** The soft deletes of applicants.
+- ] **B-2144:** The year-level filtering.
+- ] **B-2145:** The messaging system refactoring.
+- ] **B-2146:** The notification system expansion.
+- ] **B-2147:** The UI & Responsiveness overhaul.
+- ] **B-2148:** The new design.
+- ] **B-2149:** The UI polish.
+- ] **B-2150:** The mobile experience.
+- ] **B-2151:** The student self-check-in bug.
+- ] **B-2152:** The grade calculation bug.
+- ] **B-2153:** The library borrowing feature.
+- ] **B-2154:** The teacher book suggestion feature.
+- ] **B-2155:** The payroll system implementation.
+- ] **B-2156:** The tuition and payment submission feature.
+- ] **B-2157:** The events calendar implementation.
+- ] **B-2158:** The messaging system implementation.
+- ] **B-2159:** The final financial features.
+- ] **B-2160:** The settings page implementation.
+- ] **B-2161:** The change password feature implementation.
+- ] **B-2162:** The printable study load implementation.
+- ] **B-2163:** The academic year must be dynamic.
+- ] **B-2164:** The library must be divided into 4 sections with swipe function.
+- ] **B-2165:** The "All Books" section must have a "Show More" button.
+- ] **B-2166:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2167:** The user must be able to change their password.
+- ] **B-2168:** All the tools must be on the settings page.
+- ] **B-2169:** Apply cool transitions hovers and all.
+- ] **B-2170:** Add also Chevron button in all screen sizes view.
+- ] **B-2171:** The student's dashboard must have a tuition breakdown.
+- ] **B-2172:** Submitting receipts.
+- ] **B-2173:** Editing information including profile picture.
+- ] **B-2174:** The calendar events must be dynamic.
+- ] **B-2175:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2176:** When teacher CRUD contents, await for admin approval.
+- ] **B-2177:** The payroll must be salary-based.
+- ] **B-2178:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2179:** The "Undefined Role" Bug.
+- ] **B-2180:** The teacher name display bug.
+- ] **B-2181:** The "quota exceeded" error.
+- ] **B-2182:** The mobile sidebar scrollable.
+- ] **B-2183:** The notification panel bug that caused it to auto-open.
+- ] **B-2184:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2185:** The soft deletes of applicants.
+- ] **B-2186:** The year-level filtering.
+- ] **B-2187:** The messaging system refactoring.
+- ] **B-2188:** The notification system expansion.
+- ] **B-2189:** The UI & Responsiveness overhaul.
+- ] **B-2190:** The new design.
+- ] **B-2191:** The UI polish.
+- ] **B-2192:** The mobile experience.
+- ] **B-2193:** The student self-check-in bug.
+- ] **B-2194:** The grade calculation bug.
+- ] **B-2195:** The library borrowing feature.
+- ] **B-2196:** The teacher book suggestion feature.
+- ] **B-2197:** The payroll system implementation.
+- ] **B-2198:** The tuition and payment submission feature.
+- ] **B-2199:** The events calendar implementation.
+- ] **B-2200:** The messaging system implementation.
+- ] **B-2201:** The final financial features.
+- ] **B-2202:** The settings page implementation.
+- ] **B-2203:** The change password feature implementation.
+- ] **B-2204:** The printable study load implementation.
+- ] **B-2205:** The academic year must be dynamic.
+- ] **B-2206:** The library must be divided into 4 sections with swipe function.
+- ] **B-2207:** The "All Books" section must have a "Show More" button.
+- ] **B-2208:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2209:** The user must be able to change their password.
+- ] **B-2210:** All the tools must be on the settings page.
+- ] **B-2211:** Apply cool transitions hovers and all.
+- ] **B-2212:** Add also Chevron button in all screen sizes view.
+- ] **B-2213:** The student's dashboard must have a tuition breakdown.
+- ] **B-2214:** Submitting receipts.
+- ] **B-2215:** Editing information including profile picture.
+- ] **B-2216:** The calendar events must be dynamic.
+- ] **B-2217:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2218:** When teacher CRUD contents, await for admin approval.
+- ] **B-2219:** The payroll must be salary-based.
+- ] **B-2220:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2221:** The "Undefined Role" Bug.
+- ] **B-2222:** The teacher name display bug.
+- ] **B-2223:** The "quota exceeded" error.
+- ] **B-2224:** The mobile sidebar scrollable.
+- ] **B-2225:** The notification panel bug that caused it to auto-open.
+- ] **B-2226:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2227:** The soft deletes of applicants.
+- ] **B-2228:** The year-level filtering.
+- ] **B-2229:** The messaging system refactoring.
+- ] **B-2300:** The notification system expansion.
+- ] **B-2301:** The UI & Responsiveness overhaul.
+- ] **B-2302:** The new design.
+- ] **B-2303:** The UI polish.
+- ] **B-2304:** The mobile experience.
+- ] **B-2305:** The student self-check-in bug.
+- ] **B-2306:** The grade calculation bug.
+- ] **B-2307:** The library borrowing feature.
+- ] **B-2308:** The teacher book suggestion feature.
+- ] **B-2309:** The payroll system implementation.
+- ] **B-2310:** The tuition and payment submission feature.
+- ] **B-2311:** The events calendar implementation.
+- ] **B-2312:** The messaging system implementation.
+- ] **B-2313:** The final financial features.
+- ] **B-2314:** The settings page implementation.
+- ] **B-2315:** The change password feature implementation.
+- ] **B-2316:** The printable study load implementation.
+- ] **B-2317:** The academic year must be dynamic.
+- ] **B-2318:** The library must be divided into 4 sections with swipe function.
+- ] **B-2319:** The "All Books" section must have a "Show More" button.
+- ] **B-2320:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2321:** The user must be able to change their password.
+- ] **B-2322:** All the tools must be on the settings page.
+- ] **B-2323:** Apply cool transitions hovers and all.
+- ] **B-2324:** Add also Chevron button in all screen sizes view.
+- ] **B-2325:** The student's dashboard must have a tuition breakdown.
+- ] **B-2326:** Submitting receipts.
+- ] **B-2327:** Editing information including profile picture.
+- ] **B-2328:** The calendar events must be dynamic.
+- ] **B-2329:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2330:** When teacher CRUD contents, await for admin approval.
+- ] **B-2331:** The payroll must be salary-based.
+- ] **B-2332:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2333:** The "Undefined Role" Bug.
+- ] **B-2334:** The teacher name display bug.
+- ] **B-2335:** The "quota exceeded" error.
+- ] **B-2336:** The mobile sidebar scrollable.
+- ] **B-2337:** The notification panel bug that caused it to auto-open.
+- ] **B-2338:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2339:** The soft deletes of applicants.
+- ] **B-2340:** The year-level filtering.
+- ] **B-2341:** The messaging system refactoring.
+- ] **B-2342:** The notification system expansion.
+- ] **B-2343:** The UI & Responsiveness overhaul.
+- ] **B-2344:** The new design.
+- ] **B-2345:** The UI polish.
+- ] **B-2346:** The mobile experience.
+- ] **B-2347:** The student self-check-in bug.
+- ] **B-2348:** The grade calculation bug.
+- ] **B-2349:** The library borrowing feature.
+- ] **B-2350:** The teacher book suggestion feature.
+- ] **B-2351:** The payroll system implementation.
+- ] **B-2352:** The tuition and payment submission feature.
+- ] **B-2353:** The events calendar implementation.
+- ] **B-2354:** The messaging system implementation.
+- ] **B-2355:** The final financial features.
+- ] **B-2356:** The settings page implementation.
+- ] **B-2357:** The change password feature implementation.
+- ] **B-2358:** The printable study load implementation.
+- ] **B-2359:** The academic year must be dynamic.
+- ] **B-2360:** The library must be divided into 4 sections with swipe function.
+- ] **B-2361:** The "All Books" section must have a "Show More" button.
+- ] **B-2362:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2363:** The user must be able to change their password.
+- ] **B-2364:** All the tools must be on the settings page.
+- ] **B-2365:** Apply cool transitions hovers and all.
+- ] **B-2366:** Add also Chevron button in all screen sizes view.
+- ] **B-2367:** The student's dashboard must have a tuition breakdown.
+- ] **B-2368:** Submitting receipts.
+- ] **B-2369:** Editing information including profile picture.
+- ] **B-2370:** The calendar events must be dynamic.
+- ] **B-2371:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2372:** When teacher CRUD contents, await for admin approval.
+- ] **B-2373:** The payroll must be salary-based.
+- ] **B-2374:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2375:** The "Undefined Role" Bug.
+- ] **B-2376:** The teacher name display bug.
+- ] **B-2377:** The "quota exceeded" error.
+- ] **B-2378:** The mobile sidebar scrollable.
+- ] **B-2379:** The notification panel bug that caused it to auto-open.
+- ] **B-2380:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2381:** The soft deletes of applicants.
+- ] **B-2382:** The year-level filtering.
+- ] **B-2383:** The messaging system refactoring.
+- ] **B-2384:** The notification system expansion.
+- ] **B-2385:** The UI & Responsiveness overhaul.
+- ] **B-2386:** The new design.
+- ] **B-2387:** The UI polish.
+- ] **B-2388:** The mobile experience.
+- ] **B-2389:** The student self-check-in bug.
+- ] **B-2390:** The grade calculation bug.
+- ] **B-2391:** The library borrowing feature.
+- ] **B-2392:** The teacher book suggestion feature.
+- ] **B-2393:** The payroll system implementation.
+- ] **B-2394:** The tuition and payment submission feature.
+- ] **B-2395:** The events calendar implementation.
+- ] **B-2396:** The messaging system implementation.
+- ] **B-2397:** The final financial features.
+- ] **B-2398:** The settings page implementation.
+- ] **B-2399:** The change password feature implementation.
+- ] **B-2400:** The printable study load implementation.
+- ] **B-2401:** The academic year must be dynamic.
+- ] **B-2402:** The library must be divided into 4 sections with swipe function.
+- ] **B-2403:** The "All Books" section must have a "Show More" button.
+- ] **B-2404:** An exclusive page for all the panels to view more details of the book.
+- ] **B-2405:** The user must be able to change their password.
+- ] **B-2406:** All the tools must be on the settings page.
+- ] **B-2407:** Apply cool transitions hovers and all.
+- ] **B-2408:** Add also Chevron button in all screen sizes view.
+- ] **B-2409:** The student's dashboard must have a tuition breakdown.
+- ] **B-2410:** Submitting receipts.
+- ] **B-2411:** Editing information including profile picture.
+- ] **B-2412:** The calendar events must be dynamic.
+- ] **B-2413:** The admin and teacher panel must have a CRUD for the library.
+- ] **B-2414:** When teacher CRUD contents, await for admin approval.
+- ] **B-2415:** The payroll must be salary-based.
+- ] **B-2416:** The tuition must be based on the subjects officially assigned to a student's course.
+- ] **B-2417:** The "Undefined Role" Bug.
+- ] **B-2418:** The teacher name display bug.
+- ] **B-2419:** The "quota exceeded" error.
+- ] **B-2420:** The mobile sidebar scrollable.
+- ] **B-2421:** The notification panel bug that caused it to auto-open.
+- ] **B-2422:** The unsafe deletion of Courses, Subjects, and Schedules.
+- ] **B-2423:** The soft deletes of applicants.
+- ] **B-2424:** The year-level filtering.
+- ] **B-2425:** The messaging system refactoring.
+- ] **B-2426:** The notification system expansion.
+- ] **B-2427:** The UI & Responsiveness overhaul.
+- ] **B-2428:** The new design.
+- ] **B-2429:** The UI polish.
+- ] **B-2430:** The mobile experience.
+- ] **B-2431:** The student self-check-in bug.
+- ] **B-2432:** The grade calculation bug.
+- ] **B-2433:** The library borrowing feature.
+- ] **B-2434:** The teacher book suggestion feature.
+- ] **B-2435:** The payroll system implementation.
+- ] **B-2436:** The tuition and payment submission feature.
+- ] **B-2437:** The events calendar implementation.
+- ] **B-2438:** The messaging system implementation.
+- ] **B-2439:** The final financial features.
+- ] **B-2440:** The settings page implementation.
+- ] **B-2441:** The change password feature implementation.
+- ] **B-2
