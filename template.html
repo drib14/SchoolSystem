@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar will be loaded here -->
+        <div id="sidebar-container"></div>
+
+        <div class="main-content">
+            <header>
+                <div class="header-content">
+                    <button class="mobile-menu-button" id="mobile-menu-button">
+                        <img src="https://img.icons8.com/ios-glyphs/30/000000/menu--v1.png" alt="Menu"/>
+                    </button>
+                    <h1>Page Title</h1>
+                    <div class="user-info" style="display: flex; align-items: center; gap: 20px;">
+                        <a href="/messages/inbox.html" id="notification-bell" style="position: relative; cursor: pointer; text-decoration: none;">
+                            <img src="https://img.icons8.com/ios-glyphs/30/000000/bell.png" alt="Notifications"/>
+                            <span id="notification-dot" style="position: absolute; top: 0; right: 0; width: 10px; height: 10px; background-color: red; border-radius: 50%; display: none;"></span>
+                        </a>
+                        <div class="profile-info" style="display: flex; align-items: center; gap: 10px;">
+                            <span id="username-display"></span>
+                            <img id="profile-pic-display" src="" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%;">
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main id="page-content">
+                <!-- Page-specific content will be injected here -->
+                <h2>Welcome!</h2>
+                <p>This is the master template. Page-specific content will replace this.</p>
+            </main>
+
+            <footer>
+                <p>&copy; 2024 School Management System. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Core scripts -->
+    <script src="js/auth.js"></script>
+    <!-- Page-specific scripts can be added below -->
+</body>
+</html>

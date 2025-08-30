@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversation - School Management System</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .message-container {
+            max-height: 60vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+        .message {
+            padding: 10px 15px;
+            border-radius: 20px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+        .message.sent {
+            background-color: var(--secondary-color);
+            color: white;
+            align-self: flex-end;
+        }
+        .message.received {
+            background-color: #e9e9e9;
+            color: black;
+            align-self: flex-start;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div id="sidebar-container"></div>
+
+        <div class="main-content">
+            <header>
+                <div class="header-content">
+                    <h1 id="conversation-title">Conversation</h1>
+                    <div class="user-info">
+                        <span id="username-display"></span>
+                        <img id="profile-pic-display" src="" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%;">
+                    </div>
+                </div>
+            </header>
+
+            <main id="page-content">
+                <div id="message-container" class="message-container">
+                    <!-- Messages will be loaded here -->
+                </div>
+                <form id="reply-form" style="margin-top: 20px; flex-direction: row; align-items: center;">
+                    <textarea id="reply-content" rows="2" style="flex-grow: 1;" placeholder="Type your message..."></textarea>
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </form>
+            </main>
+
+            <footer>
+                <p>&copy; 2024 School Management System. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="/js/data.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/messages/conversation.js"></script>
+</body>
+</html>

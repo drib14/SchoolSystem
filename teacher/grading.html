@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Entry - School Management System</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <div id="sidebar-container"></div>
+
+        <div class="main-content">
+            <header>
+                <div class="header-content">
+                    <h1>Grade Entry</h1>
+                    <div class="user-info">
+                        <span id="username-display"></span>
+                        <img id="profile-pic-display" src="" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%;">
+                    </div>
+                </div>
+            </header>
+
+            <main id="page-content">
+                <div class="form-section">
+                    <label for="class-select">Select a Class to Grade:</label>
+                    <select id="class-select">
+                        <option value="">-- Please select a class --</option>
+                        <!-- Teacher's classes will be populated here -->
+                    </select>
+                </div>
+
+                <form id="grades-form" style="display: none; margin-top: 20px;">
+                    <h3 id="class-title-display"></h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Midterm Grade</th>
+                                <th>Final Grade</th>
+                                <th>Overall Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody id="grades-table-body">
+                            <!-- Student grade rows will be inserted here -->
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Save All Grades</button>
+                </form>
+            </main>
+
+            <footer>
+                <p>&copy; 2024 School Management System. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="/js/data.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/teacher/grading.js"></script>
+</body>
+</html>

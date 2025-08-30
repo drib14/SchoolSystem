@@ -1,0 +1,47 @@
+<nav class="sidebar">
+    <h3>Admin Panel</h3>
+    <ul>
+        <li><a href="/admin/dashboard.html">Dashboard</a></li>
+        <li><a href="/admin/applicants.html">Applicants</a></li>
+        <li><a href="/admin/students.html">Students</a></li>
+        <li><a href="/admin/teachers.html">Teachers</a></li>
+        <li><a href="/admin/courses.html">Courses</a></li>
+        <li><a href="/admin/subjects.html">Subjects</a></li>
+        <li><a href="/admin/schedule.html">Class Schedule</a></li>
+        <li><a href="/admin/enrollment.html">Enrollment</a></li>
+        <li><a href="/admin/tuition.html">Tuition Fees</a></li>
+        <li><a href="/admin/payroll.html">Payroll</a></li>
+        <li><a href="/admin/library.html">Library</a></li>
+        <li><a href="/admin/events.html">Events</a></li>
+        <li><a href="/admin/departments.html">Departments</a></li>
+        <li><a href="/profile.html">My Profile</a></li>
+        <li><a href="#" onclick="logout()">Logout</a></li>
+    </ul>
+</nav>
+<style>
+    .sidebar {
+        height: 100%;
+    }
+    .sidebar h3 {
+        color: var(--accent-color);
+        border-bottom: 1px solid var(--secondary-color);
+        padding-bottom: 10px;
+    }
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .sidebar ul li a {
+        display: block;
+        padding: 10px 15px;
+        color: var(--text-color-light);
+        border-radius: 5px;
+        transition: background-color 0.2s, padding-left 0.2s;
+    }
+    .sidebar ul li a:hover {
+        background-color: var(--secondary-color);
+        padding-left: 20px;
+        text-decoration: none;
+    }
+</style>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISCP - Grade Entry</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/panel.css">
+    <style>
+        .grade-inputs input {
+            width: 70px;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+        }
+        .final-grade-input {
+            font-weight: bold;
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel-container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>ISCP</h2>
+                <p>Teacher Panel</p>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="teacher.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="my-classes.html" class="active"><i class="fas fa-chalkboard-teacher"></i> My Classes</a></li>
+                <li><a href="teacher-attendance.html"><i class="fas fa-user-clock"></i> My Attendance</a></li>
+                <li><a href="#"><i class="fas fa-marker"></i> Grades</a></li>
+                <li><a href="profile.html"><i class="fas fa-user-cog"></i> Profile</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header" id="grade-entry-header">
+                <h1>Grade Entry</h1>
+                <p>Loading class details...</p>
+            </div>
+            <div class="content">
+                <form id="grades-form">
+                    <table class="applicants-table">
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Student Name</th>
+                                <th>Quizzes</th>
+                                <th>Assignments</th>
+                                <th>Midterm</th>
+                                <th>Final Exam</th>
+                                <th>Final Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody id="roster-tbody">
+                            <!-- Roster and grade inputs will be inserted here by JS -->
+                        </tbody>
+                    </table>
+                    <button type="submit" class="action-btn approve-btn" style="margin-top: 20px;">Save All Grades</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="js/grade-entry.js"></script>
+</body>
+</html>

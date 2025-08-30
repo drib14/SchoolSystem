@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - School Management System</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .stat-card {
+            background-color: var(--surface-color);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .stat-card h3 {
+            margin-top: 0;
+            color: var(--secondary-color);
+        }
+        .stat-card .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div id="sidebar-container"></div>
+
+        <div class="main-content">
+            <header>
+                <div class="header-content">
+                    <h1>Admin Dashboard</h1>
+                    <div class="user-info">
+                        <span id="username-display"></span>
+                        <img id="profile-pic-display" src="" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%;">
+                    </div>
+                </div>
+            </header>
+
+            <main id="page-content">
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <h3>Total Students</h3>
+                        <p id="total-students" class="stat-number">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Teachers</h3>
+                        <p id="total-teachers" class="stat-number">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>New Applicants</h3>
+                        <p id="total-applicants" class="stat-number">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Courses Offered</h3>
+                        <p id="total-courses" class="stat-number">0</p>
+                    </div>
+                </div>
+            </main>
+
+            <footer>
+                <p>&copy; 2024 School Management System. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="/js/data.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/admin/dashboard.js"></script>
+</body>
+</html>

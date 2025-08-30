@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Library - School Management System</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .search-results-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .result-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .result-card img {
+            max-width: 100px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div id="sidebar-container"></div>
+
+        <div class="main-content">
+            <header>
+                <div class="header-content">
+                    <h1>Manage Library</h1>
+                    <div class="user-info">
+                        <span id="username-display"></span>
+                        <img id="profile-pic-display" src="" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%;">
+                    </div>
+                </div>
+            </header>
+
+            <main id="page-content">
+                <!-- Search Section -->
+                <section id="search-section">
+                    <h2>Search for Books to Add</h2>
+                    <form id="book-search-form" style="flex-direction: row; gap: 10px; align-items: center;">
+                        <input type="text" id="search-query" placeholder="Enter a book title, author, or ISBN" style="flex-grow: 1;">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
+                    <div id="search-results-container" class="search-results-container">
+                        <!-- API search results will be displayed here -->
+                    </div>
+                </section>
+
+                <hr style="margin: 40px 0;">
+
+                <!-- My Library Section -->
+                <section id="my-library-section">
+                    <h2>My School's Library</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>ISBN</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="my-library-table-body">
+                            <!-- Books from local storage will be listed here -->
+                        </tbody>
+                    </table>
+                </section>
+            </main>
+
+            <footer>
+                <p>&copy; 2024 School Management System. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="/js/data.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/admin/library.js"></script>
+</body>
+</html>

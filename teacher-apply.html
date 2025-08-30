@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISCP - Teacher Application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/enroll.css"> <!-- Reusing enrollment styles for consistency -->
+</head>
+<body>
+    <div class="enroll-container">
+        <div class="enroll-box">
+            <h2>Faculty Application</h2>
+            <p style="text-align: center; margin-bottom: 30px;">Submit your application to join our team.</p>
+            <form id="teacher-apply-form">
+                <div class="photo-upload-container">
+                    <label for="photo-upload">Profile Photo</label>
+                    <div class="photo-preview" id="photo-preview">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <input type="file" id="photo-upload" accept="image/*" style="display: none;">
+                    <label for="photo-upload" class="upload-label">Choose Photo</label>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="firstName" placeholder="First Name" required>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="lastName" placeholder="Last Name" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <input type="tel" id="phone" placeholder="Phone Number" required>
+                </div>
+                <div class="input-group">
+                    <textarea id="qualifications" placeholder="Please summarize your qualifications and the subjects you are interested in teaching." rows="5" required></textarea>
+                </div>
+                <hr style="margin: 30px 0;">
+                <h3>Submit Requirements</h3>
+                <p style="text-align: center; margin-bottom: 15px;">Please provide the following required documents.</p>
+                <div id="teacher-requirements-list">
+                    <!-- Requirement items will be populated here by JS -->
+                </div>
+                <button type="submit" class="submit-btn" style="float:none; display:block; margin: 20px auto 0;">Submit Application</button>
+            </form>
+        </div>
+    </div>
+    <script src="js/teacher-apply.js"></script>
+</body>
+</html>

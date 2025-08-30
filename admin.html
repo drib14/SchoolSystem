@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISCP - Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/panel.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="panel-container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>ISCP</h2>
+                <p>Admin Panel</p>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="admin.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="applicants.html"><i class="fas fa-user-plus"></i> Student Applicants</a></li>
+                <li><a href="teacher-applicants.html"><i class="fas fa-user-tie"></i> Teacher Applicants</a></li>
+                <li><a href="enrolled-students.html"><i class="fas fa-user-graduate"></i> Students</a></li>
+                <li><a href="approved-teachers.html"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
+                <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
+                <li><a href="subjects.html"><i class="fas fa-flask"></i> Subjects</a></li>
+                <li><a href="schedules.html"><i class="fas fa-calendar-alt"></i> Schedules</a></li>
+                <li><a href="requirements.html"><i class="fas fa-file-alt"></i> Requirements</a></li>
+                <li><a href="tuition-management.html"><i class="fas fa-file-invoice-dollar"></i> Tuition Management</a></li>
+                <li><a href="tuition-settings.html"><i class="fas fa-cogs"></i> Tuition Settings</a></li>
+                <li><a href="payroll.html"><i class="fas fa-dollar-sign"></i> Payroll</a></li>
+                <li><a href="payroll-settings.html"><i class="fas fa-money-check-alt"></i> Payroll Settings</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <button class="hamburger-btn"><i class="fas fa-bars"></i></button>
+                <h1>Admin Dashboard</h1>
+                <p>Welcome, Admin! Here is an overview of the school system.</p>
+            </div>
+            <div class="analytics-grid">
+                <!-- Enrollment Stats -->
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-user-plus"></i></div>
+                    <div class="card-info">
+                        <p>Student Applicants</p>
+                        <h3 id="student-applicants-count">0</h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-user-graduate"></i></div>
+                    <div class="card-info">
+                        <p>Enrolled Students</p>
+                        <h3 id="enrolled-students-count">0</h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-user-tie"></i></div>
+                    <div class="card-info">
+                        <p>Teacher Applicants</p>
+                        <h3 id="teacher-applicants-count">0</h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <div class="card-info">
+                        <p>Approved Teachers</p>
+                        <h3 id="approved-teachers-count">0</h3>
+                    </div>
+                </div>
+
+                <!-- Academic Stats -->
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-book"></i></div>
+                    <div class="card-info">
+                        <p>Total Courses</p>
+                        <h3 id="total-courses-count">0</h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-flask"></i></div>
+                    <div class="card-info">
+                        <p>Total Subjects</p>
+                        <h3 id="total-subjects-count">0</h3>
+                    </div>
+                </div>
+
+                <!-- Financial Stats -->
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                    <div class="card-info">
+                        <p>Total Est. Tuition</p>
+                        <h3 id="total-tuition">₱0.00</h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-dollar-sign"></i></div>
+                    <div class="card-info">
+                        <p>Total Payroll (Month)</p>
+                        <h3 id="total-payroll">₱0.00</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3>Students per Course</h3>
+                    <canvas id="course-chart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Student Status</h3>
+                    <canvas id="student-status-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/nav.js"></script>
+    <script src="js/admin.js"></script>
+    <div class="overlay"></div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISCP - Tuition Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/panel.css">
+</head>
+<body>
+    <div class="panel-container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>ISCP</h2>
+                <p>Admin Panel</p>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="applicants.html"><i class="fas fa-user-plus"></i> Student Applicants</a></li>
+                <li><a href="#"><i class="fas fa-user-graduate"></i> Students</a></li>
+                <li><a href="teacher-applicants.html"><i class="fas fa-user-tie"></i> Teacher Applicants</a></li>
+                <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Teachers</a></li>
+                <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
+                <li><a href="subjects.html"><i class="fas fa-flask"></i> Subjects</a></li>
+                <li><a href="schedules.html"><i class="fas fa-calendar-alt"></i> Schedules</a></li>
+                <li><a href="requirements.html"><i class="fas fa-file-alt"></i> Requirements</a></li>
+                <li><a href="tuition-management.html" class="active"><i class="fas fa-file-invoice-dollar"></i> Tuition Management</a></li>
+                <li><a href="tuition-settings.html"><i class="fas fa-cogs"></i> Tuition Settings</a></li>
+                <li><a href="payroll.html"><i class="fas fa-dollar-sign"></i> Payroll</a></li>
+                <li><a href="payroll-settings.html"><i class="fas fa-money-check-alt"></i> Payroll Settings</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <h1>Student Tuition Management</h1>
+                <p>Overview of calculated tuition fees for the semester.</p>
+            </div>
+            <div class="content">
+                <table class="applicants-table">
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Course</th>
+                            <th>Total Units</th>
+                            <th>Total Tuition</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tuition-tbody">
+                        <!-- Student tuition data will be inserted here by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="js/tuition-management.js"></script>
+
+    <!-- Tuition Breakdown Modal -->
+    <div id="tuition-breakdown-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 id="modal-title">Tuition Breakdown</h3>
+            <div id="modal-body">
+                <!-- Breakdown will be populated here -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

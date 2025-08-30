@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISCP - Student Enrollment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/enroll.css">
+</head>
+<body>
+    <div class="enroll-container">
+        <div class="enroll-box">
+            <h2>Student Enrollment</h2>
+            <div class="progress-bar">
+                <div class="step active" id="step-1">
+                    <div class="step-icon"><i class="fas fa-user"></i></div>
+                    <p>Personal Info</p>
+                </div>
+                <div class="step" id="step-2">
+                    <div class="step-icon"><i class="fas fa-book-open"></i></div>
+                    <p>Course Selection</p>
+                </div>
+                <div class="step" id="step-3">
+                    <div class="step-icon"><i class="fas fa-file-alt"></i></div>
+                    <p>Requirements</p>
+                </div>
+            </div>
+
+            <form id="enroll-form">
+                <!-- Step 1: Personal Information -->
+                <div class="form-step active" id="form-step-1">
+                    <h3>Step 1: Personal Information</h3>
+                    <div class="photo-upload-container">
+                        <label for="photo-upload">Profile Photo</label>
+                        <div class="photo-preview" id="photo-preview">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <input type="file" id="photo-upload" accept="image/*" style="display: none;">
+                        <label for="photo-upload" class="upload-label">Choose Photo</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="firstName" placeholder="First Name" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="lastName" placeholder="Last Name" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="tel" id="phone" placeholder="Phone Number" required>
+                    </div>
+                    <button type="button" class="next-btn">Next</button>
+                </div>
+
+                <!-- Step 2: Course Selection -->
+                <div class="form-step" id="form-step-2">
+                    <h3>Step 2: Course Selection</h3>
+                    <div class="input-group">
+                        <label for="course-selection">Select your desired course:</label>
+                        <select id="course-selection" required>
+                            <option value="">--Please choose a course--</option>
+                            <!-- Options will be populated by JS -->
+                        </select>
+                    </div>
+                    <button type="button" class="prev-btn">Back</button>
+                    <button type="button" class="next-btn">Next</button>
+                </div>
+
+                <!-- Step 3: Requirements Submission -->
+                <div class="form-step" id="form-step-3">
+                    <h3>Step 3: Submit Requirements</h3>
+                    <p>Please provide the following required documents.</p>
+                    <div id="student-requirements-list">
+                        <!-- Requirement items will be populated here by JS -->
+                    </div>
+                    <button type="button" class="prev-btn">Back</button>
+                    <button type="submit" class="submit-btn">Submit Application</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <script src="js/enroll.js"></script>
+</body>
+</html>

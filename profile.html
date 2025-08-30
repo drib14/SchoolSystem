@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - School Management System</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <div id="sidebar-container"></div>
+
+        <div class="main-content">
+            <header>
+                <div class="header-content">
+                    <h1>My Profile</h1>
+                    <div class="user-info">
+                        <span id="username-display"></span>
+                        <img id="profile-pic-display" src="" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%;">
+                    </div>
+                </div>
+            </header>
+
+            <main id="page-content">
+                <section>
+                    <h2>Edit My Information</h2>
+                    <form id="profile-info-form">
+                        <label for="profile-name">Full Name</label>
+                        <input type="text" id="profile-name" required>
+
+                        <label for="profile-email">Email Address</label>
+                        <input type="email" id="profile-email" required>
+
+                        <button type="submit" class="btn btn-primary">Update Info</button>
+                    </form>
+                </section>
+
+                <hr style="margin: 40px 0;">
+
+                <section>
+                    <h2>Change Password</h2>
+                    <form id="password-change-form">
+                        <label for="current-password">Current Password</label>
+                        <input type="password" id="current-password" required>
+
+                        <label for="new-password">New Password</label>
+                        <input type="password" id="new-password" required>
+
+                        <button type="submit" class="btn btn-primary">Change Password</button>
+                    </form>
+                </section>
+
+                <hr style="margin: 40px 0;">
+
+                <section>
+                    <h2>Profile Picture</h2>
+                    <form id="profile-pic-form">
+                        <label for="profile-pic-upload">Upload new picture:</label>
+                        <input type="file" id="profile-pic-upload" accept="image/*">
+                        <button type="submit" class="btn btn-primary">Save Picture</button>
+                    </form>
+                </section>
+            </main>
+
+            <footer>
+                <p>&copy; 2024 School Management System. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="/js/data.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/profile.js"></script>
+</body>
+</html>

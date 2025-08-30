@@ -1,0 +1,203 @@
+/* === Core Styles & Variables === */
+:root {
+    --primary-color: #0A2540;
+    --secondary-color: #008080;
+    --accent-color: #4DD0E1;
+    --background-color: #F6F9FC;
+    --surface-color: #FFFFFF;
+    --text-color: #333;
+    --text-color-light: #F6F9FC;
+    --border-color: #E6E6E6;
+    --error-color: #D32F2F;
+    --success-color: #388E3C;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* === Layout === */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+#sidebar-container {
+    width: 250px;
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    padding: 20px;
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: var(--surface-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px 30px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mobile-menu-button {
+    display: none; /* Hidden on desktop */
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+main#page-content {
+    padding: 30px;
+    flex-grow: 1;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: var(--surface-color);
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* === Common Elements === */
+h1, h2, h3 {
+    color: var(--primary-color);
+}
+
+a {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.2s;
+}
+.btn-primary {
+    background-color: var(--secondary-color);
+    color: var(--text-color-light);
+}
+.btn-primary:hover {
+    background-color: #006666;
+    transform: translateY(-1px);
+}
+.btn-secondary {
+    background-color: #f0f0f0;
+    color: #333;
+    border-color: #ccc;
+}
+.btn-secondary:hover {
+    background-color: #e0e0e0;
+}
+.btn-danger {
+    background-color: var(--error-color);
+    color: var(--text-color-light);
+}
+.btn-danger:hover {
+    background-color: #b71c1c;
+}
+.btn-sm {
+    padding: 5px 10px;
+    font-size: 0.85em;
+}
+
+/* Forms */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: var(--surface-color);
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+form label {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+form input, form select, form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+table thead {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+}
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+table tbody tr {
+    background-color: var(--surface-color);
+}
+table tbody tr:nth-of-type(even) {
+    background-color: var(--background-color);
+}
+table tbody tr:hover {
+    background-color: #e8f4f4;
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+        position: relative;
+        overflow-x: hidden;
+    }
+    #sidebar-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        transform: translateX(-100%);
+        box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+    }
+    body.sidebar-open #sidebar-container {
+        transform: translateX(0);
+    }
+    .mobile-menu-button {
+        display: block;
+    }
+    header, main#page-content {
+        padding: 15px;
+    }
+}
